@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="top">记录新日子</view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="section">
+      <input name="title" placeholder='纪念日名称' auto-focus/>
+    </view>
+    <view class="section">
+      <!--<text>每年{{month}}月{{day}}日</text> -->
+      <picker mode="date" name="date" class="date" fields="day" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+        <view class="picker">
+          纪念日日期:<text>{{date}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="section">
+        <label>每年循环</label>
+        <switch checked bindchange="switch1Change"/>
+    </view>
+    <view class="section imgs">
+      <label>请选择图片</label>
+      <image src='http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+      <image src='http://oyu60t3s9.bkt.clouddn.com/shopping.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+      <image src='http://oyu60t3s9.bkt.clouddn.com/blackboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+      <image src='http://oyu60t3s9.bkt.clouddn.com/xiaobaoji.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+      <image src='http://oyu60t3s9.bkt.clouddn.com/gift.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+      <image src='http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
+    </view>
+    <view class="btn-area">
+      <button formType="submit">确认</button>
+    </view>
+  </form>
+</view>
+
+
+

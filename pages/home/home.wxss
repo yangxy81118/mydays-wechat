@@ -1,0 +1,136 @@
+/**index.wxss**/
+.container{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index: 0;
+}
+
+.bk {
+    content : "";
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    opacity : 0.1;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bk image{
+    width:1000px;
+    height:100%;
+    position: relative;
+    left:-35%;
+}
+
+.day-list{
+  padding:20% 0 0 0;
+  white-space: nowrap; 
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.day-list-ad{
+  white-space: nowrap; 
+  position: relative;
+  transition: all 0.5s;
+}
+.day-list-wrap{
+  padding:20% 0 0 0;
+  width:100%;
+  overflow:hidden;
+}
+
+.day-logo {
+  display: inline-block;
+  width:100%;
+  text-align: center;
+}
+
+.day-logo image {
+  width: 256rpx;
+  height: 256rpx;
+  border-radius: 50%;
+  border:2px solid #333;
+  box-shadow: 0 0 6px #000;
+}
+
+.content{
+  margin:4% 0;
+  color:#555;
+}
+
+.content text.row{
+  display: block;
+  text-align: center;
+}
+
+.content text.small{
+  font-size:26rpx;
+}
+
+.content text.holiday{
+  font-size:48rpx;
+  line-height:68rpx;
+}
+
+.content text.days{
+  font-size:140rpx;
+  margin:0 10px;
+  color:#e4861e;
+}
+
+.content text.rightnow{
+  font-size: 32rpx;
+  color:#e4861e;
+  width:100%;
+  text-align: center;
+}
+
+.content .icon{
+  margin:0 10px 0 0;
+}
+
+.control{
+  position: fixed;
+  bottom:5%;
+  width:100%;
+  text-align: center;
+}
+
+.control .iconfont{
+  font-size:34px;
+  color:#555;
+  margin:0 10%;
+  display:inline-block;
+}
+
+.control .iconfont:active{
+  color:#000;
+}
+
+.navigator{
+  position: absolute;
+  top:20%;
+  left:0;
+  width:100%;
+  opacity: 0.18;
+  color:#000;
+}
+
+.navigator text.left{
+  position:absolute;
+  left:6%;
+   font-size:60px;
+}
+
+.navigator text.right{
+  position:absolute;
+  right:6%;
+   font-size:60px;
+}

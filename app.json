@@ -1,0 +1,15 @@
+{
+  "pages":[
+    "pages/wall/wall",
+    "pages/home/home",
+    "pages/list/list",
+    "pages/edit/edit",
+    "pages/suggestion/suggestion"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "那些日子",
+    "navigationBarTextStyle":"black"
+  } 
+}

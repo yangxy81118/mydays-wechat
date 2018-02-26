@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="row clear">
+        <navigator class="toAdd" url="/pages/edit/edit">
+          <text class="icon iconfont icon-add"></text>记录新日子
+        </navigator>
+    </view>
+    <view class="row" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
+        <text class="title">{{item.name}}</text>
+        <text class="time">{{item.year}}年{{item.month}}月{{item.date}}日</text>
+        <text wx:if="{{item.custom}}" class="icon iconfont icon-close close"></text>
+    </view>
+    <view class="row clear">
+        <navigator class="toAdd" url="/pages/edit/edit">
+          <text class="icon iconfont icon-add"></text>记录新日子
+        </navigator>
+    </view>
+    
+</view>
