@@ -1,30 +1,40 @@
 <!--index.wxml-->
 <view class="header">
+  <image mode="aspectFill" src="{{day.image}}" />
+</view>
+
+<view class="main">
   <view class="words">
-      <text class="title">{{day.name}}</text>
-      <text class="small date">{{day.year}}年{{day.month}}月{{day.date}}日</text>
-      <text class="small remain">还有{{day.remain}}天</text>
-  </view>
-  <view class="bk">
-      <image mode="aspectFill" src="{{day.image}}" />
-  </view>
-</view>
-<view wx:if="{{day.remain > 7}}" class="comments">
-  还有一段时间，可以提早构思一下哦~
-</view>
-<view wx:else class="comments">
-  就快要到了，尽快准备好哦，以免留下遗憾~
-</view>
-<scroll-view scroll-y class="suggestions">
-  <view class="sug-box" wx:for="{{sugs}}" wx:for-index="idx" wx:for-item="item" >
-      <view class="img">
-          <image  src="{{item.image}}" />
+      <view class="row">
+        <text class="name">中秋节</text>
+        <text class="date right">2018年9月24日</text>
       </view>
-      <view class="word-box">
-         <text>{{item.content}}</text>
+      <view class="row">
+        <text class="eng-name small">Mid-Autumn Festival</text>
+        <text class="remain small right">还有213天</text>
+      </view>
+      <view class="brief">
+        中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍
       </view>
   </view>
-</scroll-view>
+
+  <!-- <view wx:if="{{day.remain > 7}}" class="comments">
+    还有一段时间，可以提早构思一下哦~
+  </view>
+  <view wx:else class="comments">
+    就快要到了，尽快准备好哦，以免留下遗憾~
+  </view> -->
+  <!-- <scroll-view scroll-y class="suggestions">
+    <view class="sug-box" wx:for="{{sugs}}" wx:for-index="idx" wx:for-item="item" >
+        <view class="word-box">
+          <text>{{item.content}}</text>
+        </view>
+    </view>
+  </scroll-view> -->
+
+</view>
+
+
 
 
 

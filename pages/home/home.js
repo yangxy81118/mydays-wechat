@@ -33,20 +33,28 @@ Page({
       }
     })
 
-    var userId =  wx.getStorageSync('userId')
+    var userId =  wx.getStorageSync('userId')   
+
     wx.request({
-      url: 'https://www.yubopet.top/days/list?userId=' + userId,
-      success: function(res) {
-        console.log(res.data)
-        MAX_IDX = res.data.length;
+      url: 'https://www.yubopet.top/graphql/days',
+      method: 'POST',
+      data: '{days(userId:"1") { id name year month date image remain custom }}',
+      header: {
+        'content-type': 'text/plain'
+      },
+      success: function (res) {
+        var daysData = res.data.data.days
+        MAX_IDX = daysData.length;
+        console.log(daysData)
         that.setData({
-          days:res.data,
-          curDay:res.data[0],
-          largeBk: res.data[0].image
+          days: daysData,
+          curDay: daysData[0],
+          largeBk: daysData[0].image
         })
-        
+
       }
     })
+
   },
   touchstart: function (e) {
     startTouchX = e.changedTouches[0].pageX;

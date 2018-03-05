@@ -10,9 +10,10 @@
     </view>
 
     <view class="content">
-      <text class="row small">距离{{curDay.year}}年{{curDay.month}}月{{curDay.date}}日</text>
       <text class="row holiday">{{curDay.name}}</text>
-      <text class="row small">还有<text class="days">{{curDay.remain}}</text>天</text>
+      <text class="row small">Mid-Autumn Festival</text>
+      <text class="row holiday date">{{curDay.year}}年{{curDay.month}}月{{curDay.date}}日</text>
+      <text class="row small">还有{{curDay.remain}}天</text>
       <text wx:if="{{curDay.remain <= 7 }}" class="row rightnow">
         <text class="icon iconfont icon-iconfontblueberryattention"></text>即将来临，你准备好了么？
       </text>
@@ -26,9 +27,9 @@
       <text class="icon iconfont icon-left left" bindtap='toPrev'></text>
       <text class="icon iconfont icon-rightarrow right" bindtap='toNext'></text>
     </view>
-    <view class="bk">
+    <!-- <view class="bk">
       <image src="{{largeBk}}" style='width:{{bkWidth}}px;height:{{bkHeight}}px' bindload='bkLoad'></image>
-    </view>
+    </view> -->
 </view>
 
 

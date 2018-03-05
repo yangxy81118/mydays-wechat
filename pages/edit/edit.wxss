@@ -13,12 +13,40 @@ page{
 
 view.section{
   margin:20px 0;
-  font-size: 16px;
+  font-size: 28rpx;
+  background: #FFF;
+  overflow: hidden;
 }
+
+view.section label{
+  float:left;
+  display: block;
+  line-height: 84rpx;
+  margin:0 0 0 50rpx;
+}
+
 view.section input{
   background: #FFF;
-  font-size:16px;
-  padding:8px;
+  padding:12rpx 12rpx 12rpx 40rpx;
+}
+
+view.section picker{
+  padding:0 0 0 120rpx;
+}
+
+view.section switch{
+  display: block;
+  float:right;
+  padding:20rpx 0;
+}
+
+view.section.cycle label{
+  line-height: 100rpx;
+}
+
+view.section .picker text{
+  font-size:28rpx;
+  color:#848484;
 }
 
 .date{
@@ -45,16 +73,49 @@ button{
 }
 
 view.imgs{
-  width:300px;
+  width:100%;
+  background: #FFF;
+}
+
+view.imgs .img-title{
+  padding:30rpx 50rpx 30rpx 4%;
+  font-size:28rpx;
+  overflow: hidden;
+}
+
+view.imgs .img-title button{
+  float:right;
+  width:100rpx;
+  font-size: 20rpx;
+  margin:0;
+  padding:0;
+  border:0;
+  background: #FEC;
+  color:#E84;
+  box-shadow: 0;
+}
+
+view.imgs .img-list{
+  width:88%;
   margin:0 auto;
 }
 
-.imgs label{
-  display: block;
-  margin:0 0 10px 0;
+.img-list image{
+  width:200rpx;
+  height:200rpx;
+  margin:0 4% 10rpx 0;
+  border-radius: 8rpx;
 }
 
-.imgs image{
-  width:100px;
-  height:100px;
+.img-list image.tail{
+  margin-right:0;
 }
+
+button.submit{
+  position: fixed;
+  bottom: 0;
+  width:100%;
+  font-size: 26rpx;
+  padding:8rpx 0;
+}
+

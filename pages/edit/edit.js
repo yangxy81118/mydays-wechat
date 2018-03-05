@@ -19,6 +19,7 @@ Page({
     days: days,
     day: 2,
     value: [9999, 1, 1],
+    date:"点击选择"
   },
   bindChange: function(e) {
     const val = e.detail.value

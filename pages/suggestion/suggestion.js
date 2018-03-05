@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var dayId = -1
+var dayId = 8
 
 Page({
   data: {
