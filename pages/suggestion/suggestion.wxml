@@ -17,20 +17,21 @@
         中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍
       </view>
   </view>
-
+  <scroll-view scroll-y class="suggestions">
+    <view class="sug-box" wx:for="{{sugs}}" wx:for-index="idx" wx:for-item="item" >
+        <text class="icon iconfont icon-iconfontblueberryattention"></text>
+        <view class="word-box">
+          <text>{{item.content}}</text>
+        </view>
+    </view>
+  </scroll-view> 
   <!-- <view wx:if="{{day.remain > 7}}" class="comments">
     还有一段时间，可以提早构思一下哦~
   </view>
   <view wx:else class="comments">
     就快要到了，尽快准备好哦，以免留下遗憾~
   </view> -->
-  <!-- <scroll-view scroll-y class="suggestions">
-    <view class="sug-box" wx:for="{{sugs}}" wx:for-index="idx" wx:for-item="item" >
-        <view class="word-box">
-          <text>{{item.content}}</text>
-        </view>
-    </view>
-  </scroll-view> -->
+   
 
 </view>
 

@@ -11,14 +11,14 @@ view.main{
   width:100%;
 }
 
-.words{
+.words,.suggestions{
   background:#FFF;
-  box-shadow: 0 3rpx 8rpx #DDD;
+  box-shadow: 0 4rpx 10rpx #DDD;
   width: 82%;
   color:#333;
   border-radius: 12rpx;
   padding:4%;
-  margin:0 auto;
+  margin:0 auto 30rpx;
 }
 
 .words view.row{
@@ -71,29 +71,20 @@ view.comments{
   color:#666;
 }
 
-.suggestions{
-  
-}
-
 view.sug-box{
-  height:50rpx;
   width:100%;
-  margin:0 0 10px 0;
+  margin:0 0 30px 0;
   background:#FFF;
   color:#666;
-  position: relative;
+  overflow: hidden;
 }
 
 view.sug-box .word-box{
-  display:block;
-  position: absolute;
-  z-index: 1;
-  height:100%;
-  top:0;
-  left:0;
+  font-size: 24rpx;
 }
 
-view.sug-box{
-  font-size:26rpx;
-  display:block;
+.suggestions .icon {
+  font-size: 60rpx;
+  float:left;
+  margin:0 30rpx 0 0;
 }
