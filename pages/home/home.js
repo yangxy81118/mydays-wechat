@@ -38,7 +38,7 @@ Page({
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{days(userId:"1") { id name year month date image remain custom }}',
+      data: '{days(userId:"1") { id name year month date image remain custom engName }}',
       header: {
         'content-type': 'text/plain'
       },

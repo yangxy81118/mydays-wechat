@@ -6,12 +6,12 @@
 <view class="main">
   <view class="words">
       <view class="row">
-        <text class="name">中秋节</text>
-        <text class="date right">2018年9月24日</text>
+        <text class="name">{{day.name}}</text>
+        <text class="date right">{{day.year}}年{{day.month}}月{{day.date}}日</text>
       </view>
       <view class="row">
-        <text class="eng-name small">Mid-Autumn Festival</text>
-        <text class="remain small right">还有213天</text>
+        <text class="eng-name small">{{day.engName}}</text>
+        <text class="remain small right">还有{{day.remain}}天</text>
       </view>
       <view class="brief">
         中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍,中秋节介绍

@@ -11,7 +11,7 @@
 
     <view class="content">
       <text class="row holiday">{{curDay.name}}</text>
-      <text class="row small">Mid-Autumn Festival</text>
+      <text class="row small">{{curDay.engName}}</text>
       <text class="row holiday date">{{curDay.year}}年{{curDay.month}}月{{curDay.date}}日</text>
       <text class="row small">还有{{curDay.remain}}天</text>
       <text wx:if="{{curDay.remain <= 7 }}" class="row rightnow">
