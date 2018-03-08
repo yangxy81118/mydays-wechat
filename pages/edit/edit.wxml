@@ -3,7 +3,7 @@
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
       <label>起个名字</label>
-      <input name="title" placeholder='纪念日名称' auto-focus/>
+      <input name="title" placeholder='纪念日名称，如 妈妈生日' auto-focus/>
     </view>
     <view class="section">
       <label>纪念日期</label>
@@ -14,9 +14,13 @@
         </view>
       </picker>
     </view>
-    <view class="section cycle">
+    <view class="section switch">
+        <label>农历模式</label>
+        <switch name="useLunar" bindchange="switch1Change"/>
+    </view>
+    <view class="section switch">
         <label>每年循环</label>
-        <switch checked bindchange="switch1Change"/>
+        <switch name="yearCycle" bindchange="switch1Change"/>
     </view>
     <view class="imgs">
       <view class="img-title">

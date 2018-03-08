@@ -12,15 +12,22 @@ Page({
       success: function (res) {
         that.setData({
           appWidth: res.windowWidth
-        })
-        
+        })  
       }
     })
+
+    var userId = wx.getStorageSync('userId') 
+
     wx.request({
-      url: 'https://www.yubopet.top/days/list?userId=1',
-      success: function(res) {
+      url: 'https://www.yubopet.top/graphql/days',
+      method: 'POST',
+      data: '{days(userId:"' + userId + '") { id name year month date custom}}',
+      header: {
+        'content-type': 'text/plain'
+      },
+      success: function (res) {
         that.setData({
-          days:res.data
+          days:res.data.data.days
         })
       }
     })

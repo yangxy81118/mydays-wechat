@@ -1,4 +1,4 @@
-//index.js
+ //index.js
 //获取应用实例
 const app = getApp()
 var startTouchX = 0;
@@ -38,7 +38,7 @@ Page({
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{days(userId:"1") { id name year month date image remain custom engName }}',
+      data: '{days(userId:"'+userId+'") { id name year month date image remain custom engName }}',
       header: {
         'content-type': 'text/plain'
       },

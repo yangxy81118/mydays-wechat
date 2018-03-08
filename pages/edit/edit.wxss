@@ -38,7 +38,7 @@ view.section switch{
   padding:20rpx 0;
 }
 
-view.section.cycle label{
+view.switch label{
   line-height: 100rpx;
 }
 

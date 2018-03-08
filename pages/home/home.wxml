@@ -13,10 +13,21 @@
       <text class="row holiday">{{curDay.name}}</text>
       <text class="row small">{{curDay.engName}}</text>
       <text class="row holiday date">{{curDay.year}}年{{curDay.month}}月{{curDay.date}}日</text>
-      <text class="row small">还有{{curDay.remain}}天</text>
-      <text wx:if="{{curDay.remain <= 7 }}" class="row rightnow">
-        <text class="icon iconfont icon-iconfontblueberryattention"></text>即将来临，你准备好了么？
-      </text>
+
+
+
+      <!-- 今天  -->
+      <block wx:if="{{curDay.remain < 0 }}"> 
+        <text class="row small">就是今天！</text>
+      </block>
+
+      <!-- 明天  -->
+      <block wx:elif="{{curDay.remain == 0 }}"> 
+        <text class="row small">明天哦！</text>
+      </block>
+      <block wx:else="{{curDay.remain > 0 }}"> 
+        <text class="row small">还有{{curDay.remain}}天</text>
+      </block>
     </view>
     <view class="control">
       <navigator url="/pages/suggestion/suggestion?dayId={{curDay.id}}" class="icon iconfont icon-info"></navigator>

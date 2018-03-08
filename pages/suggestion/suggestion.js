@@ -10,6 +10,7 @@ Page({
   onLoad:function(options){
     var that = this
     dayId = options.dayId
+
     wx.request({
       url: 'https://www.yubopet.top/suggestion/list?dayId='+dayId,
       success:function(res){
@@ -20,10 +21,16 @@ Page({
     })
 
     wx.request({
-      url: 'https://www.yubopet.top/days/get?dayId=' + dayId,
+      url: 'https://www.yubopet.top/graphql/days',
+      method: 'POST',
+      data: '{day(dayId:' + dayId + ') { id name year month date image remain custom engName }}',
+      header: {
+        'content-type': 'text/plain'
+      },
       success: function (res) {
+        console.log(res)
         that.setData({
-          day: res.data
+          day: res.data.data.day
         })
       }
     })
