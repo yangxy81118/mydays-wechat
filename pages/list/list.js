@@ -21,7 +21,7 @@ Page({
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{days(userId:"' + userId + '") { id name year month date custom}}',
+      data: '{days(userId:' + userId + ') { id name year month date custom}}',
       header: {
         'content-type': 'text/plain'
       },

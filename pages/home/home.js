@@ -38,11 +38,12 @@ Page({
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{days(userId:"'+userId+'") { id name year month date image remain custom engName }}',
+      data: '{days(userId:'+userId+') { id name year month date image remain custom engName }}',
       header: {
         'content-type': 'text/plain'
       },
       success: function (res) {
+        console.log(res)
         var daysData = res.data.data.days
         MAX_IDX = daysData.length;
         console.log(daysData)

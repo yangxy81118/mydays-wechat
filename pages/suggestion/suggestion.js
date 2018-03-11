@@ -10,27 +10,20 @@ Page({
   onLoad:function(options){
     var that = this
     dayId = options.dayId
-
-    wx.request({
-      url: 'https://www.yubopet.top/suggestion/list?dayId='+dayId,
-      success:function(res){
-        that.setData({
-          sugs:res.data
-        })
-      }
-    })
-
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{day(dayId:' + dayId + ') { id name year month date image remain custom engName }}',
+      data: '{day(dayId:' + dayId + ') { id name year month date image remain custom engName brief suggestions { content } }}',
       header: {
         'content-type': 'text/plain'
       },
       success: function (res) {
-        console.log(res)
+
+        var dayData = res.data.data.day
+        console.log(dayData)
         that.setData({
-          day: res.data.data.day
+          day: dayData,
+          sugs: dayData.suggestions
         })
       }
     })
