@@ -1,0 +1,46 @@
+<!--index.wxml-->
+<view scroll-y="true" class="container">
+    <view class="day-list-wrap" bindtouchstart='touchstart' bindtouchend='touchend'>
+      <view class="day-list-ad" style='left:-{{scrollOffset}}px'>
+          <view class="day-logo" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" id="day-{{item.id}}" 
+            style='width:{{appWidth}}px '>
+            <image src="{{item.image}}" background-size="cover"></image>
+          </view>
+      </view>
+    </view>
+
+    <view class="content">
+      <text class="row holiday">{{curDay.name}}</text>
+      <text class="row small">{{curDay.engName}}</text>
+      <text class="row holiday date">{{curDay.year}}年{{curDay.month}}月{{curDay.date}}日</text>
+
+
+
+      <!-- 今天  -->
+      <block wx:if="{{curDay.remain < 0 }}"> 
+        <text class="row small">就是今天！</text>
+      </block>
+
+      <!-- 明天  -->
+      <block wx:elif="{{curDay.remain == 0 }}"> 
+        <text class="row small">明天哦！</text>
+      </block>
+      <block wx:else="{{curDay.remain > 0 }}"> 
+        <text class="row small">还有{{curDay.remain}}天</text>
+      </block>
+    </view>
+    <view class="control">
+      <navigator url="/pages/suggestion/suggestion?dayId={{curDay.id}}" class="icon iconfont icon-info"></navigator>
+      <navigator url="/pages/list/list" class="icon iconfont icon-list"></navigator>
+      <navigator url="/pages/list/list" class="icon iconfont icon-usered"></navigator>
+    </view>
+    <view class="navigator">
+      <text class="icon iconfont icon-left left" bindtap='toPrev'></text>
+      <text class="icon iconfont icon-rightarrow right" bindtap='toNext'></text>
+    </view>
+    <!-- <view class="bk">
+      <image src="{{largeBk}}" style='width:{{bkWidth}}px;height:{{bkHeight}}px' bindload='bkLoad'></image>
+    </view> -->
+</view>
+
+

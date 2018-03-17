@@ -2,40 +2,42 @@
 <view class="container">
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
-      <label>起个名字</label>
-      <input name="title" placeholder='纪念日名称，如 妈妈生日' auto-focus/>
+      <label>姓名</label>
+      <input name="title" placeholder='10字以内，如 妈妈、爸爸' auto-focus/>
     </view>
+
     <view class="section">
-      <label>纪念日期</label>
-      <!--<text>每年{{month}}月{{day}}日</text> -->
+      <label>历法</label>
+      <picker mode="selector" name="dateMode" class="date" fields="day" value="0" range="{{dateModeChoice}}" bindchange="dateModeChange">
+        <view class="picker">
+          <text>{{dateMode}}</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="section" wx:if="{{dateMode=='公历'}}">
+      <label>日期</label>
       <picker mode="date" name="date" class="date" fields="day" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
         <view class="picker">
           <text>{{date}}</text>
         </view>
       </picker>
     </view>
+    
+    <view class="section" wx:if="{{dateMode=='农历'}}">
+      <label>日期</label>
+      <picker mode="multiSelector" name="date" class="date" style='height:84rpx' bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
+        <view class="picker">
+           <text>{{cnDate}}</text>
+        </view>
+      </picker>
+    </view>
+
     <view class="section switch">
-        <label>农历模式</label>
-        <switch name="useLunar" bindchange="switch1Change"/>
+        <label>星标</label>
+        <switch name="favor"/>
     </view>
-    <view class="section switch">
-        <label>每年循环</label>
-        <switch name="yearCycle" bindchange="switch1Change"/>
-    </view>
-    <view class="imgs">
-      <view class="img-title">
-        <label>选一张你喜欢的图片</label>
-        <button>换一组</button>
-      </view>
-      <view class="img-list">
-        <image src='http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-        <image src='http://oyu60t3s9.bkt.clouddn.com/shopping.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-        <image class="tail" src='http://oyu60t3s9.bkt.clouddn.com/blackboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-        <image src='http://oyu60t3s9.bkt.clouddn.com/xiaobaoji.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-        <image src='http://oyu60t3s9.bkt.clouddn.com/gift.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-        <image class="tail" src='http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg?imageView2/1/w/100/h/100/q/75|imageslim' />
-      </view>
-    </view>
+
     <button class="submit" formType="submit"><text class="icon iconfont icon-add"></text>   确认新增</button>
   </form>
 </view>

@@ -13,7 +13,6 @@ var windowHeight = 0;
 Page({
   data: {
     appWidth:375,
-    listHeight:0,
     toView:'day-1',
     largeBk:'',
     scrollOffset:0,
@@ -32,8 +31,7 @@ Page({
         console.log(res.windowHeight)
         windowHeight = res.windowHeight;
         that.setData({
-          appWidth: res.windowWidth,
-          listHeight: res.windowHeight-80
+          appWidth: res.windowWidth
         })
         if (res.model.indexOf("iPhone") >= 0){
           that.setData({

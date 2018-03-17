@@ -28,7 +28,7 @@ view.section input{
   height: 84rpx;
 }
 
-view.section picker{
+view.section picker{ 
   padding:0 0 0 120rpx;
 }
 
@@ -115,5 +115,9 @@ button.submit{
   width:100%;
   font-size: 30rpx;
   padding:8rpx 0;
+}
+
+label.tip{
+  color:#848484;
 }
 
