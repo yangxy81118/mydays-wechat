@@ -8,8 +8,6 @@ var cnCalender
 
 var dateSelected = false
 
-
-
 Page({
   data: {
     date:"点击选择",
@@ -114,6 +112,7 @@ Page({
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var formData = e.detail.value
+    
 
     //TODO 校验，最好用上第三方工具类
     if (formData.title.length <= 0) {
@@ -129,6 +128,33 @@ Page({
       toastWarning('请选择日期')
       return
     }
+
+    if (formData.dateMode == 1){
+      var cnCalendarArray = this.data.lunarArray
+      formData.date = cnCalendarArray[0][formData.date[0]] + cnCalendarArray[1][formData.date[1]] + cnCalendarArray[2][formData.date[2]]
+    }
+
+    var userId = wx.getStorageSync('userId')  
+
+    wx.request({
+      url: 'https://www.yubopet.top/customDay',
+      method: 'PUT',
+      data: {
+        name: formData.title,
+        dateMode: formData.dateMode,
+        date: formData.date,
+        favor: formData.favor,
+        userId: userId
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+       
+      }
+    })
+
 
   },
   formReset: function () {
