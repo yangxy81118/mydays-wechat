@@ -119,7 +119,7 @@ Page({
       toastWarning('请输入姓名')
       return
     }
-    if (formData.title.length > 10) {
+    if (formData.title.length > 6) {
       toastWarning('姓名过长')
       return
     }
@@ -150,9 +150,21 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        console.log(res)
-       
-      }
+        wx.showToast({
+          title:"添加成功"
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+       },
+       fail:function(res){
+         wx.showToast({
+           title: "添加失败"
+         })
+         wx.navigateBack({
+           delta: 1
+         })
+       }
     })
 
 

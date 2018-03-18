@@ -5,21 +5,27 @@
     <text>星标</text>
   </view>
   <!--style='height:{{listHeight}}px' -->
-  <scroll-view scroll-y='true' class="list" >
+  <view wx:if="{{days.length == 0}}" class='empty-list'>
+    <image src='/images/empty-list.png' mode='aspectFit'></image>
+    <text>记录那些日子</text>
+    <view class="line"></view>
+  </view>
+  <scroll-view wx:else scroll-y='true' class="list" >
     <scroll-view scroll-x="true" class="day-item" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
-        <view class="day-box">  
-          <text class="day-title ">{{item.name}}</text>
-          <block wx:if="{{item.remain < 50}}">
+        <view class="day-box">   
+          <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
+          <block wx:if="{{item.remain <= 30}}">
             <text class="day-remain close-remain">还有{{item.remain}}天</text>
-            <text class="date close-date">{{item.month}}月{{item.date}}日</text>
+            <text class="date close-date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
+            <text class="date close-date" wx:else>{{item.lunar}}</text>
             <view class="close-tip"></view>
           </block>
           <block wx:else>
             <text class="day-remain">还有{{item.remain}}天</text>
-            <text class="date">{{item.month}}月{{item.date}}日</text>
+            <text class="date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
+            <text class="date" wx:else>{{item.lunar}}</text>
           </block>
-
         </view> 
         <view class="opt-box">
           <text class="edit">编辑</text>
@@ -29,6 +35,6 @@
     </scroll-view>
   </scroll-view>
 
-  <navigator class="add" url='/pages/edit/edit'>+</navigator>
+  <navigator class="add" url='/pages/edit/edit'>添加生日</navigator>
 
 </view>

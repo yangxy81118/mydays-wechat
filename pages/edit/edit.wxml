@@ -3,7 +3,7 @@
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
       <label>姓名</label>
-      <input name="title" placeholder='10字以内，如 妈妈、爸爸' auto-focus/>
+      <input name="title" placeholder='6字以内，如 妈妈、爸爸' auto-focus/>
     </view>
 
     <view class="section">
@@ -13,7 +13,7 @@
           <text>{{dateMode}}</text>
         </view>
       </picker>
-    </view>
+    </view> 
 
     <view class="section" wx:if="{{dateMode=='公历'}}">
       <label>日期</label>
