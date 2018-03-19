@@ -44,7 +44,8 @@ Page({
     this.setData({
       dateMode: choice[e.detail.value],
       cnDate:"点击选择",
-      date:"点击选择"
+      date:"点击选择",
+      dateClass: ""
     })
     dateSelected = false
   },
@@ -91,7 +92,8 @@ Page({
     var valArray = e.detail.value
     var cnDateStr = lunar[0][valArray[0]]+""+lunar[1][valArray[1]]+lunar[2][valArray[2]]
     this.setData({
-      cnDate : cnDateStr
+      cnDate : cnDateStr,
+      dateClass : "selected"
     })
     
   },
@@ -105,7 +107,8 @@ Page({
   },
   bindDateChange: function (e) {
     this.setData({
-      date: e.detail.value
+      date: e.detail.value,
+      dateClass: "selected"
     })
     dateSelected = true
   },

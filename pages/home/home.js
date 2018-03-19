@@ -15,7 +15,6 @@ Page({
     console.log(options)
   },
   onShow: function () {
-    console.log('onLoad!!!')
     var that = this
     wx.getSystemInfo({
       success: function (res) {
@@ -36,27 +35,60 @@ Page({
     })
 
     var userId =  wx.getStorageSync('userId')   
+    loadDays(that,userId)
+    
+  },
+  delAction:function(e){
+
+    var dayId = e.currentTarget.dataset.dayid
+    var userId = wx.getStorageSync('userId')   
+    var that = this
 
     wx.request({
-      url: 'https://www.yubopet.top/graphql/days',
-      method: 'POST',
-      data: '{days(userId:'+userId+') { id name year month date remain custom lunar age }}',
-      header: {
-        'content-type': 'text/plain'
-      },
+      url: 'https://www.yubopet.top/customDay?dayId='+dayId,
+      method: 'DELETE',
       success: function (res) {
         console.log(res)
-        var daysData = res.data.data.days
-        MAX_IDX = daysData.length;
-        console.log(daysData)
-        that.setData({
-          days: daysData,
-          curDay: daysData[0]
+        // loadDays(that, userId)
+        that.onShow()
+        wx.showToast({
+          title: '删除成功',
+          duration: 1000
         })
-
+      },
+      fail: function (res) {
+        console.log(res)
+        toastWarning('删除失败')
       }
     })
   }
   
    
 })
+
+function loadDays(that,userId){
+  wx.request({
+    url: 'https://www.yubopet.top/graphql/days',
+    method: 'POST',
+    data: '{days(userId:' + userId + ') { id name year month date remain custom lunar age }}',
+    header: {
+      'content-type': 'text/plain'
+    },
+    success: function (res) {
+      var daysData = res.data.data.days
+      console.log(daysData)
+      that.setData({
+        days: daysData
+      })
+    }
+  })
+}
+
+function toastWarning(content) {
+  wx.showToast({
+    title: content,
+    image: '/images/warning.png',
+    duration: 2000
+  })
+}
+

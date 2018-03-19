@@ -13,6 +13,8 @@ view.section{
   font-size: 28rpx;
   background: #FFF;
   overflow: hidden;
+  border:1px solid #EEE;
+  border-width: 1px 0;
 }
 
 view.section label{
@@ -24,7 +26,7 @@ view.section label{
 
 view.section input{
   background: #FFF;
-  padding:0 0 0 40rpx;
+  padding:0 0 0 76rpx;
   height: 84rpx;
 }
 
@@ -32,10 +34,14 @@ view.section picker{
   padding:0 0 0 120rpx;
 }
 
+view.section picker text.selected{
+  color:#000;
+} 
+
 view.section switch{
   display: block;
   float:right;
-  padding:20rpx 0;
+  padding:20rpx 34rpx 20rpx 0;
 }
 
 view.switch label{
@@ -56,8 +62,7 @@ view.section .picker text{
 }
 
 .date view{
-  font-size:16px;
-  padding:8px;
+  padding:24rpx;
 }
 
 label{
@@ -110,11 +115,18 @@ view.imgs .img-list{
 }
 
 button.submit{
+  display: block;
   position: fixed;
   bottom: 0;
+  left:0;
+  height:12%;
   width:100%;
-  font-size: 30rpx;
-  padding:8rpx 0;
+  background: #ff9940;
+  color:#FFF;
+  text-align: center;
+  font-size:40rpx;
+  line-height: 140rpx;
+  box-shadow: 0 0 6px #776630;
 }
 
 label.tip{

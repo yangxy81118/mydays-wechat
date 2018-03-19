@@ -2,14 +2,12 @@
   "pages":[
     "pages/wall/wall",
     "pages/home/home",
-    "pages/list/list",
-    "pages/edit/edit",
-    "pages/suggestion/suggestion"
+    "pages/edit/edit"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "那些日子",
+    "navigationBarTitleText": "生日纪",
     "navigationBarTextStyle":"black"
   } 
 }

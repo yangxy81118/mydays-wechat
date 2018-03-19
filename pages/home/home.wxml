@@ -29,12 +29,12 @@
         </view> 
         <view class="opt-box">
           <text class="edit">编辑</text>
-          <text class="del">删除</text>
+          <text class="del" bindtap='delAction' data-dayId='{{item.id}}'>删除</text>
         </view>
       </view>
     </scroll-view>
   </scroll-view>
 
-  <navigator class="add" url='/pages/edit/edit'>添加生日</navigator>
+  <navigator class="add" url='/pages/edit/edit'>添加</navigator>
 
 </view>

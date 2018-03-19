@@ -20,6 +20,10 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"list": []
 		},
@@ -31,12 +35,6 @@
 					"name": "编辑",
 					"pathName": "pages/edit/edit",
 					"query": ""
-				},
-				{
-					"id": 1,
-					"name": "详情",
-					"pathName": "pages/suggestion/suggestion",
-					"query": "dayId=2"
 				}
 			]
 		}
