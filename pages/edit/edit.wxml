@@ -17,7 +17,7 @@
 
     <view class="section" wx:if="{{dateMode=='公历'}}">
       <label>日期</label>
-      <picker mode="date" name="date" class="date" fields="day" value="{{date}}" start="1950-01-01" end="2020-12-31" bindchange="bindDateChange">
+      <picker mode="date" name="date" class="date" fields="day" value="{{date}}" start="1950-01-01" end="2018-12-31" bindchange="bindDateChange">
         <view class="picker">
           <text class="{{dateClass}}">{{date}}</text>
         </view>

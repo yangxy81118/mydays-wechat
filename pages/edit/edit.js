@@ -27,8 +27,8 @@ Page({
         cnCalender = createLunarCalendar(calanderSource)
         console.log(cnCalender)
         var cnYears = buildCNYears()
-        var cnMonths = buildCNMonths("2018（戊戌年）")
-        var cnDays = buildCNDays( "2018（戊戌年）","1.正月")
+        var cnMonths = buildCNMonths("2018（狗年）")
+        var cnDays = buildCNDays( "2018（狗年）","1.正月")
 
         that.setData({
           lunarArray: [cnYears,cnMonths,cnDays],
@@ -48,6 +48,22 @@ Page({
       dateClass: ""
     })
     dateSelected = false
+
+    //设置date数据为“历法日期切换中...”
+
+    //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
+
+    //如果是切换到公历，则直接修改公历插件的value数值即可
+
+    //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
+
+
+    //设置date数据为切换成功后的value
+
+
+
+
+
   },
   lunarFieldChange: function (e) {
     var colIdx = e.detail.column
