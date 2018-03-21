@@ -7,7 +7,10 @@
   <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
     <image src='/images/empty-list.png' mode='aspectFit'></image>
-    <text>记录那些日子</text>
+    <view class="sug">
+      <text>还记得爸妈的生日吗?</text>
+      <text>记下来吧！</text>
+    </view>
     <view class="line"></view>
   </view>
   <scroll-view wx:else scroll-y='true' class="list" >
@@ -28,13 +31,13 @@
           </block>
         </view> 
         <view class="opt-box">
-          <text class="edit">编辑</text>
+          <text class="edit" bindtap='editAction' data-dayId='{{item.id}}'>编辑</text>
           <text class="del" bindtap='delAction' data-dayId='{{item.id}}'>删除</text>
         </view>
       </view>
     </scroll-view>
   </scroll-view>
 
-  <navigator class="add" url='/pages/edit/edit'>添加</navigator>
+  <navigator class="add" url='/pages/edit/edit'>记录生日</navigator>
 
 </view>

@@ -1,6 +1,5 @@
 <view class="wall">
-  <text class="title">那些日子</text>
-  <text class="slogen">简单·铭记·生活</text>
+  <text class="title">生日纪</text>
   <text class="loading">...加载中...</text>
   <image src="http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg" />
 </view>

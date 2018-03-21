@@ -33,23 +33,26 @@ view.empty-list image{
   width:300rpx;
   height:300rpx;
   display: block;
-  margin:30% auto 0;
+  margin:24% auto 0;
+}
+
+view.empty-list .sug{
+  margin:2% auto 0;
+  font-size:28rpx;
+  color:#AAA;
+  text-align: center;
 }
 
 view.empty-list text{
   display: block;
-  font-size:28rpx;
-  text-align: center;
-  margin:2% auto 0;
-  color:#AAA;
 }
 
 view.empty-list .line{
   position: absolute;
-  height: 26%;
+  height: 28%;
   width:10%;
   left:50%;
-  top:58%;
+  bottom:14%;
   border-left: 1px dashed #DDD;
 }
 

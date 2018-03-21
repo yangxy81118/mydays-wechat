@@ -38,6 +38,12 @@ Page({
     loadDays(that,userId)
     
   },
+  editAction:function(e){
+    wx.showToast({
+      title: '此功能暂未开放',
+      image:'/images/warning.png'
+    })
+  },
   delAction:function(e){
 
     var dayId = e.currentTarget.dataset.dayid
