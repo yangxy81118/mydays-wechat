@@ -1,8 +1,9 @@
 <!--index.wxml-->
 <view class="main">
   <view class="tab-nav">
-    <text class="selected">全部</text>
-    <text>星标</text>
+    <text class="{{navAllClass}}" bindtap='listNavAction'>全部</text>
+    <text class='{{navFavorClass}}' bindtap='listNavAction' data-favor="1">星标</text>
+    <image class="star" src="/images/star.png" />
   </view>
   <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
@@ -29,6 +30,7 @@
             <text class="date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
             <text class="date" wx:else>{{item.lunar}}</text>
           </block>
+          <image class="star" wx:if="{{item.favor}}" src="/images/star-s.png" />
         </view> 
         <view class="opt-box">
           <text class="edit" bindtap='editAction' data-dayId='{{item.id}}'>编辑</text>

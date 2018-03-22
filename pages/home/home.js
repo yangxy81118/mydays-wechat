@@ -5,11 +5,14 @@ var startTouchX = 0;
 var MAX_IDX = 0;
 var curIdx = 1;
 var windowHeight = 0;
+var favor = false
 
 Page({
   data: {
     appWidth:375,
     listHeight:0,
+    navAllClass:"selected",
+    navFavorClass:""
   },
   onShareAppMessage: function(options){
     console.log(options)
@@ -37,6 +40,25 @@ Page({
     var userId =  wx.getStorageSync('userId')   
     loadDays(that,userId)
     
+  },
+  listNavAction:function(e){
+    favor = Boolean(e.currentTarget.dataset.favor)
+
+    //还要检查无效操作 
+    if(favor){
+      this.setData({
+        navAllClass: "",
+        navFavorClass: "selected"
+      })
+    }else{
+      this.setData({
+        navAllClass: "selected",
+        navFavorClass: ""
+      })
+    }
+
+    var userId = wx.getStorageSync('userId')   
+    loadDays(this, userId)
   },
   editAction:function(e){
     wx.showToast({
@@ -76,7 +98,7 @@ function loadDays(that,userId){
   wx.request({
     url: 'https://www.yubopet.top/graphql/days',
     method: 'POST',
-    data: '{days(userId:' + userId + ') { id name year month date remain custom lunar age }}',
+    data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor }}',
     header: {
       'content-type': 'text/plain'
     },
