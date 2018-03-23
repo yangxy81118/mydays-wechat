@@ -6,23 +6,60 @@ view.main{
 
 view.tab-nav{
   background: #FFF;
-  height:6%;
+  height:8%;
+  position: relative;
+  border:1rpx solid #f3f3f3;
+  border-width:1px 0;
+}
+
+view.tab-nav view{
+  height:100%;
+  background: none;
+  font-size: 30rpx;
+  color:#C7C7C7;
+  display: inline-flex;
+  align-items: center;
+  justify-content:center;
   position: relative;
 }
 
-view.tab-nav text{
-  display: inline-block;
-  width:50%;
-  text-align: center;
-  background: none;
-  font-size: 32rpx;
-  color:#C7C7C7;
+view.tab-nav view.underline{
+  position: absolute;
+  bottom:0rpx;
+  left:32%;
+  height:6rpx;
+  background:#FFF;
+  width:36%;
+}
+
+view.tab-nav view.nav{
+  height:100%;
+  width:42%;
+}
+
+view.tab-nav view.switch{
+  border-left:1rpx solid #f3f3f3;
+  width:15.5%;
+}
+
+view.nav text.icon{
+  margin:0 10rpx 0 0;
+  /* font-size:28rpx; */
+}
+
+view.nav text.word{
   font-weight: 700;
 }
 
-view.tab-nav text.selected{
+view.tab-nav view.selected{
   color:#ff9940;
 }
+
+view.tab-nav view.selected view.underline{
+  background:#ff9940;
+}
+
+
 
 view.tab-nav image{
   position:absolute;
@@ -71,7 +108,7 @@ scroll-view.list{
   height:76%;
 }
 
-.day-item{
+.day-item-h{
   overflow-x: hidden; 
   width:95%;
   height:170rpx;
@@ -79,8 +116,9 @@ scroll-view.list{
   margin:0 5% 0 0;
 }
 
+
 view.item-scroll-wrap{
-  width:140%;
+  width:128%;
   position: relative;
   margin:10rpx 0;
   padding:0 5%;
@@ -92,7 +130,7 @@ view.item-scroll-wrap view{
 }
 
 view.item-scroll-wrap .day-box{
-  width:67.8%;
+  width:74.2%;
   background: #FFF;
   position: relative;
   border-radius: 10rpx;
@@ -161,26 +199,26 @@ view.item-scroll-wrap .day-box{
 }
 
 
-view.item-scroll-wrap .opt-box{
-  width:32.2%;
+.day-item-h view.item-scroll-wrap .opt-box{
+  width:25.8%;
   position: relative;
   top:26rpx;
 }
 
-.opt-box text{
+.day-item-h .opt-box text{
   display: inline-block;
   height:100rpx;
   line-height: 100rpx;
   color:#FFF;
   width:50%;
-  font-size:30rpx;
+  font-size:34rpx;
 }
 
-.opt-box text.edit{
+.day-item-h .opt-box text.edit{
   background: #CCC;
 }
 
-.opt-box text.del{
+.day-item-h .opt-box text.del{
   background: #FE7070;
   border-top-right-radius: 10rpx;
   border-bottom-right-radius: 10rpx;
@@ -198,9 +236,9 @@ navigator.add{
   text-align: center;
   font-size:40rpx;
   line-height: 140rpx;
-  box-shadow: 0 0 6px #776630;
+  box-shadow: 0 0 6px #ff9940;
 }
 
 navigator.add:active{
-  box-shadow: 0 0 2px #776630;
+  box-shadow: 0 0 2px #ff9940;
 }

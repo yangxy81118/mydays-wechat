@@ -1,9 +1,20 @@
 <!--index.wxml-->
 <view class="main">
   <view class="tab-nav">
-    <text class="{{navAllClass}}" bindtap='listNavAction'>全部</text>
-    <text class='{{navFavorClass}}' bindtap='listNavAction' data-favor="1">星标</text>
-    <image class="star" src="/images/star.png" />
+    <view class="nav {{navAllClass}}" bindtap='listNavAction'>
+      <text class="icon iconfont icon-fabu"></text>
+      <text class="word">全部</text>
+      <view class="underline"></view>
+    </view>
+    <view class="nav {{navFavorClass}}" bindtap='listNavAction' data-favor="1">
+      <text class="icon iconfont icon-xingxing"></text>
+      <text class="word">星标</text>
+      <view class="underline"></view>
+    </view>
+    <view class="switch" bindtap='layoutAction'>
+      <text class="icon iconfont {{layoutBtnClass}}"></text>
+    </view>
+    <!-- <image class="star" src="/images/star.png" /> -->
   </view>
   <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
@@ -15,7 +26,7 @@
     <view class="line"></view>
   </view>
   <scroll-view wx:else scroll-y='true' class="list" >
-    <scroll-view scroll-x="true" class="day-item" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
+    <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
         <view class="day-box">   
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
@@ -33,13 +44,27 @@
           <image class="star" wx:if="{{item.favor}}" src="/images/star-s.png" />
         </view> 
         <view class="opt-box">
-          <text class="edit" bindtap='editAction' data-dayId='{{item.id}}'>编辑</text>
-          <text class="del" bindtap='delAction' data-dayId='{{item.id}}'>删除</text>
+          <text class="edit iconfont icon-bianji" bindtap='editAction' data-dayId='{{item.id}}'></text>
+          <text class="del iconfont icon-shanchu" bindtap='delAction' data-dayId='{{item.id}}'></text>
         </view>
       </view>
     </scroll-view>
-  </scroll-view>
 
+
+    <scroll-view wx:if="{{layout == 2}}" scroll-x="true" class="day-item-v" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
+      <text class="star iconfont icon-xingxing"></text>
+      <text class="remain">{{item.remain}}</text>
+      <text class="name">{{item.name}}</text>
+      <text class="disc">{{item.age}}岁生日</text>
+      <text class="date">{{item.date}}</text>
+      <view class="opt">
+         <text class="edit iconfont icon-bianji" bindtap='editAction' data-dayId='{{item.id}}'></text>
+         <text class="del iconfont icon-shanchu" bindtap='delAction' data-dayId='{{item.id}}'></text>
+      </view>
+    </scroll-view>
+
+  </scroll-view>
+  
   <navigator class="add" url='/pages/edit/edit'>记录生日</navigator>
 
 </view>

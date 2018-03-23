@@ -1,4 +1,3 @@
-
 //获取应用实例
 const app = getApp()
 var startTouchX = 0;
@@ -12,11 +11,14 @@ Page({
     appWidth:375,
     listHeight:0,
     navAllClass:"selected",
-    navFavorClass:""
+    navFavorClass:"",
+    maskClass:"",
+    layoutBtnClass:"icon-xitongguanli",
+    layout:1
   },
-  onShareAppMessage: function(options){
-    console.log(options)
-  },
+  // onShareAppMessage: function(options){
+  //   console.log(options)
+  // },
   onShow: function () {
     var that = this
     wx.getSystemInfo({
@@ -39,7 +41,14 @@ Page({
 
     var userId =  wx.getStorageSync('userId')   
     loadDays(that,userId)
+
+    this.setData({ maskClass:""})
     
+  },
+  layoutAction:function(e){
+    this.setData({
+      layoutBtnClass:"icon-liebiao"
+    })
   },
   listNavAction:function(e){
     favor = Boolean(e.currentTarget.dataset.favor)
@@ -62,7 +71,7 @@ Page({
   },
   editAction:function(e){
     wx.showToast({
-      title: '此功能暂未开放',
+      title: '编辑暂未开放',
       image:'/images/warning.png'
     })
   },

@@ -1,5 +1,8 @@
 <view class="wall">
-  <text class="title">生日纪</text>
-  <text class="loading">...加载中...</text>
-  <image src="http://oyu60t3s9.bkt.clouddn.com/keyboard.jpg" />
+  <image src="/images/wall-loading.gif"></image>
+  <text>小程序加载中...</text>
+
+  <!-- <view class="test t1 {{change}}"></view>
+  <view class="test t2 {{change}}"></view>
+  <view class="test t3 {{change}}"></view> -->
 </view>
