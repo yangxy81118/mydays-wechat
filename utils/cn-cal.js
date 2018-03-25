@@ -92,25 +92,26 @@ const getYear = function(calendar,name){
   return calendar[name]
 }
 
-const getChoiceIndex = function(calendar,lunarStr){
-  var lunarYear = calendar[lunarStr[0]]
-  var lunarMonth = lunarYear[calTool.formatMField(lunarStr[1])]
+const getChoiceIndex = function(calendar,lunarArray,originalLunarArray){
+  var lunarYear = calendar[lunarArray[0]]
+  var lunarMonth = lunarYear[formatMField(lunarArray[1])]
 
   //构建农历的月和日的数据
-  var cnCalendarArray = that.data.lunarArray
-  var cnMonths = calTool.buildCNMonths(calendar,lunarStr[0]);
+  var cnCalendarArray = originalLunarArray
+  var cnMonths = buildCNMonths(calendar,lunarArray[0]);
   cnCalendarArray[1] = cnMonths
-  cnCalendarArray[2] = calTool.buildCNDays(calendar,lunarStr[0], calTool.formatMField(lunarStr[1]))
+  cnCalendarArray[2] = buildCNDays(calendar,lunarArray[0], formatMField(lunarArray[1]))
 
   //获取选择value索引            
-  var yearIdx = findLunarIndexFromObj(lunarStr[0], calendar)
-  var monthIdx = findLunarIndexFromObj(lunarStr[1], lunarYear)
-  var dayIdx = findLunarIndexFromArray(lunarStr[2], lunarMonth.days)
+  var yearIdx = findLunarIndexFromObj(lunarArray[0], calendar)
+  var monthIdx = findLunarIndexFromObj(lunarArray[1], lunarYear)
+  var dayIdx = findLunarIndexFromArray(lunarArray[2], lunarMonth.days)
 
   var result = new Object()
   result.year = yearIdx
   result.month = monthIdx
   result.day = dayIdx
+  result.lunarArray = cnCalendarArray
   return result
 
 }

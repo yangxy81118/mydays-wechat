@@ -14,7 +14,7 @@ Page({
     layout:1,
     modelShow:"none"
   },
-  // onShareAppMessage: function(options){
+  // onShareAppMessage: funeditActionction(options){
   //   console.log(options)
   // },
   onShow: function () {
@@ -76,28 +76,43 @@ Page({
     loadDays(this, userId)
   },
   editAction:function(e){
-    commonTool.warning('编辑暂未开放')
+    var dayId = e.currentTarget.dataset.dayid
+    wx.navigateTo({
+      url: '/pages/edit/edit?dayId=' + dayId
+    })
+    wx.showLoading({
+      title: '加载中',
+    })
   },
   delAction:function(e){
 
-    var dayId = e.currentTarget.dataset.dayid
-    var userId = wx.getStorageSync('userId')   
     var that = this
-
-    wx.request({
-      url: 'https://www.yubopet.top/customDay?dayId='+dayId,
-      method: 'DELETE',
-      success: function (res) {
-        console.log(res)
-        // loadDays(that, userId)
-        that.onShow()
-        commonTool.success('删除成功')
-      },
-      fail: function (res) {
-        console.log(res)
-        commonTool.warning('删除失败')
+    wx.showModal({
+      title: '删除',
+      content: '确认要删除吗？',
+      success: function(res) {
+        if (res.confirm) {
+          var dayId = e.currentTarget.dataset.dayid
+          var userId = wx.getStorageSync('userId')   
+      
+          wx.request({
+            url: 'https://www.yubopet.top/customDay?dayId='+dayId,
+            method: 'DELETE',
+            success: function (res) {
+              console.log(res)
+              that.onShow()
+              commonTool.success('删除成功')
+              that.setData({modelShow:"none"})
+            },
+            fail: function (res) {
+              console.log(res)
+              commonTool.warning('删除失败')
+            }
+          })
+        } 
       }
     })
+    
   },
   popupAction:function(e){
     var dayId = e.currentTarget.dataset.dayid
@@ -129,11 +144,17 @@ Page({
       }
     })
   },
+  modelTapAction:function(e){
+    if(e.currentTarget.id=="popBk"){
+      this.setData({ modelShow: "none" })
+    }
+  },
   quitModel:function(e){
     this.setData({ modelShow: "none"})
+  },
+  shareAction:function(e){
+    commonTool.warning("暂未开放~")
   }
-
-
 })
 
 function loadDays(that,userId){

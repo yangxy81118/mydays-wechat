@@ -76,8 +76,8 @@
 </view>
 
 
-<view class="model-bk" style="display:{{modelShow}}">
-  <view class="main">
+<view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
+  <view class="main" id="popContent" catchtap='modelTapAction'>
     <text class="small">距离</text>
     <text class="name">{{popUpDay.name}}</text>
     <text class="birthday">{{popUpDay.age}}岁生日</text>
@@ -86,7 +86,7 @@
     <text class="hello">尽管生活忙碌，请不要忘记给TA送上一份祝福哦！</text>
     <view class="toolBar">
       <navigator url="/pages/edit/edit?dayId={{popUpDay.id}}" class="icon iconfont icon-bianji"></navigator>
-      <navigator class="icon iconfont icon-fenxiang"></navigator>
+      <navigator class="icon iconfont icon-fenxiang" catchtap='shareAction'></navigator>
       <navigator class="icon iconfont icon-shanchu red" data-dayId="{{popUpDay.id}}" bindtap='delAction'></navigator>
     </view>
   </view>

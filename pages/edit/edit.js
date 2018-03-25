@@ -15,52 +15,92 @@ Page({
   data: {
     date: "点击选择",   //阳历组件显示值
     cnDate: "点击选择",//农历组件显示值
+    dateModeValue: 0,
     dateModeChoice: ['公历', '农历'],
     dateMode: '公历',
     vDate: "",   //两种日历后台公用实际值
-    dateValue: ""   //阳历组件value属性值
+    dateValue: "",  //阳历组件value属性值
+    dayFavor:false
   },
 
-  onShow: function (option) {
+  onLoad: function (option) {
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
 
-    var cnYears, cnMonths, cnDays
+    //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
       wx.request({
         url: 'https://www.yubopet.top/simple-query/lunar',
         method: 'GET',
         success: function (res) {
           var calendarSource = res.data
-          //解析格式，构建农历日历对象
           cnCalendar = calTool.init(calendarSource)
           wx.setStorage({
             key: 'cnCalendar',
             data: cnCalendar,
           })
-
-          cnYears = calTool.buildCNYears(cnCalendar)
-          cnMonths = calTool.buildCNMonths(cnCalendar,"2018（狗年）")
-          cnDays = calTool.buildCNDays(cnCalendar,"2018（狗年）", "1.正月")
-
-          that.setData({
-            lunarArray: [cnYears, cnMonths, cnDays],
-            lunarChoice: [108, 0, 0]
-          })
+          initLunarCompornt(that)
         }
       })
     }else{
-      cnYears = calTool.buildCNYears(cnCalendar)
-      cnMonths = calTool.buildCNMonths(cnCalendar, "2018（狗年）")
-      cnDays = calTool.buildCNDays(cnCalendar, "2018（狗年）", "1.正月")
-
-      that.setData({
-        lunarArray: [cnYears, cnMonths, cnDays],
-        lunarChoice: [108, 0, 0]
-      })
+      initLunarCompornt(that)
     }
 
+    //如果是编辑，则去加载该天数据
+    if (option && option.dayId){
 
+      wx.request({
+        url: 'https://www.yubopet.top/graphql/days',
+        method: 'POST',
+        data: '{day(dayId:' + option.dayId + ') { name year month date lunar favor }}',
+        header: {
+          'content-type': 'text/plain'
+        },
+        success: function (res) {
+          var dayData = res.data.data.day
+
+          //检测是否是农历
+          if(dayData.lunar && dayData.lunar.length > 0){
+            
+            var lunarSplitArray = new Array()
+            var nian = dayData.lunar.indexOf("）")
+            var yue = dayData.lunar.indexOf("月")
+            lunarSplitArray[0] = dayData.lunar.substring(0,nian+1)
+            lunarSplitArray[1] = dayData.lunar.substring(nian+1,yue+1)
+            lunarSplitArray[2] = dayData.lunar.substring(yue+1, dayData.lunar.length)
+            
+            var result = calTool.getChoiceIndex(cnCalendar,lunarSplitArray,that.data.lunarArray)
+            var cnDateStr = lunarSplitArray[0] + lunarSplitArray[1] + lunarSplitArray[2]
+            that.setData({
+              lunarArray: result.lunarArray,
+              lunarChoice: [result.year, result.month, result.day],
+              cnDate: cnDateStr,
+              vDate: cnDateStr,
+              dateMode: "农历",
+              dateModeValue: 1
+            })
+
+          }else{
+            var normalDateStr = dayData.year + "-" + dayData.month + "-" + dayData.date
+            that.setData({
+              dateValue: normalDateStr,
+              vDate: normalDateStr,
+              date: normalDateStr,
+              dateMode: "公历",
+              dateClass: "selected",
+              dateModeValue:0
+            })
+          }
+
+          that.setData({
+            dayName: dayData.name,
+            dayFavor:dayData.favor
+          })
+
+          wx.hideLoading();
+        }
+      })
+    }
   },
   dateModeChange: function (e) {
     var choice = this.data.dateModeChoice
@@ -86,7 +126,6 @@ Page({
 
       //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
       //如果是切换到公历，则直接修改公历插件的value数值即可
-
       if (e.detail.value == 0) {
         wx.request({
           url: 'https://www.yubopet.top/simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
@@ -109,10 +148,10 @@ Page({
           method: 'GET',
           success: function (res) {
             var lunarStr = res.data.split(",")
-            var result = calTool.getChoiceIndex(res.data)
+            var result = calTool.getChoiceIndex(cnCalendar,lunarStr,that.data.lunarArray)
             var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
             that.setData({
-              lunarArray: cnCalendarArray,
+              lunarArray: result.lunarArray,
               lunarChoice: [result.year, result.month, result.day],
               cnDate: cnDateStr,
               vDate: cnDateStr
@@ -243,3 +282,16 @@ Page({
 
 })
 
+
+function initLunarCompornt(pageObj){
+
+  var cnYears, cnMonths, cnDays
+  cnYears = calTool.buildCNYears(cnCalendar)
+  cnMonths = calTool.buildCNMonths(cnCalendar,"2018（狗年）")
+  cnDays = calTool.buildCNDays(cnCalendar,"2018（狗年）", "1.正月")
+
+  pageObj.setData({
+    lunarArray: [cnYears, cnMonths, cnDays],
+    lunarChoice: [108, 0, 0]
+  })
+}

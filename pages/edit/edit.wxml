@@ -3,12 +3,12 @@
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
       <label>姓名</label>
-      <input name="title" placeholder='6字以内，如 妈妈、爸爸' auto-focus/>
+      <input name="title" placeholder='6字以内，如 妈妈、爸爸' auto-focus value="{{dayName}}"/>
     </view>
 
     <view class="section">
       <label>历法</label>
-      <picker mode="selector" name="dateMode" class="date" fields="day" value="0" range="{{dateModeChoice}}" bindchange="dateModeChange">
+      <picker mode="selector" name="dateMode" class="date" fields="day" value="{{dateModeValue}}" range="{{dateModeChoice}}" bindchange="dateModeChange">
         <view class="picker">
           <text class="selected">{{dateMode}}</text>
         </view>
@@ -35,10 +35,11 @@
 
     <view class="section switch">
         <label>星标</label>
-        <switch name="favor"/>
+        <switch name="favor" wx:if="{{dayFavor}}" checked/>
+        <switch name="favor" wx:else/>
     </view>
 
-    <button class="submit" formType="submit">确认</button>
+    <button class="submit" formType="submit" checked="{{dayFavor}}">确认</button>
   </form>
 </view>
 

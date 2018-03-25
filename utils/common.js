@@ -13,8 +13,16 @@ const success = function(content) {
   })
 }
 
+const loading = function (content) {
+  wx.showToast({
+    title: content,
+    image:'loading',
+    duration: 2000
+  })
+}
 
 module.exports = {
   warning: warning,
-  success:success
+  success:success,
+  loading: loading
 }
