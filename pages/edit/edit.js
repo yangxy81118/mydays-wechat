@@ -11,6 +11,8 @@ var dateSelected = false
 const calTool = require("../../utils/cn-cal.js")
 const commonTool = require("../../utils/common.js")
 
+var thisDayId = 0
+
 Page({
   data: {
     date: "点击选择",   //阳历组件显示值
@@ -48,7 +50,7 @@ Page({
 
     //如果是编辑，则去加载该天数据
     if (option && option.dayId){
-
+      thisDayId = option.dayId
       wx.request({
         url: 'https://www.yubopet.top/graphql/days',
         method: 'POST',
@@ -97,6 +99,7 @@ Page({
             dayFavor:dayData.favor
           })
 
+          dateSelected = true
           wx.hideLoading();
         }
       })
@@ -244,36 +247,70 @@ Page({
 
     var userId = wx.getStorageSync('userId')
 
-    wx.request({
-      url: 'https://www.yubopet.top/customDay',
-      method: 'PUT',
-      data: {
-        name: formData.title,
-        dateMode: formData.dateMode,
-        date: formData.date,
-        favor: formData.favor,
-        userId: userId
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        wx.showToast({
-          title: "添加成功"
-        })
-        wx.navigateBack({
-          delta: 1
-        })
-      },
-      fail: function (res) {
-        wx.showToast({
-          title: "添加失败"
-        })
-        wx.navigateBack({
-          delta: 1
-        })
-      }
-    })
+    if(thisDayId > 0){
+      wx.request({
+        url: 'https://www.yubopet.top/customDay',
+        method: 'POST',
+        data: {
+          name: formData.title,
+          dateMode: formData.dateMode,
+          date: formData.date,
+          favor: formData.favor,
+          dayId: thisDayId
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          wx.showToast({
+            title: "修改成功"
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: "修改失败"
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        }
+      })
+    }else{
+      wx.request({
+        url: 'https://www.yubopet.top/customDay',
+        method: 'PUT',
+        data: {
+          name: formData.title,
+          dateMode: formData.dateMode,
+          date: formData.date,
+          favor: formData.favor,
+          userId: userId
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          wx.showToast({
+            title: "添加成功"
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: "添加失败"
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        }
+      })
+    }
+    
 
   },
   formReset: function () {
