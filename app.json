@@ -7,7 +7,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "生日纪",
+    "navigationBarTitleText": "生日还记得吗",
     "navigationBarTextStyle":"black"
   } 
 }

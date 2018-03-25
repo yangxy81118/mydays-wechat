@@ -4,9 +4,12 @@ const date = new Date()
 const months = []
 const days = []
 
-var cnCalender
+var cnCalendar
 
 var dateSelected = false
+
+const calTool = require("../../utils/cn-cal.js")
+const commonTool = require("../../utils/common.js")
 
 Page({
   data: {
@@ -18,34 +21,46 @@ Page({
     dateValue: ""   //阳历组件value属性值
   },
 
-  onLoad: function (option) {
+  onShow: function (option) {
     var that = this
-    cnCalender = wx.getStorageSync("cnCalendar")
+    cnCalendar = wx.getStorageSync("cnCalendar")
 
-    if (cnCalender == "") {
+    var cnYears, cnMonths, cnDays
+    if (!cnCalendar || cnCalendar == "") {
       wx.request({
         url: 'https://www.yubopet.top/simple-query/lunar',
         method: 'GET',
         success: function (res) {
-          var calanderSource = res.data
+          var calendarSource = res.data
           //解析格式，构建农历日历对象
-          cnCalender = createLunarCalendar(calanderSource)
+          cnCalendar = calTool.init(calendarSource)
           wx.setStorage({
             key: 'cnCalendar',
-            data: cnCalender,
+            data: cnCalendar,
+          })
+
+          cnYears = calTool.buildCNYears(cnCalendar)
+          cnMonths = calTool.buildCNMonths(cnCalendar,"2018（狗年）")
+          cnDays = calTool.buildCNDays(cnCalendar,"2018（狗年）", "1.正月")
+
+          that.setData({
+            lunarArray: [cnYears, cnMonths, cnDays],
+            lunarChoice: [108, 0, 0]
           })
         }
       })
+    }else{
+      cnYears = calTool.buildCNYears(cnCalendar)
+      cnMonths = calTool.buildCNMonths(cnCalendar, "2018（狗年）")
+      cnDays = calTool.buildCNDays(cnCalendar, "2018（狗年）", "1.正月")
+
+      that.setData({
+        lunarArray: [cnYears, cnMonths, cnDays],
+        lunarChoice: [108, 0, 0]
+      })
     }
 
-    var cnYears = buildCNYears()
-    var cnMonths = buildCNMonths("2018（狗年）")
-    var cnDays = buildCNDays("2018（狗年）", "1.正月")
 
-    that.setData({
-      lunarArray: [cnYears, cnMonths, cnDays],
-      lunarChoice: [108, 0, 0]
-    })
   },
   dateModeChange: function (e) {
     var choice = this.data.dateModeChoice
@@ -69,25 +84,19 @@ Page({
         date: "历法切换中..."
       })
 
-      console.log("lastDate:"+lastDate)
       //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
       //如果是切换到公历，则直接修改公历插件的value数值即可
-
-      console.log("afterEncode:" + encodeURI(lastDate))
 
       if (e.detail.value == 0) {
         wx.request({
           url: 'https://www.yubopet.top/simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
           method: 'GET',
           success: function (res) {
-            console.log(res)
-            console.log('getNormal 1 :'+res.data)
             that.setData({
               dateValue: res.data,
               vDate: res.data,
               date: res.data
             })
-            console.log('getNormal 2 :' + that.data.date)
           }
         })
       }
@@ -100,56 +109,34 @@ Page({
           method: 'GET',
           success: function (res) {
             var lunarStr = res.data.split(",")
-            var lunarYear = cnCalender[lunarStr[0]]
-            var lunarMonth = lunarYear[formatMField(lunarStr[1])]
-
-            //构建农历的月和日的数据
-            var cnCalendarArray = that.data.lunarArray
-            var cnMonths = buildCNMonths(lunarStr[0]);
-            cnCalendarArray[1] = cnMonths
-            cnCalendarArray[2] = buildCNDays(lunarStr[0], formatMField(lunarStr[1]))
-
-            //获取选择value索引            
-            var yearIdx = findLunarIndexFromObj(lunarStr[0], cnCalender)
-            var monthIdx = findLunarIndexFromObj(lunarStr[1], lunarYear)
-            var dayIdx = findLunarIndexFromArray(lunarStr[2], lunarMonth.days)
-
+            var result = calTool.getChoiceIndex(res.data)
             var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
             that.setData({
               lunarArray: cnCalendarArray,
-              lunarChoice: [yearIdx, monthIdx, dayIdx],
+              lunarChoice: [result.year, result.month, result.day],
               cnDate: cnDateStr,
               vDate: cnDateStr
             })
           }
         })
-
-
       }
     }
-
-    //设置date数据为切换成功后的value
-
-
-
-
-
   },
   lunarFieldChange: function (e) {
     var colIdx = e.detail.column
     var rowIdx = e.detail.value
 
     var cnCalendarArray = this.data.lunarArray
-    var cnCalenderChoice = this.data.lunarChoice
+    var cnCalendarChoice = this.data.lunarChoice
     //year
     if (colIdx == 0) {
 
       var targetYear = cnCalendarArray[0][rowIdx]
 
       //获取年份下面的月份与日
-      var cnMonths = buildCNMonths(targetYear);
+      var cnMonths = calTool.buildCNMonths(cnCalendar,targetYear);
       cnCalendarArray[1] = cnMonths
-      cnCalendarArray[2] = buildCNDays(targetYear, formatMField(cnMonths[0]))
+      cnCalendarArray[2] = calTool.buildCNDays(cnCalendar,targetYear, calTool.formatMField(cnMonths[0]))
 
       this.setData({
         lunarArray: cnCalendarArray,
@@ -159,16 +146,16 @@ Page({
 
     //month
     if (colIdx == 1) {
-      var targetYear = cnCalendarArray[0][cnCalenderChoice[0]]
+      var targetYear = cnCalendarArray[0][cnCalendarChoice[0]]
       var targetMonth = cnCalendarArray[1][rowIdx]
-      cnCalendarArray[2] = buildCNDays(targetYear, formatMField(targetMonth))
+      cnCalendarArray[2] = calTool.buildCNDays(cnCalendar,targetYear, calTool.formatMField(targetMonth))
 
-      cnCalenderChoice[1] = rowIdx
-      cnCalenderChoice[2] = 0
+      cnCalendarChoice[1] = rowIdx
+      cnCalendarChoice[2] = 0
 
       this.setData({
         lunarArray: cnCalendarArray,
-        lunarChoice: cnCalenderChoice
+        lunarChoice: cnCalendarChoice
       })
     }
   },
@@ -185,14 +172,6 @@ Page({
     })
 
   },
-
-  bindChange: function (e) {
-    const val = e.detail.value
-    this.setData({
-      month: this.data.months[val[1]],
-      day: this.data.days[val[2]]
-    })
-  },
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value,
@@ -202,22 +181,20 @@ Page({
     dateSelected = true
   },
   formSubmit: function (e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var formData = e.detail.value
-
 
     //TODO 校验，最好用上第三方工具类
     if (formData.title.length <= 0) {
-      toastWarning('请输入姓名')
+      commonTool.warning('请输入姓名')
       return
     }
     if (formData.title.length > 6) {
-      toastWarning('姓名过长')
+      commonTool.warning('姓名过长')
       return
     }
 
     if (!dateSelected) {
-      toastWarning('请选择日期')
+      commonTool.warning('请选择日期')
       return
     }
 
@@ -259,128 +236,10 @@ Page({
       }
     })
 
-
   },
   formReset: function () {
     console.log('form发生了reset事件')
   }
 
-
 })
 
-function toastWarning(content) {
-  wx.showToast({
-    title: content,
-    image: '/images/warning.png',
-    duration: 2000
-  })
-}
-
-
-function findLunarIndexFromObj(target, obj) {
-  var i = 0 //有一个name属性
-  for (var key in obj) {
-    if (key == "name") continue
-
-    if (key.indexOf(target) >= 0) {
-      return i
-    }
-    i++
-  }
-  return i
-}
-
-function findLunarIndexFromArray(target, array) {
-  for (var idx in array) {
-    if (array[idx].indexOf(target) >= 0) {
-      return idx
-    }
-  }
-  return 0
-}
-
-
-function createLunarCalendar(sourceArray) {
-  var lunar = new Object()
-
-  for (var idx in sourceArray) {
-    var allMonthStr = sourceArray[idx].m
-    var yearObj = new Object()
-    yearObj.name = sourceArray[idx].y
-    lunar[yearObj.name] = yearObj
-
-    var monthArray = allMonthStr.split("|")
-    for (var idx = 1; idx < monthArray.length; idx++) {
-      var monthObj = createMonthObj(monthArray[idx])
-      yearObj[formatMField(monthObj.name)] = monthObj
-    }
-  }
-
-  return lunar
-
-}
-
-function createMonthObj(monthStr) {
-
-  var monthObj = new Object()
-  var monthPair = monthStr.split("-")
-  monthObj.name = monthPair[0]
-
-  var days = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九"]
-
-  if (monthPair[1].indexOf("&") > 0) {
-    days[29] = "三十"
-  }
-  monthObj.days = days
-  return monthObj
-}
-
-function formatMField(cnMonth) {
-  if (cnMonth == "正月") return "1." + cnMonth
-  if (cnMonth == "二月") return "2." + cnMonth
-  if (cnMonth == "闰二月") return "3." + cnMonth
-  if (cnMonth == "三月") return "4." + cnMonth
-  if (cnMonth == "闰三月") return "5." + cnMonth
-  if (cnMonth == "四月") return "6." + cnMonth
-  if (cnMonth == "闰四月") return "7." + cnMonth
-  if (cnMonth == "五月") return "8." + cnMonth
-  if (cnMonth == "闰五月") return "9." + cnMonth
-  if (cnMonth == "六月") return "10." + cnMonth
-  if (cnMonth == "闰六月") return "11." + cnMonth
-  if (cnMonth == "七月") return "12." + cnMonth
-  if (cnMonth == "闰七月") return "13." + cnMonth
-  if (cnMonth == "八月") return "14." + cnMonth
-  if (cnMonth == "闰八月") return "15." + cnMonth
-  if (cnMonth == "九月") return "16." + cnMonth
-  if (cnMonth == "闰九月") return "17." + cnMonth
-  if (cnMonth == "十月") return "18." + cnMonth
-  if (cnMonth == "闰十月") return "19." + cnMonth
-  if (cnMonth == "冬月") return "20." + cnMonth
-  if (cnMonth == "腊月") return "21." + cnMonth
-}
-
-
-function buildCNYears() {
-  const years = []
-  for (var key in cnCalender) {
-    years.push(key)
-  }
-  return years
-}
-
-function buildCNMonths(targetYear) {
-  var year = cnCalender[targetYear]
-  const months = []
-  for (var key in year) {
-    if (key != "name") {
-      months.push(key.split(".")[1])
-    }
-  }
-  return months
-}
-
-function buildCNDays(targetYear, targetMonth) {
-  var year = cnCalender[targetYear]
-  var month = year[targetMonth]
-  return month.days
-}

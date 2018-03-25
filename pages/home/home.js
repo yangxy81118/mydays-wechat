@@ -1,20 +1,18 @@
 //获取应用实例
-const app = getApp()
-var startTouchX = 0;
-var MAX_IDX = 0;
-var curIdx = 1;
-var windowHeight = 0;
+var windowHeight = 0
 var favor = false
+
+const commonTool = require("../../utils/common.js")
 
 Page({
   data: {
-    appWidth:375,
     listHeight:0,
     navAllClass:"selected",
     navFavorClass:"",
     maskClass:"",
-    layoutBtnClass:"icon-xitongguanli",
-    layout:1
+    layoutBtnClass:"icon-all",
+    layout:1,
+    modelShow:"none"
   },
   // onShareAppMessage: function(options){
   //   console.log(options)
@@ -28,7 +26,6 @@ Page({
         console.log(res.windowHeight)
         windowHeight = res.windowHeight;
         that.setData({
-          appWidth: res.windowWidth,
           listHeight: res.windowHeight-80
         })
         if (res.model.indexOf("iPhone") >= 0){
@@ -46,9 +43,18 @@ Page({
     
   },
   layoutAction:function(e){
-    this.setData({
-      layoutBtnClass:"icon-liebiao"
-    })
+    if(this.data.layout==1){
+      this.setData({
+        layoutBtnClass: "icon-liebiao",
+        layout:2
+      })
+    }else{
+      this.setData({
+        layoutBtnClass: "icon-all",
+        layout: 1
+      })
+    }
+    
   },
   listNavAction:function(e){
     favor = Boolean(e.currentTarget.dataset.favor)
@@ -70,10 +76,7 @@ Page({
     loadDays(this, userId)
   },
   editAction:function(e){
-    wx.showToast({
-      title: '编辑暂未开放',
-      image:'/images/warning.png'
-    })
+    commonTool.warning('编辑暂未开放')
   },
   delAction:function(e){
 
@@ -88,19 +91,49 @@ Page({
         console.log(res)
         // loadDays(that, userId)
         that.onShow()
-        wx.showToast({
-          title: '删除成功',
-          duration: 1000
-        })
+        commonTool.success('删除成功')
       },
       fail: function (res) {
         console.log(res)
-        toastWarning('删除失败')
+        commonTool.warning('删除失败')
       }
     })
+  },
+  popupAction:function(e){
+    var dayId = e.currentTarget.dataset.dayid
+
+    //优化体验
+    this.setData({
+      popUpDay:{
+        name:"...",
+        age:"...",
+        favor:false,
+        remain:"..."
+      },
+      modelShow: "block"
+    })
+
+    var that = this
+    wx.request({
+      url: 'https://www.yubopet.top/graphql/days',
+      method: 'POST',
+      data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor }}',
+      header: {
+        'content-type': 'text/plain'
+      },
+      success: function (res) {
+        var dayData = res.data.data.day
+        that.setData({
+          popUpDay: dayData
+        })
+      }
+    })
+  },
+  quitModel:function(e){
+    this.setData({ modelShow: "none"})
   }
-  
-   
+
+
 })
 
 function loadDays(that,userId){
@@ -118,14 +151,6 @@ function loadDays(that,userId){
         days: daysData
       })
     }
-  })
-}
-
-function toastWarning(content) {
-  wx.showToast({
-    title: content,
-    image: '/images/warning.png',
-    duration: 2000
   })
 }
 

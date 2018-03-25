@@ -11,7 +11,7 @@
       <text class="word">星标</text>
       <view class="underline"></view>
     </view>
-    <view class="switch" bindtap='layoutAction'>
+    <view class="layout-btn" bindtap='layoutAction'>
       <text class="icon iconfont {{layoutBtnClass}}"></text>
     </view>
     <!-- <image class="star" src="/images/star.png" /> -->
@@ -23,12 +23,11 @@
       <text>还记得爸妈的生日吗?</text>
       <text>记下来吧！</text>
     </view>
-    <view class="line"></view>
   </view>
-  <scroll-view wx:else scroll-y='true' class="list" >
+  <scroll-view wx:else scroll-y='true' class="list">
     <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
-        <view class="day-box">   
+        <view class="day-box" bindtap="popupAction" data-dayId="{{item.id}}">
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
           <block wx:if="{{item.remain <= 30}}">
             <text class="day-remain close-remain">还有{{item.remain}}天</text>
@@ -42,7 +41,7 @@
             <text class="date" wx:else>{{item.lunar}}</text>
           </block>
           <image class="star" wx:if="{{item.favor}}" src="/images/star-s.png" />
-        </view> 
+        </view>
         <view class="opt-box">
           <text class="edit iconfont icon-bianji" bindtap='editAction' data-dayId='{{item.id}}'></text>
           <text class="del iconfont icon-shanchu" bindtap='delAction' data-dayId='{{item.id}}'></text>
@@ -51,20 +50,47 @@
     </scroll-view>
 
 
-    <scroll-view wx:if="{{layout == 2}}" scroll-x="true" class="day-item-v" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
-      <text class="star iconfont icon-xingxing"></text>
-      <text class="remain">{{item.remain}}</text>
-      <text class="name">{{item.name}}</text>
-      <text class="disc">{{item.age}}岁生日</text>
-      <text class="date">{{item.date}}</text>
-      <view class="opt">
-         <text class="edit iconfont icon-bianji" bindtap='editAction' data-dayId='{{item.id}}'></text>
-         <text class="del iconfont icon-shanchu" bindtap='delAction' data-dayId='{{item.id}}'></text>
-      </view>
-    </scroll-view>
+    <view wx:if="{{layout == 2}}" scroll-x="true" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" 
+      bindtap="popupAction" data-dayId="{{item.id}}"
+      class="day-item-v">
+        <view wx:if="{{item.remain <= 90}}" class="item-v-main close-v" data-dayId="{{item.id}}">
+          <text wx:if="{{item.favor}}" class="star iconfont icon-xingxing"></text>
+          <text class="remain">{{item.remain}}</text>
+          <text class="name">{{item.name}}</text>
+          <text class="disc">{{item.age}}岁生日</text>
+          <text class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+        </view>
+        <view wx:else class="item-v-main" data-dayId="{{item.id}}">
+          <text wx:if="{{item.favor}}" class="star iconfont icon-xingxing"></text>
+          <text class="remain">{{item.remain}}</text>
+          <text class="name">{{item.name}}</text>
+          <text class="disc">{{item.age}}岁生日</text>
+          <text class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+        </view>
+    </view>
 
   </scroll-view>
-  
+
   <navigator class="add" url='/pages/edit/edit'>记录生日</navigator>
 
+</view>
+
+
+<view class="model-bk" style="display:{{modelShow}}">
+  <view class="main">
+    <text class="small">距离</text>
+    <text class="name">{{popUpDay.name}}</text>
+    <text class="birthday">{{popUpDay.age}}岁生日</text>
+    <text class="small">还有</text>
+    <text class="remain">{{popUpDay.remain}}天</text>
+    <text class="hello">尽管生活忙碌，请不要忘记给TA送上一份祝福哦！</text>
+    <view class="toolBar">
+      <navigator url="/pages/edit/edit?dayId={{popUpDay.id}}" class="icon iconfont icon-bianji"></navigator>
+      <navigator class="icon iconfont icon-fenxiang"></navigator>
+      <navigator class="icon iconfont icon-shanchu red" data-dayId="{{popUpDay.id}}" bindtap='delAction'></navigator>
+    </view>
+  </view>
+  <view class="shadow s1"></view>
+   <view class="shadow s2"></view> 
+  <text class="quit" bindtap='quitModel'>×</text>
 </view>

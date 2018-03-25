@@ -1,8 +1,13 @@
 <view class="wall">
-  <image src="/images/wall-loading.gif"></image>
+  <view id="fountainG">
+    <view id="fountainG_1" class="fountainG"></view>
+    <view id="fountainG_2" class="fountainG"></view>
+    <view id="fountainG_3" class="fountainG"></view>
+    <view id="fountainG_4" class="fountainG"></view>
+    <view id="fountainG_5" class="fountainG"></view>
+    <view id="fountainG_6" class="fountainG"></view>
+    <view id="fountainG_7" class="fountainG"></view>
+    <view id="fountainG_8" class="fountainG"></view>
+  </view>
   <text>小程序加载中...</text>
-
-  <!-- <view class="test t1 {{change}}"></view>
-  <view class="test t2 {{change}}"></view>
-  <view class="test t3 {{change}}"></view> -->
 </view>

@@ -27,6 +27,6 @@ Page({
   }
 })
 
-function test(that){
+function testTime(that){
   that.setData({change:"changed"})
 }
