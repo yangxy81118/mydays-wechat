@@ -22,10 +22,12 @@ Page({
     dateMode: '公历',
     vDate: "",   //两种日历后台公用实际值
     dateValue: "",  //阳历组件value属性值
-    dayFavor:false
+    dayFavor:false,
+    thisDayId:0,
   },
 
   onLoad: function (option) {
+
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
 
@@ -51,6 +53,7 @@ Page({
     //如果是编辑，则去加载该天数据
     if (option && option.dayId){
       thisDayId = option.dayId
+      this.setData({thisDayId:thisDayId})
       wx.request({
         url: 'https://www.yubopet.top/graphql/days',
         method: 'POST',
@@ -103,7 +106,29 @@ Page({
           wx.hideLoading();
         }
       })
+    }else{
+
+      //处理额度 
+      var userId = wx.getStorageSync('userId')
+      wx.request({
+        url: 'https://www.yubopet.top/graphql/days',
+        method: 'POST',
+        data: '{user(userId:' + userId + '){limit daysCount} }',
+        header: {
+          'content-type': 'text/plain'
+        },
+        success: function (res) {
+          var u = res.data.data.user
+          that.setData({
+            limit: u.limit,
+            daysCount: u.daysCount
+          })
+        }
+      });
     }
+    wx.hideLoading();
+
+    
   },
   dateModeChange: function (e) {
     var choice = this.data.dateModeChoice
@@ -295,10 +320,12 @@ Page({
         success: function (res) {
           wx.showToast({
             title: "添加成功"
-          })
+          })       
           wx.navigateBack({
             delta: 1
           })
+          wx.setStorageSync("newDayId", res.data)
+          console.log("记录新增newId:" + wx.getStorageSync("newDayId"))
         },
         fail: function (res) {
           wx.showToast({
@@ -313,8 +340,9 @@ Page({
     
 
   },
-  formReset: function () {
-    console.log('form发生了reset事件')
+
+  limitTap: function (e) {
+    commonTool.warning("记录额度已满")
   }
 
 })

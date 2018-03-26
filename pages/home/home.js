@@ -9,21 +9,24 @@ Page({
     listHeight:0,
     navAllClass:"selected",
     navFavorClass:"",
-    maskClass:"",
-    layoutBtnClass:"icon-all",
-    layout:1,
+    layoutBtnClass:"icon-liebiao",
+    layout:2,
     modelShow:"none"
   },
   // onShareAppMessage: funeditActionction(options){
   //   console.log(options)
   // },
-  onShow: function () {
+  onShow: function (option) {
+
+    //清空一些可能的多余状态
+    this.setData({
+      modelShow: "none",
+      newId:0
+    })
+
     var that = this
     wx.getSystemInfo({
       success: function (res) {
-        console.log(res.model)
-        console.log(res.windowWidth)
-        console.log(res.windowHeight)
         windowHeight = res.windowHeight;
         that.setData({
           listHeight: res.windowHeight-80
@@ -39,8 +42,13 @@ Page({
     var userId =  wx.getStorageSync('userId')   
     loadDays(that,userId)
 
-    this.setData({ maskClass:""})
-    
+    //如果navigateBack能够带参数，就不需要这么绕了
+    var newDayId = wx.getStorageSync('newDayId')   
+    console.log("home页获取：" + newDayId)
+    if(newDayId){
+      this.setData({ newId: newDayId})
+      wx.removeStorageSync('newDayId')
+    }
   },
   layoutAction:function(e){
     if(this.data.layout==1){
@@ -77,12 +85,14 @@ Page({
   },
   editAction:function(e){
     var dayId = e.currentTarget.dataset.dayid
-    wx.navigateTo({
-      url: '/pages/edit/edit?dayId=' + dayId
-    })
     wx.showLoading({
       title: '加载中',
     })
+    
+    wx.navigateTo({
+      url: '/pages/edit/edit?dayId=' + dayId
+    })
+
   },
   delAction:function(e){
 
@@ -158,6 +168,7 @@ Page({
 })
 
 function loadDays(that,userId){
+
   wx.request({
     url: 'https://www.yubopet.top/graphql/days',
     method: 'POST',
@@ -167,10 +178,10 @@ function loadDays(that,userId){
     },
     success: function (res) {
       var daysData = res.data.data.days
-      console.log(daysData)
       that.setData({
         days: daysData
       })
+      
     }
   })
 }

@@ -41,3 +41,7 @@ page{
 .red{
   color:rgb(253,112,112)!important;
 }
+
+.orange{
+  color:#ff9940!important;
+}

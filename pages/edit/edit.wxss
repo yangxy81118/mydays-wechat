@@ -114,7 +114,7 @@ view.imgs .img-list{
   margin-right:0;
 }
 
-button.submit{
+button{
   display: block;
   position: fixed;
   bottom: 0;
@@ -129,7 +129,28 @@ button.submit{
   box-shadow: 0 0 6px #ff9940;
 }
 
+button.submit{
+  background: #ff9940;
+  box-shadow: 0 0 6px #ff9940;
+}
+
+button.disable{
+  background: #c4c4c4;
+  box-shadow: 0 0 6px #c4c4c4;
+}
+
+button::after{ 
+  border:none;
+}
+
 label.tip{
   color:#848484;
 }
 
+text.limit{
+  display: block;
+  padding:0 0 0 50rpx;
+  font-size:26rpx;
+  line-height: 60rpx;
+  color:#AAA;
+}
