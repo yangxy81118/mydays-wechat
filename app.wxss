@@ -45,3 +45,13 @@ page{
 .orange{
   color:#ff9940!important;
 }
+
+
+.l-grey{
+  color:#CCC;
+}
+
+
+/*reset*/
+input,button,select,textarea{outline:none}
+textarea{resize:none} 

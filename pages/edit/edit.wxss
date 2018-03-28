@@ -30,6 +30,18 @@ view.section input{
   height: 84rpx;
 }
 
+view.section textarea{
+  padding:0 20rpx;
+  height: 146rpx;
+  margin:28rpx 0 0 150rpx;
+  width:70%;
+  line-height: 50rpx; 
+}
+
+view.section textarea.ios{
+  margin-top:10rpx;
+}
+
 view.section picker{ 
   padding:0 0 0 120rpx;
 }
@@ -50,7 +62,7 @@ view.switch label{
 
 view.section .picker text{
   font-size:28rpx;
-  color:#848484;
+  color:#CCC;
 }
 
 .date{

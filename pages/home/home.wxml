@@ -19,7 +19,11 @@
   <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
     <image src='/images/empty-list.png' mode='aspectFit'></image>
-    <view class="sug">
+    
+    <view class="sug" wx:if="{{queryFavor}}">
+      <text>还没有任何星标日子~</text>
+    </view>
+    <view class="sug" wx:else>
       <text>还记得爸妈的生日吗?</text>
       <text>记下来吧！</text>
     </view>
@@ -30,7 +34,10 @@
         <view class="day-box" bindtap="popupAction" data-dayId="{{item.id}}">
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
           <block wx:if="{{item.remain <= 60}}">
-            <text class="day-remain close-remain">还有{{item.remain}}天</text>
+            <text wx:if="{{item.remain == -1}}" class="day-remain close-remain">今天</text>
+            <text wx:if="{{item.remain == 0}}" class="day-remain close-remain">明天</text>
+            <text wx:if="{{item.remain == 1}}" class="day-remain close-remain">后天</text>
+            <text wx:if="{{item.remain > 1}}" class="day-remain close-remain">还有{{item.remain}}天</text>
             <text class="date close-date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
             <text class="date close-date" wx:else>{{item.lunar}}</text>
             <view class="close-tip"></view>
@@ -90,24 +97,27 @@
 
 <view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
   <view class="main" id="popContent" catchtap='modelTapAction'>
-    <text class="small">距离</text>
-    <text class="name">{{popUpDay.name}}</text>
-    <text class="birthday">{{popUpDay.age}}岁生日</text>
-    <text class="small">还有</text>
 
-    <text wx:if="{{popUpDay.remain <= 60}}" class="remain orange">{{popUpDay.remain}}天</text>
-    <text wx:else class="remain">{{popUpDay.remain}}天</text>
+    <view class="content">
+      <text class="small">距离</text>
+      <text class="name">{{popUpDay.name}}</text>
+      <text class="birthday">{{popUpDay.age}}岁生日</text>
+      <text class="small">还有</text>
 
-    <text class="hello">尽管生活忙碌，请不要忘记给TA送上一份祝福哦！</text>
+      <text wx:if="{{popUpDay.remain <= 60}}" class="remain orange">{{popUpDay.remain}}天</text>
+      <text wx:else class="remain">{{popUpDay.remain}}天</text>
+
+      <text class="hello">尽管生活忙碌，请不要忘记给TA送上一份祝福哦！</text>
+    </view>
+
+
     <view class="toolBar">
       <navigator url="/pages/edit/edit?dayId={{popUpDay.id}}" class="icon iconfont icon-bianji"></navigator>
       <navigator class="icon iconfont icon-fenxiang" catchtap='shareAction'></navigator>
       <navigator class="icon iconfont icon-shanchu red" data-dayId="{{popUpDay.id}}" bindtap='delAction'></navigator>
     </view>
     <text wx:if="{{popUpDay.remain <= 60}}" class="highLight hl"></text>
-    <text wx:else class="highLight"></text>
-
-    
+    <text wx:else class="highLight"></text>  
   </view>
   <view class="shadow s1"></view>
    <view class="shadow s2"></view> 

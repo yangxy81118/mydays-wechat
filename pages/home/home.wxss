@@ -331,6 +331,10 @@ view.model-bk view.main {
   overflow: hidden;
 }
 
+view.model-bk view.main view.content{
+  height:360rpx;
+}
+
 view.model-bk view.main text {
   display: block;
   color: #444;

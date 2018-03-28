@@ -11,7 +11,8 @@ Page({
     navFavorClass:"",
     layoutBtnClass:"icon-liebiao",
     layout:2,
-    modelShow:"none"
+    modelShow:"none",
+    queryFavor:false
   },
   // onShareAppMessage: funeditActionction(options){
   //   console.log(options)
@@ -71,12 +72,14 @@ Page({
     if(favor){
       this.setData({
         navAllClass: "",
-        navFavorClass: "selected"
+        navFavorClass: "selected",
+        queryFavor:true
       })
     }else{
       this.setData({
         navAllClass: "selected",
-        navFavorClass: ""
+        navFavorClass: "",
+        queryFavor:false
       })
     }
 

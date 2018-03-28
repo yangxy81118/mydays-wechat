@@ -3,8 +3,8 @@
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
       <label>姓名</label>
-      <input name="title" wx:if="{{thisDayId <= 0}}" placeholder='6字以内，如 妈妈、爸爸' auto-focus value="{{dayName}}"/>
-      <input name="title" wx:else placeholder='6字以内，如 妈妈、爸爸' value="{{dayName}}"/>
+      <input name="title" placeholder-class="l-grey" wx:if="{{thisDayId <= 0}}" placeholder='6字以内，如 妈妈、爸爸' auto-focus value="{{dayName}}"/>
+      <input name="title" placeholder-class="l-grey" wx:else placeholder='6字以内，如 妈妈、爸爸' value="{{dayName}}"/>
     </view>
 
     <view class="section">
@@ -40,7 +40,11 @@
         <switch name="favor" wx:else/>
     </view>
 
-    
+    <view class="section">
+      <label>备注</label>
+      <textarea class="{{ios}}" maxlength='50' placeholder-class="l-grey" name="comment" placeholder="送TA点什么，去哪里郊游？点滴想法，随意记录，50字以内" value='{{dayComment}}'></textarea>
+    </view>
+
     <!-- 只有新增时才进行额度判断 -->
     <block wx:if="{{thisDayId <= 0}}">
       <text class="limit">生日记录额度：{{daysCount}}/{{limit}}</text>

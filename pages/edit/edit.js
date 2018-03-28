@@ -31,6 +31,12 @@ Page({
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
 
+    //处理样式
+    var res = wx.getSystemInfoSync()
+    if (res.system.toLowerCase().indexOf("ios") >= 0) {
+      this.setData({ ios: "ios" })
+    }
+
     //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
       wx.request({
@@ -57,7 +63,7 @@ Page({
       wx.request({
         url: 'https://www.yubopet.top/graphql/days',
         method: 'POST',
-        data: '{day(dayId:' + option.dayId + ') { name year month date lunar favor }}',
+        data: '{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
         header: {
           'content-type': 'text/plain'
         },
@@ -82,7 +88,8 @@ Page({
               cnDate: cnDateStr,
               vDate: cnDateStr,
               dateMode: "农历",
-              dateModeValue: 1
+              dateModeValue: 1,
+              dateClass:"selected"
             })
 
           }else{
@@ -99,7 +106,8 @@ Page({
 
           that.setData({
             dayName: dayData.name,
-            dayFavor:dayData.favor
+            dayFavor:dayData.favor,
+            dayComment: dayData.comment
           })
 
           dateSelected = true
@@ -108,7 +116,7 @@ Page({
       })
     }else{
 
-      //处理额度 
+      //查询额度信息
       var userId = wx.getStorageSync('userId')
       wx.request({
         url: 'https://www.yubopet.top/graphql/days',
@@ -281,7 +289,8 @@ Page({
           dateMode: formData.dateMode,
           date: formData.date,
           favor: formData.favor,
-          dayId: thisDayId
+          dayId: thisDayId,
+          comment: formData.comment
         },
         header: {
           'content-type': 'application/json'
@@ -312,7 +321,8 @@ Page({
           dateMode: formData.dateMode,
           date: formData.date,
           favor: formData.favor,
-          userId: userId
+          userId: userId,
+          comment: formData.comment
         },
         header: {
           'content-type': 'application/json'
