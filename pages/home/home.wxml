@@ -81,7 +81,8 @@
           <text class="remain">{{item.remain}}</text>
           <text class="name">{{item.name}}</text>
           <text class="disc">{{item.age}}岁生日</text>
-          <text class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+          <text wx:if="{{item.lunar.length == 0}}" class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+          <text wx:else class="date">{{item.lunar}}</text>
         </view>
         <view class="new" wx:if="{{item.id == newId }}" >
             <text>新</text> 
@@ -102,12 +103,19 @@
       <text class="small">距离</text>
       <text class="name">{{popUpDay.name}}</text>
       <text class="birthday">{{popUpDay.age}}岁生日</text>
-      <text class="small">还有</text>
+      <text class="small">还有</text> 
 
-      <text wx:if="{{popUpDay.remain <= 60}}" class="remain orange">{{popUpDay.remain}}天</text>
-      <text wx:else class="remain">{{popUpDay.remain}}天</text>
-
-      <text class="hello">尽管生活忙碌，请不要忘记给TA送上一份祝福哦！</text>
+      <block wx:if="{{popUpDay.remain <= 60}}">
+        <text wx:if="{{popUpDay.remain == -1}}" class="remain orange">今天</text>
+        <text wx:if="{{popUpDay.remain == 0}}" class="remain orange">明天</text>
+        <text wx:if="{{popUpDay.remain == 1}}" class="remain orange">后天</text>
+        <text wx:if="{{popUpDay.remain > 1}}" class="remain orange">{{popUpDay.remain}}天</text>
+      </block>
+      <block wx:else>
+          <text class="remain">{{popUpDay.remain}}天</text>
+      </block>
+      
+      <text class="greeing">{{popUpDay.greeting}}</text>
     </view>
 
 

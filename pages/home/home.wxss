@@ -301,6 +301,7 @@ navigator.add:active {
   font-size: 20rpx;
   color: #aaa;
   margin: 5% 0 0;
+  height:36rpx;
 }
 
 .day-item-v text.close-remain {
@@ -350,7 +351,7 @@ view.model-bk view.main text.small {
 view.model-bk view.main text.remain {
   color: #444;
   font-size: 38rpx;
-  margin: 10rpx 0;
+  margin: 10rpx 0 15rpx;
 }
 
 view.model-bk view.main text.name {
@@ -364,14 +365,14 @@ view.model-bk view.main text.birthday {
   margin: 0 0 15rpx 0;
 }
 
-view.model-bk view.main text.hello {
+view.model-bk view.main text.greeing {
   font-size: 24rpx;
-  color: #ccc;
+  color: #bbb;
 }
 
 view.model-bk view.main .toolBar {
   width: 100%;
-  margin: 40rpx 0 0;
+  margin: 30rpx 0 0;
 }
 
 view.model-bk view.main navigator {
@@ -411,7 +412,7 @@ view.s1 {
   bottom: 30.5%;
   left: 17%;
   width: 66%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 view.s2 {

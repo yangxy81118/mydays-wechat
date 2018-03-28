@@ -145,7 +145,7 @@ Page({
     wx.request({
       url: 'https://www.yubopet.top/graphql/days',
       method: 'POST',
-      data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor }}',
+      data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
       header: {
         'content-type': 'text/plain'
       },
