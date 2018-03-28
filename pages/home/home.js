@@ -180,10 +180,14 @@ function loadDays(that,userId){
       'content-type': 'text/plain'
     },
     success: function (res) {
-      var daysData = res.data.data.days
-      that.setData({
-        days: daysData
-      })
+      if(res.statusCode==200){
+        var daysData = res.data.data.days
+        that.setData({
+          days: daysData
+        })
+      }else{
+        commonTool.warning("系统故障..")
+      }
       
     }
   })

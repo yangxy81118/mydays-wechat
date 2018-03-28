@@ -11,8 +11,6 @@ var dateSelected = false
 const calTool = require("../../utils/cn-cal.js")
 const commonTool = require("../../utils/common.js")
 
-var thisDayId = 0
-
 Page({
   data: {
     date: "点击选择",   //阳历组件显示值
@@ -31,6 +29,8 @@ Page({
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
 
+    //重置数据
+    
     //处理样式
     var res = wx.getSystemInfoSync()
     if (res.system.toLowerCase().indexOf("ios") >= 0) {
@@ -56,10 +56,11 @@ Page({
       initLunarCompornt(that)
     }
 
+    console.log("edit:")
+    console.dir(option)
     //如果是编辑，则去加载该天数据
     if (option && option.dayId){
-      thisDayId = option.dayId
-      this.setData({thisDayId:thisDayId})
+      this.setData({ thisDayId: option.dayId})
       wx.request({
         url: 'https://www.yubopet.top/graphql/days',
         method: 'POST',
@@ -68,6 +69,9 @@ Page({
           'content-type': 'text/plain'
         },
         success: function (res) {
+
+          if (commonTool.checkError(res)) return
+
           var dayData = res.data.data.day
 
           //检测是否是农历
@@ -126,6 +130,8 @@ Page({
           'content-type': 'text/plain'
         },
         success: function (res) {
+          if (commonTool.checkError(res)) return
+
           var u = res.data.data.user
           that.setData({
             limit: u.limit,
@@ -167,6 +173,7 @@ Page({
           url: 'https://www.yubopet.top/simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
           method: 'GET',
           success: function (res) {
+            if (commonTool.checkError(res)) return
             that.setData({
               dateValue: res.data,
               vDate: res.data,
@@ -280,6 +287,7 @@ Page({
 
     var userId = wx.getStorageSync('userId')
 
+    var thisDayId = this.data.thisDayId
     if(thisDayId > 0){
       wx.request({
         url: 'https://www.yubopet.top/customDay',
@@ -296,16 +304,10 @@ Page({
           'content-type': 'application/json'
         },
         success: function (res) {
+          if (commonTool.checkError(res)) return
+
           wx.showToast({
             title: "修改成功"
-          })
-          wx.navigateBack({
-            delta: 1
-          })
-        },
-        fail: function (res) {
-          wx.showToast({
-            title: "修改失败"
           })
           wx.navigateBack({
             delta: 1
@@ -328,22 +330,17 @@ Page({
           'content-type': 'application/json'
         },
         success: function (res) {
+          if (commonTool.checkError(res)) return
+
+          wx.setStorageSync("newDayId", res.data)
+          // console.log("记录新增newId:" + wx.getStorageSync("newDayId"))
           wx.showToast({
             title: "添加成功"
           })       
           wx.navigateBack({
             delta: 1
           })
-          wx.setStorageSync("newDayId", res.data)
-          console.log("记录新增newId:" + wx.getStorageSync("newDayId"))
-        },
-        fail: function (res) {
-          wx.showToast({
-            title: "添加失败"
-          })
-          wx.navigateBack({
-            delta: 1
-          })
+          
         }
       })
     }

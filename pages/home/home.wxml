@@ -100,28 +100,29 @@
   <view class="main" id="popContent" catchtap='modelTapAction'>
 
     <view class="content">
-      <text class="small">距离</text>
-      <text class="name">{{popUpDay.name}}</text>
-      <text class="birthday">{{popUpDay.age}}岁生日</text>
-      <text class="small">还有</text> 
-
-      <block wx:if="{{popUpDay.remain <= 60}}">
-        <text wx:if="{{popUpDay.remain == -1}}" class="remain orange">今天</text>
-        <text wx:if="{{popUpDay.remain == 0}}" class="remain orange">明天</text>
-        <text wx:if="{{popUpDay.remain == 1}}" class="remain orange">后天</text>
-        <text wx:if="{{popUpDay.remain > 1}}" class="remain orange">{{popUpDay.remain}}天</text>
+      <block wx:if="{{popUpDay.remain < 2}}">
+        <text wx:if="{{popUpDay.remain == -1}}" class="remain orange special">今天</text>
+        <text wx:if="{{popUpDay.remain == 0}}" class="remain orange special">明天</text>
+        <text wx:if="{{popUpDay.remain == 1}}" class="remain orange special">后天</text>
+        <text class="name">{{popUpDay.name}}</text>
+        <text class="birthday">{{popUpDay.age}}岁生日</text>
       </block>
       <block wx:else>
-          <text class="remain">{{popUpDay.remain}}天</text>
+          <text class="small">距离</text>
+          <text class="name">{{popUpDay.name}}</text>
+          <text class="birthday">{{popUpDay.age}}岁生日</text>
+          <text class="small">还有</text> 
+          <text wx:if="{{popUpDay.remain <= 60 }}" class="remain orange">{{popUpDay.remain}}天</text>
+          <text wx:else class="remain">{{popUpDay.remain}}天</text>
       </block>
       
-      <text class="greeing">{{popUpDay.greeting}}</text>
+      <text class="greeting">{{popUpDay.greeting}}</text>
     </view>
 
 
     <view class="toolBar">
       <navigator url="/pages/edit/edit?dayId={{popUpDay.id}}" class="icon iconfont icon-bianji"></navigator>
-      <navigator class="icon iconfont icon-fenxiang" catchtap='shareAction'></navigator>
+      <!-- <navigator class="icon iconfont icon-fenxiang" catchtap='shareAction'></navigator> -->
       <navigator class="icon iconfont icon-shanchu red" data-dayId="{{popUpDay.id}}" bindtap='delAction'></navigator>
     </view>
     <text wx:if="{{popUpDay.remain <= 60}}" class="highLight hl"></text>

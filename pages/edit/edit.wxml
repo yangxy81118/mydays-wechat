@@ -42,7 +42,7 @@
 
     <view class="section">
       <label>备注</label>
-      <textarea class="{{ios}}" maxlength='50' placeholder-class="l-grey" name="comment" placeholder="送TA点什么，去哪里郊游？点滴想法，随意记录，50字以内" value='{{dayComment}}'></textarea>
+      <textarea class="{{ios}}" maxlength='50' placeholder-class="l-grey" name="comment" placeholder="【选填】 送TA点什么，去哪里郊游？点滴想法，随意记录，50字以内" value='{{dayComment}}'></textarea>
     </view>
 
     <!-- 只有新增时才进行额度判断 -->

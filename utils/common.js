@@ -21,8 +21,19 @@ const loading = function (content) {
   })
 }
 
+const checkError = function(res){
+  if(res.statusCode != 200){
+    warning("系统故障...")
+    return true
+  }else{
+    return false
+  }
+  
+}
+
 module.exports = {
   warning: warning,
   success:success,
-  loading: loading
+  loading: loading,
+  checkError: checkError
 }

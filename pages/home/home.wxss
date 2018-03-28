@@ -217,7 +217,6 @@ view.item-scroll-wrap .day-box {
 }
 
 navigator.add {
-  display: block;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -229,6 +228,9 @@ navigator.add {
   font-size: 40rpx;
   line-height: 140rpx;
   box-shadow: 0 0 6px #ff9940;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 navigator.add:active {
@@ -336,6 +338,11 @@ view.model-bk view.main view.content{
   height:360rpx;
 }
 
+view.model-bk view.main view.content text.special{
+  font-size:80rpx;
+  margin:40rpx 0;
+}
+
 view.model-bk view.main text {
   display: block;
   color: #444;
@@ -351,7 +358,7 @@ view.model-bk view.main text.small {
 view.model-bk view.main text.remain {
   color: #444;
   font-size: 38rpx;
-  margin: 10rpx 0 15rpx;
+  margin: 10rpx 0 0;
 }
 
 view.model-bk view.main text.name {
@@ -365,9 +372,10 @@ view.model-bk view.main text.birthday {
   margin: 0 0 15rpx 0;
 }
 
-view.model-bk view.main text.greeing {
+view.model-bk view.main text.greeting {
   font-size: 24rpx;
   color: #bbb;
+  margin: 10rpx 0 10rpx 0;
 }
 
 view.model-bk view.main .toolBar {
@@ -379,7 +387,7 @@ view.model-bk view.main navigator {
   display: inline-block;
   font-size: 48rpx;
   color: #aaa;
-  width: 33.3%;
+  width: 50%;
   line-height: 60rpx;
   text-align: center;
 }

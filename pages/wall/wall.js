@@ -4,11 +4,11 @@ Page({
   },
   onLoad: function () {
     var that = this
+
     // 登录
     wx.login({
       success: res => {
-        console.log(res)
-        
+        console.log(res)   
         wx.request({
           url: 'https://www.yubopet.top/login?code='+res.code,
           success: function (loginRes) {
