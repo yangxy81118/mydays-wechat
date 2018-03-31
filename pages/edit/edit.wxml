@@ -5,8 +5,7 @@
       <label>姓名</label>
       <view class="input-box">
         <text class="iconfont icon-fenxiang label-icon"></text>
-        <input name="name" wx:if="{{thisDayId <= 0}}" maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
-        <input name="name" wx:else maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
+        <input name="name" value="{{dayName}}" maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
         <text class="iconfont icon-xingxing star {{starState}}" bindtap='starTapAction'></text>
       </view>
     </view>

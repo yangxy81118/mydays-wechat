@@ -106,10 +106,13 @@ Page({
             })
           }
 
+          var favorState = ""
+          if(dayData.favor){
+            favorState = "star-selected"
+          }
           that.setData({
             dayName: dayData.name,
-            dayFavor:dayData.favor,
-            dayComment: dayData.comment
+            starState: favorState
           })
 
           dateSelected = true
