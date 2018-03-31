@@ -31,9 +31,33 @@ const checkError = function(res){
   
 }
 
+const showLastAction = function(){
+  var state = wx.getStorageSync("lastActionState")
+  if(!state || state.length == 0)
+    return
+
+  var array = state.split(":")
+  if(array[0] == "success"){
+    wx.showToast({
+      title: array[1],
+      duration: 8000
+    })
+  }
+
+  wx.removeStorageSync("lastActionState")
+}
+
+const checkDaysCount = function(){
+  var daysCount = wx.getStorageSync("daysCount")
+  var daysLimit = wx.getStorageSync("daysLimit")
+  return daysCount >= daysLimit
+}
+
 module.exports = {
   warning: warning,
   success:success,
   loading: loading,
-  checkError: checkError
+  checkError: checkError,
+  showLastAction: showLastAction,
+  checkDaysCount: checkDaysCount
 }

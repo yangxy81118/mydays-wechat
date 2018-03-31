@@ -15,21 +15,20 @@ Page({
   data: {
     date: "点击选择",   //阳历组件显示值
     cnDate: "点击选择",//农历组件显示值
-    dateModeValue: 0,
-    dateModeChoice: ['公历', '农历'],
-    dateMode: '公历',
     vDate: "",   //两种日历后台公用实际值
     dateValue: "",  //阳历组件value属性值
     dayFavor:false,
     thisDayId:0,
+    dateMode:0,
+    starState:""
   },
 
   onLoad: function (option) {
 
+    commonTool.showLastAction()
+
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
-
-    //重置数据
     
     //处理样式
     var res = wx.getSystemInfoSync()
@@ -91,9 +90,8 @@ Page({
               lunarChoice: [result.year, result.month, result.day],
               cnDate: cnDateStr,
               vDate: cnDateStr,
-              dateMode: "农历",
-              dateModeValue: 1,
-              dateClass:"selected"
+              dateClass:"selected",
+              dateMode: 1
             })
 
           }else{
@@ -104,7 +102,7 @@ Page({
               date: normalDateStr,
               dateMode: "公历",
               dateClass: "selected",
-              dateModeValue:0
+              dateMode:0
             })
           }
 
@@ -118,46 +116,33 @@ Page({
           wx.hideLoading();
         }
       })
-    }else{
-
-      //查询额度信息
-      var userId = wx.getStorageSync('userId')
-      wx.request({
-        url: 'https://www.yubopet.top/graphql/days',
-        method: 'POST',
-        data: '{user(userId:' + userId + '){limit daysCount} }',
-        header: {
-          'content-type': 'text/plain'
-        },
-        success: function (res) {
-          if (commonTool.checkError(res)) return
-
-          var u = res.data.data.user
-          that.setData({
-            limit: u.limit,
-            daysCount: u.daysCount
-          })
-        }
-      });
     }
+
+    var daysCount = wx.getStorageSync("daysCount")
+    var daysLimit = wx.getStorageSync("daysLimit")
+    var isFull = ((daysCount + 1) >= daysLimit)
+
+    this.setData({
+      daysCount: daysCount,
+      daysLimit: daysLimit,
+      isFull:isFull
+    })
+
     wx.hideLoading();
 
     
   },
-  dateModeChange: function (e) {
-    var choice = this.data.dateModeChoice
-    var lastDate = this.data.vDate
-    //检查是否是无效切换 
-    if (this.data.dateMode == choice[e.detail.value]) {
-      return;
+  dateModeSwitch: function (e) {
+
+    var dateMode = e.currentTarget.dataset.mode
+    if (this.data.dateMode == dateMode){
+      return
     }
 
+    this.setData({ dateMode:dateMode})
+
     var that = this
-    //同时清空两个date数据
-    this.setData({
-      dateMode: choice[e.detail.value],
-      dateClass: ""
-    })
+    var lastDate = this.data.vDate
 
     if (lastDate.length > 0) {
 
@@ -168,7 +153,7 @@ Page({
 
       //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
       //如果是切换到公历，则直接修改公历插件的value数值即可
-      if (e.detail.value == 0) {
+      if (dateMode == 0) {
         wx.request({
           url: 'https://www.yubopet.top/simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
           method: 'GET',
@@ -265,13 +250,11 @@ Page({
   formSubmit: function (e) {
     var formData = e.detail.value
 
+    var again = (e.detail.target.id == "again")
+
     //TODO 校验，最好用上第三方工具类
-    if (formData.title.length <= 0) {
+    if (formData.name.length <= 0) {
       commonTool.warning('请输入姓名')
-      return
-    }
-    if (formData.title.length > 6) {
-      commonTool.warning('姓名过长')
       return
     }
 
@@ -280,23 +263,26 @@ Page({
       return
     }
 
-    if (formData.dateMode == 1) {
+    var dateMode = this.data.dateMode;
+    if (dateMode == 1) {
       var cnCalendarArray = this.data.lunarArray
       formData.date = cnCalendarArray[0][formData.date[0]] + cnCalendarArray[1][formData.date[1]] + cnCalendarArray[2][formData.date[2]]
     }
 
     var userId = wx.getStorageSync('userId')
+    var that = this
 
     var thisDayId = this.data.thisDayId
+    var isFavor = this.data.starState.length > 0
     if(thisDayId > 0){
       wx.request({
         url: 'https://www.yubopet.top/customDay',
         method: 'POST',
         data: {
-          name: formData.title,
-          dateMode: formData.dateMode,
+          name: formData.name,
+          dateMode: dateMode,
           date: formData.date,
-          favor: formData.favor,
+          favor: isFavor,
           dayId: thisDayId,
           comment: formData.comment
         },
@@ -306,12 +292,16 @@ Page({
         success: function (res) {
           if (commonTool.checkError(res)) return
 
-          wx.showToast({
-            title: "修改成功"
-          })
-          wx.navigateBack({
-            delta: 1
-          })
+          if (again) {
+            wx.setStorageSync("lastActionState", "success:修改成功")
+            wx.redirectTo({
+              url: '/pages/edit/edit',
+            })
+          } else {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
         }
       })
     }else{
@@ -319,10 +309,10 @@ Page({
         url: 'https://www.yubopet.top/customDay',
         method: 'PUT',
         data: {
-          name: formData.title,
-          dateMode: formData.dateMode,
+          name: formData.name,
+          dateMode:dateMode,
           date: formData.date,
-          favor: formData.favor,
+          favor: isFavor,
           userId: userId,
           comment: formData.comment
         },
@@ -331,15 +321,25 @@ Page({
         },
         success: function (res) {
           if (commonTool.checkError(res)) return
-
           wx.setStorageSync("newDayId", res.data)
-          // console.log("记录新增newId:" + wx.getStorageSync("newDayId"))
-          wx.showToast({
-            title: "添加成功"
-          })       
-          wx.navigateBack({
-            delta: 1
-          })
+
+          var daysCount = wx.getStorageSync("daysCount")
+          daysCount++
+          wx.setStorageSync("daysCount", daysCount)
+
+          if (again) {
+            wx.setStorageSync("lastActionState", "success:添加成功")
+
+
+            // console.log("存储:" + wx.getStorageSync("lastActionState"))
+            wx.redirectTo({
+              url: '/pages/edit/edit',
+            })
+          } else {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
           
         }
       })
@@ -348,8 +348,16 @@ Page({
 
   },
 
-  limitTap: function (e) {
-    commonTool.warning("记录额度已满")
+  againDisableAction: function (e) {
+    commonTool.warning("无法记录更多")
+  },
+  starTapAction:function(e){
+    var state = this.data.starState;
+    if(state.length == 0){
+      this.setData({starState:"star-selected"})
+    }else{
+      this.setData({starState:""})
+    }
   }
 
 })

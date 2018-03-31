@@ -19,12 +19,7 @@ Page({
   // },
   onShow: function (option) {
 
-    //清空一些可能的多余状态
-    this.setData({
-      modelShow: "none",
-      newId:0
-    })
-
+    //手机信息
     var that = this
     wx.getSystemInfo({
       success: function (res) {
@@ -32,13 +27,24 @@ Page({
         that.setData({
           listHeight: res.windowHeight-80
         })
-        if (res.model.indexOf("iPhone") >= 0){
-          that.setData({
-            isApple: true
-          })
-        }
+        // if (res.model.indexOf("iPhone") >= 0){
+        //   that.setData({
+        //     isApple: true
+        //   })
+        // }
       }
     })
+
+    //额度
+    var isFull = commonTool.checkDaysCount()
+
+    //清空一些可能的多余状态
+    this.setData({
+      modelShow: "none",
+      newId: 0,
+      isFull: isFull
+    })
+
 
     var userId =  wx.getStorageSync('userId')   
     loadDays(that,userId)
@@ -112,14 +118,15 @@ Page({
             url: 'https://www.yubopet.top/customDay?dayId='+dayId,
             method: 'DELETE',
             success: function (res) {
-              console.log(res)
+              if (commonTool.checkError(res)) return
+
+              var daysCount = wx.getStorageSync("daysCount")
+              daysCount--
+              wx.setStorageSync("daysCount", daysCount)
+
               that.onShow()
-              commonTool.success('删除成功')
               that.setData({modelShow:"none"})
-            },
-            fail: function (res) {
-              console.log(res)
-              commonTool.warning('删除失败')
+              commonTool.success('删除成功')
             }
           })
         } 
@@ -167,6 +174,9 @@ Page({
   },
   shareAction:function(e){
     commonTool.warning("暂未开放~")
+  },
+  fullAction:function(e){
+    commonTool.warning("生日额度已满")
   }
 })
 
@@ -180,15 +190,12 @@ function loadDays(that,userId){
       'content-type': 'text/plain'
     },
     success: function (res) {
-      if(res.statusCode==200){
-        var daysData = res.data.data.days
-        that.setData({
-          days: daysData
-        })
-      }else{
-        commonTool.warning("系统故障..")
-      }
-      
+      if (commonTool.checkError(res)) return
+
+      var daysData = res.data.data.days
+      that.setData({
+        days: daysData
+      })
     }
   })
 }

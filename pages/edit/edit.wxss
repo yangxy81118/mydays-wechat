@@ -1,168 +1,166 @@
-/**index.wxss**/
 page{
   background: #F9F9F9;
-  height: auto;
+  height:96%;
 }
 
-.top{
-  text-align: center;
-}
-
-view.section{
-  margin:20rpx 0;
-  font-size: 28rpx;
-  background: #FFF;
-  overflow: hidden;
-  border:1px solid #EEE;
-  border-width: 1px 0;
-}
-
-view.section label{
-  float:left;
-  display: block;
-  line-height: 84rpx;
-  margin:0 0 0 50rpx;
-}
-
-view.section input{
-  background: #FFF;
-  padding:0 0 0 76rpx;
-  height: 84rpx;
-}
-
-view.section textarea{
-  padding:0 20rpx;
-  height: 146rpx;
-  margin:28rpx 0 0 150rpx;
-  width:70%;
-  line-height: 50rpx; 
-}
-
-view.section textarea.ios{
-  margin-top:10rpx;
-}
-
-view.section picker{ 
-  padding:0 0 0 120rpx;
-}
-
-view.section picker text.selected{
-  color:#000;
-} 
-
-view.section switch{
-  display: block;
-  float:right;
-  padding:20rpx 34rpx 20rpx 0;
-}
-
-view.switch label{
-  line-height: 100rpx;
-}
-
-view.section .picker text{
-  font-size:28rpx;
-  color:#CCC;
-}
-
-.date{
-  background: #FFF;
-}
-
-.date text{
-  margin:0 0 0 20px;
-}
-
-.date view{
-  padding:24rpx;
-}
-
-label{
-  margin:0 20px 0 10px;
-}
-
-button{
-  background: #e4861e;
-  color:#FFF;
-  border-radius: 0;
-}
-
-view.imgs{
-  width:100%;
-  background: #FFF;
-}
-
-view.imgs .img-title{
-  padding:30rpx 50rpx 30rpx 4%;
-  font-size:28rpx;
-  overflow: hidden;
-}
-
-view.imgs .img-title button{
-  float:right;
-  width:100rpx;
-  font-size: 20rpx;
-  margin:0;
-  padding:0;
-  border:0;
-  background: #FEC;
-  color:#E84;
-  box-shadow: 0;
-}
-
-view.imgs .img-list{
-  width:88%;
+.container{
+  width:84%;
   margin:0 auto;
 }
 
-.img-list image{
-  width:200rpx;
-  height:200rpx;
-  margin:0 4% 10rpx 0;
+form{
+  color:#A8A8A8;
+  font-size:26rpx;
+}
+
+view.section{
+  margin:30rpx 0 0 0 ;
+}
+
+view.sec-name{
+
+}
+
+view.sec-time{
+
+}
+
+view.sec-limit{
+  margin:40rpx 0 0 0;
+  border-top:2rpx solid #E5E5E5;
+  padding:40rpx 0 0 0;
+}
+
+view.section label{
+  display: block;
+  line-height: 70rpx;
+  font-size:26rpx;
+  color:#A8A8A8;
+  text-indent: 30rpx;
+}
+
+view.section .input-box{
+  position: relative;
+  background: #FFF;
+  height:100rpx;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
   border-radius: 8rpx;
 }
 
-.img-list image.tail{
-  margin-right:0;
+view.section .iconfont{
+  color:#FF9940;
+  font-size:50rpx;  
+  position: absolute;
+  top:0;
+  line-height: 100rpx;
 }
 
-button{
-  display: block;
-  position: fixed;
-  bottom: 0;
-  left:0;
-  height:12%;
-  width:100%;
-  background: #ff9940;
-  color:#FFF;
-  text-align: center;
+view.section text.label-icon{
+  left:30rpx;
+}
+
+view.section input{
+  height:100%;
+  width:70%;
+  margin:0 0 0 100rpx;
+  color:#000;
+}
+
+.placeholder{
+  color:#AAA;
+}
+
+view.sec-name text.star{
+  right:30rpx;
   font-size:40rpx;
-  line-height: 140rpx;
-  box-shadow: 0 0 6px #ff9940;
+  color:#BBB;
 }
 
-button.submit{
+view.sec-name text.star-selected{
+  color:#FF9940;
+}
+
+view.sec-time button{
+  width:48%;
+  height:100rpx;
+  line-height: 100rpx;
+  border-color:#ff9940;
+  display: inline-block;
+  background: #FFF;
+  margin:0 0 20rpx 0;
+  font-size:26rpx;
+}
+
+view.sec-time button.selected{
+  color:#ff9940;
+  box-shadow:0 0 6rpx rgba(255,153,64,0.35);
+}
+
+view.sec-time button.selected:after{
+  border-color:#ff9940;
+}
+  
+
+view.sec-time picker{
+  width:80%;
+  height:100%;
+}
+
+view.sec-time view.picker{
+  height:100%;
+  width:100%;
+  margin:0 0 0 100rpx;
+}
+
+view.picker text{
+  line-height: 100rpx;
+}
+
+
+view.picker text.selected{
+  color:#000;
+}
+
+
+
+view.toolbar{
+  position: fixed;
+  bottom:20rpx;
+  width:100%;
+  /* height:80rpx; */
+}
+
+
+view.toolbar button{
+  font-size:30rpx;
+  display: inline-block;
+  line-height: 100rpx;
+  background: #FFF;
+  height:100rpx;
+  color:#FFF;
+}
+
+view.toolbar button.again{
+  background: #ffe8d3;
+  width:32%;
+  color:#ff9940;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+}
+
+view.toolbar button.save{
   background: #ff9940;
-  box-shadow: 0 0 6px #ff9940;
+  width:50%;
+  margin:0 0 0 2%;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
 }
 
-button.disable{
-  background: #c4c4c4;
-  box-shadow: 0 0 6px #c4c4c4;
+view.toolbar button.disable{
+  color:#BDBDBD;
+  background: #E3E3E3;
 }
 
-button::after{ 
+
+view.toolbar button::after{ 
   border:none;
 }
 
-label.tip{
-  color:#848484;
-}
-
-text.limit{
-  display: block;
-  padding:0 0 0 50rpx;
-  font-size:26rpx;
-  line-height: 60rpx;
-  color:#AAA;
-}

@@ -60,7 +60,7 @@
     </scroll-view>
 
 
-    <view wx:if="{{layout == 2}}" scroll-x="true" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" 
+    <view wx:if="{{layout == 2}}" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" 
       bindtap="popupAction" data-dayId="{{item.id}}"
       class="day-item-v">
         <view wx:if="{{item.remain <= 60}}" class="item-v-main close-v" data-dayId="{{item.id}}">
@@ -89,9 +89,13 @@
         </view>
     </view>
 
+    <view class="bottom-box"></view>
+
   </scroll-view>
 
-  <navigator class="add" url='/pages/edit/edit'>记录生日</navigator>
+  <view class="bottom-mask"></view>
+  <navigator wx:if="{{!isFull}}" class="add" url='/pages/edit/edit'>记录生日</navigator>
+  <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator>
 
 </view>
 

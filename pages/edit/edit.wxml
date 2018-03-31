@@ -1,61 +1,61 @@
 <!--index.wxml-->
 <view class="container">
   <form bindsubmit="formSubmit" bindreset="formReset">
-    <view class="section">
+    <view class="section sec-name">
       <label>姓名</label>
-      <input name="title" placeholder-class="l-grey" wx:if="{{thisDayId <= 0}}" placeholder='6字以内，如 妈妈、爸爸' auto-focus value="{{dayName}}"/>
-      <input name="title" placeholder-class="l-grey" wx:else placeholder='6字以内，如 妈妈、爸爸' value="{{dayName}}"/>
+      <view class="input-box">
+        <text class="iconfont icon-fenxiang label-icon"></text>
+        <input name="name" wx:if="{{thisDayId <= 0}}" maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
+        <input name="name" wx:else maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
+        <text class="iconfont icon-xingxing star {{starState}}" bindtap='starTapAction'></text>
+      </view>
     </view>
 
-    <view class="section">
-      <label>历法</label>
-      <picker mode="selector" name="dateMode" class="date" fields="day" value="{{dateModeValue}}" range="{{dateModeChoice}}" bindchange="dateModeChange">
-        <view class="picker">
-          <text class="selected">{{dateMode}}</text>
-        </view>
-      </picker>
-    </view> 
+    <view class="section sec-time">
+      <label>生日</label>
 
-    <view class="section" wx:if="{{dateMode=='公历'}}">
-      <label>日期</label>
-      <picker mode="date" name="date" class="date" fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
-        <view class="picker">
-          <text class="{{dateClass}}">{{date}}</text>
-        </view>
-      </picker>
-    </view>
-    
-    <view class="section" wx:if="{{dateMode=='农历'}}">
-      <label>日期</label>
-      <picker mode="multiSelector" name="date" class="date" style='height:84rpx' bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
-        <view class="picker">
-           <text class="{{dateClass}}">{{cnDate}}</text>
-        </view>
-      </picker>
-    </view>
+      <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+      <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
 
-    <view class="section switch">
-        <label>星标</label>
-        <switch name="favor" wx:if="{{dayFavor}}" checked/>
-        <switch name="favor" wx:else/>
-    </view>
+      <button wx:if="{{dateMode==1}}" class="selected" bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+      <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
 
-    <view class="section">
-      <label>备注</label>
-      <textarea class="{{ios}}" maxlength='50' placeholder-class="l-grey" name="comment" placeholder="【选填】 送TA点什么，去哪里郊游？点滴想法，随意记录，50字以内" value='{{dayComment}}'></textarea>
+      <view class="input-box" wx:if="{{dateMode==0}}">
+        <text class="iconfont icon-xitongguanli label-icon"></text>
+        <picker mode="date" name="date"
+          fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
+          <view class="picker">
+            <text class="{{dateClass}}">{{date}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="input-box" wx:else>
+        <text class="iconfont icon-shanchu label-icon"></text>
+        <picker mode="multiSelector" name="date"
+            bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
+          <view class="picker">
+            <text class="{{dateClass}}">{{cnDate}}</text>
+          </view>
+        </picker>
+      </view>
+
+
     </view>
 
-    <!-- 只有新增时才进行额度判断 -->
-    <block wx:if="{{thisDayId <= 0}}">
-      <text class="limit">生日记录额度：{{daysCount}}/{{limit}}</text>
-      <button wx:if="{{daysCount < limit}}" class="submit" formType="submit">确认添加</button>
-      <button wx:else class="disable" bindtap='limitTap'>额度已满</button>
-    </block>
-    <block wx:else>
-      <button class="submit" formType="submit">确认修改</button>
-    </block>
+    <!-- <view class="section other">
+      <label>其他添加方式</label>
+    </view> -->
 
+    <view class="section sec-limit">
+      已用生日额度:{{daysCount}}/{{daysLimit}}
+    </view>
 
+    <view class="toolbar">
+      <button wx:if="{{!isFull}}" class="again" formType="submit" id="again"  data-test="1">保存再记</button>
+      <button wx:else class="again disable" id="again"  data-test="1" bindtap='againDisableAction'>保存再记</button>
+      <button class="save" formType="submit" id="save" data-test="2">保存</button>
+    </view>
   </form>
 </view>
 
