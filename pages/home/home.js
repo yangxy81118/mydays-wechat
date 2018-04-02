@@ -14,9 +14,6 @@ Page({
     modelShow:"none",
     queryFavor:false
   },
-  // onShareAppMessage: funeditActionction(options){
-  //   console.log(options)
-  // },
   onShow: function (option) {
 
     //手机信息
@@ -136,20 +133,8 @@ Page({
   },
   popupAction:function(e){
     var dayId = e.currentTarget.dataset.dayid
-
-    //优化体验
-    this.setData({
-      popUpDay:{
-        name:"...",
-        age:"...",
-        favor:false,
-        remain:"..."
-      },
-      popUpIdx: e.currentTarget.dataset.idx,
-      modelShow: "block"
-    })
-
-    loadPopUp(this,dayId)
+    var idx = e.currentTarget.dataset.idx
+    loadPopUp(this, dayId,idx)
   },
   modelTapAction:function(e){
     if(e.currentTarget.id=="popBk"){
@@ -169,28 +154,43 @@ Page({
     if(e.currentTarget.id=="prev"){
       var currentIdx = this.data.popUpIdx
       var days = this.data.days
-      
+      currentIdx--
+
       this.setData({
-        popUpIdx: currentIdx - 1
+        popUpIdx: currentIdx
       })
 
-      loadPopUp(this, days[currentIdx - 1].id)
+      // loadPopUp(this,)
+      loadPopUp(this, days[currentIdx].id, currentIdx)
 
     }else{
       var currentIdx = this.data.popUpIdx
       var days = this.data.days
+      currentIdx++
 
       this.setData({
-        popUpIdx: currentIdx + 1
+        popUpIdx: currentIdx
       })
 
-      loadPopUp(this, days[currentIdx + 1].id)
+      loadPopUp(this, days[currentIdx].id, currentIdx)
     }
   }
 })
 
 
-function loadPopUp(that,dayId){
+function loadPopUp(that,dayId,idx){
+  //优化体验
+  that.setData({
+    popUpDay: {
+      name: "...",
+      age: "...",
+      favor: false,
+      remain: "..."
+    },
+    popUpIdx: idx,
+    modelShow: "block"
+  })
+
   wx.request({
     url: 'https://www.yubopet.top/graphql/days',
     method: 'POST',

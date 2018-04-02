@@ -30,7 +30,7 @@
       </view>
 
       <view class="input-box" wx:else>
-        <text class="iconfont icon-date label-icon"></text>
+        <text class="iconfont icon-date2 label-icon"></text>
         <picker mode="multiSelector" name="date"
             bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
           <view class="picker">
@@ -42,9 +42,10 @@
 
     </view>
 
-    <!-- <view class="section other">
+     <!-- <view class="section sec-other">
       <label>其他添加方式</label>
-    </view> -->
+      <button class="share" bindtap='toSharePageAction'>邀请微信好友添加</button>
+    </view>  -->
 
     <view class="section sec-limit">
       已用生日额度：{{daysCount}}/{{daysLimit}}

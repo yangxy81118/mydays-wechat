@@ -359,7 +359,7 @@ view.model-bk view.main {
 }
 
 view.model-bk view.main view.content{
-  height:360rpx;
+  height:440rpx;
 }
 
 view.model-bk view.main view.content text.special{
@@ -396,15 +396,17 @@ view.model-bk view.main text.birthday {
   margin: 0 0 15rpx 0;
 }
 
-view.model-bk view.main text.greeting {
+view.model-bk view.main view.greeting {
+  padding:30rpx 0;
+}
+
+view.model-bk view.main view.greeting text {
   font-size: 24rpx;
   color: #bbb;
-  margin: 10rpx 0 10rpx 0;
 }
 
 view.model-bk view.main .toolBar {
   width: 100%;
-  margin: 30rpx 0 0;
 }
 
 view.model-bk view.main navigator {
@@ -492,10 +494,13 @@ view.seq{
   color:#FFF;
   opacity: .5;
   width:100rpx;
-  font-size:60rpx;
   height:400rpx;
   line-height: 400rpx;
   text-align: center;
+}
+
+view.seq text{
+  font-size:50rpx;
 }
 
 view.prev{

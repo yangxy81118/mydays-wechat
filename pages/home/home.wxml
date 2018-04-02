@@ -120,7 +120,10 @@
           <text wx:else class="remain">{{popUpDay.remain}}天</text>
       </block>
       
-      <text class="greeting">{{popUpDay.greeting}}</text>
+      <view class="greeting">
+        <text class="greeting">{{popUpDay.greeting}}</text>
+      </view>
+
     </view>
 
 
@@ -134,9 +137,9 @@
 
    
   </view>
-  <view wx:if="{{popUpIdx > 0}}" class="seq prev" catchtap='popSeqAction' id="prev">＜</view>
-  <view wx:if="{{popUpIdx+1 < daysCnt}}"class="seq next" catchtap='popSeqAction' id="next">＞</view>
+  <view wx:if="{{popUpIdx > 0}}" class="seq prev" catchtap='popSeqAction' id="prev"><text class="iconfont icon-last"></text></view>
+  <view wx:if="{{popUpIdx+1 < daysCnt}}"class="seq next" catchtap='popSeqAction' id="next"><text class="iconfont icon-next"></text></view>
   <view class="shadow s1"></view> 
   <view class="shadow s2"></view> 
-  <text class="quit" bindtap='quitModel'>×</text>
+  <!-- <text class="quit" bindtap='quitModel'>×</text> -->
 </view>

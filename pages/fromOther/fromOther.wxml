@@ -1,4 +1,20 @@
 <view class="wall">
-  <text>这是转发页面</text>
-  <button>点击此处转发</button>
+  <view>这是转发页面1</view>
+  <view>这是转发页面2</view>
+  <view>这是转发页面3</view>
+  <view>这是转发页面4</view>
+  <view>这是转发页面5</view>
+  <view>这是转发页面6</view>
+  <view>这是转发页面7</view>
+  <view>这是转发页面8</view>
+  <view>这是转发页面9</view>
+  <view>这是转发页面0</view>
+  <view>这是转发页面1</view>
+  <view>这是转发页面2</view>
+  <view>这是转发页面3</view>
+  <view>这是转发页面4</view>
+  <view>这是转发页面5</view>
+  <view>这是转发页面6</view>
+
+  <button open-type='share'>点击此处转发</button>
 </view>
