@@ -9,7 +9,7 @@ Page({
     listHeight:0,
     navAllClass:"selected",
     navFavorClass:"",
-    layoutBtnClass:"icon-liebiao",
+    layoutBtnClass:"icon-list",
     layout:2,
     modelShow:"none",
     queryFavor:false
@@ -60,12 +60,12 @@ Page({
   layoutAction:function(e){
     if(this.data.layout==1){
       this.setData({
-        layoutBtnClass: "icon-liebiao",
+        layoutBtnClass: "icon-list",
         layout:2
       })
     }else{
       this.setData({
-        layoutBtnClass: "icon-all",
+        layoutBtnClass: "icon-gallery",
         layout: 1
       })
     }
@@ -145,24 +145,11 @@ Page({
         favor:false,
         remain:"..."
       },
+      popUpIdx: e.currentTarget.dataset.idx,
       modelShow: "block"
     })
 
-    var that = this
-    wx.request({
-      url: 'https://www.yubopet.top/graphql/days',
-      method: 'POST',
-      data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
-      header: {
-        'content-type': 'text/plain'
-      },
-      success: function (res) {
-        var dayData = res.data.data.day
-        that.setData({
-          popUpDay: dayData
-        })
-      }
-    })
+    loadPopUp(this,dayId)
   },
   modelTapAction:function(e){
     if(e.currentTarget.id=="popBk"){
@@ -177,8 +164,49 @@ Page({
   },
   fullAction:function(e){
     commonTool.warning("生日额度已满")
+  },
+  popSeqAction:function(e){
+    if(e.currentTarget.id=="prev"){
+      var currentIdx = this.data.popUpIdx
+      var days = this.data.days
+      
+      this.setData({
+        popUpIdx: currentIdx - 1
+      })
+
+      loadPopUp(this, days[currentIdx - 1].id)
+
+    }else{
+      var currentIdx = this.data.popUpIdx
+      var days = this.data.days
+
+      this.setData({
+        popUpIdx: currentIdx + 1
+      })
+
+      loadPopUp(this, days[currentIdx + 1].id)
+    }
   }
 })
+
+
+function loadPopUp(that,dayId){
+  wx.request({
+    url: 'https://www.yubopet.top/graphql/days',
+    method: 'POST',
+    data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
+    header: {
+      'content-type': 'text/plain'
+    },
+    success: function (res) {
+      var dayData = res.data.data.day
+      that.setData({
+        popUpDay: dayData
+      })
+    }
+  })
+
+}
 
 function loadDays(that,userId){
 
@@ -193,8 +221,10 @@ function loadDays(that,userId){
       if (commonTool.checkError(res)) return
 
       var daysData = res.data.data.days
+
       that.setData({
-        days: daysData
+        days: daysData,
+        daysCnt:daysData.length
       })
     }
   })

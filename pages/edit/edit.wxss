@@ -56,7 +56,11 @@ view.section .iconfont{
 }
 
 view.section text.label-icon{
+  position: absolute;
+  font-size:50rpx;
   left:30rpx;
+  top:22rpx;
+  color:#FF9940;
 }
 
 view.section input{
@@ -71,6 +75,8 @@ view.section input{
 }
 
 view.sec-name text.star{
+  position: absolute;
+  top:30rpx;
   right:30rpx;
   font-size:40rpx;
   color:#BBB;

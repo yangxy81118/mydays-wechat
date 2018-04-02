@@ -484,3 +484,24 @@ view.new text{
   color:#FFF;
   font-size:26rpx;
 }
+
+view.seq{ 
+  position: fixed;
+  z-index: 2;
+  top:24%;
+  color:#FFF;
+  opacity: .5;
+  width:100rpx;
+  font-size:60rpx;
+  height:400rpx;
+  line-height: 400rpx;
+  text-align: center;
+}
+
+view.prev{
+  left:0;
+}
+
+view.next{
+  right:0;
+}
