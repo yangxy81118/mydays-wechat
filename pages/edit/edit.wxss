@@ -90,20 +90,26 @@ view.sec-time button{
   width:48%;
   height:100rpx;
   line-height: 100rpx;
-  border-color:#ff9940;
+  
   display: inline-block;
   background: #FFF;
   margin:0 0 20rpx 0;
   font-size:26rpx;
 }
 
+view.sec-time button:after{
+  border-color:#FFF;
+  border-width: 6rpx;
+}
+
 view.sec-time button.selected{
   color:#ff9940;
-  box-shadow:0 0 6rpx rgba(255,153,64,0.35);
+  box-shadow:0 0 12rpx rgba(255,153,64,0.35);
 }
 
 view.sec-time button.selected:after{
   border-color:#ff9940;
+  
 }
   
 

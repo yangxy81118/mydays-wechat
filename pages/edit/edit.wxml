@@ -47,7 +47,7 @@
     </view> -->
 
     <view class="section sec-limit">
-      已用生日额度:{{daysCount}}/{{daysLimit}}
+      已用生日额度：{{daysCount}}/{{daysLimit}}
     </view>
 
     <view class="toolbar">
