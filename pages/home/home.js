@@ -34,6 +34,7 @@ Page({
 
     //额度
     var isFull = commonTool.checkDaysCount()
+    console.log("isFull:"+isFull)
 
     //清空一些可能的多余状态
     this.setData({
@@ -150,6 +151,11 @@ Page({
   fullAction:function(e){
     commonTool.warning("生日额度已满")
   },
+  addAction:function(e){
+    wx.navigateTo({
+      url: '/pages/edit/edit',
+    })
+  },
   popSeqAction:function(e){
     if(e.currentTarget.id=="prev"){
       var currentIdx = this.data.popUpIdx
@@ -191,42 +197,34 @@ function loadPopUp(that,dayId,idx){
     modelShow: "block"
   })
 
-  wx.request({
-    url: 'https://www.yubopet.top/graphql/days',
-    method: 'POST',
-    data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
-    header: {
-      'content-type': 'text/plain'
-    },
-    success: function (res) {
+  commonTool.graphReq(
+    'days',
+    '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
+    function (res) {
+      if (commonTool.checkError(res)) return
+
       var dayData = res.data.data.day
       that.setData({
         popUpDay: dayData
       })
     }
-  })
-
+  )
 }
 
 function loadDays(that,userId){
 
-  wx.request({
-    url: 'https://www.yubopet.top/graphql/days',
-    method: 'POST',
-    data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor }}',
-    header: {
-      'content-type': 'text/plain'
-    },
-    success: function (res) {
+  commonTool.graphReq(
+    'days',
+    '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor }}',
+    function (res) {
       if (commonTool.checkError(res)) return
 
       var daysData = res.data.data.days
-
       that.setData({
         days: daysData,
-        daysCnt:daysData.length
+        daysCnt: daysData.length
       })
     }
-  })
+  )
 }
 

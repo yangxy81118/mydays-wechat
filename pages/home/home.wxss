@@ -222,7 +222,7 @@ view.item-scroll-wrap .day-box {
   border-bottom-right-radius: 10rpx;
 }
 
-navigator.add {
+button.add {
   position: fixed;
   z-index: 2;
   bottom: 2%;
@@ -240,7 +240,11 @@ navigator.add {
   justify-content: center;
 }
 
-navigator.disable{
+button.add:after{
+  border:none;
+}
+
+button.disable{
   color:#FFCA9C;
 }
 

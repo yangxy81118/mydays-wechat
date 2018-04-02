@@ -4,7 +4,7 @@
     <view class="section sec-name">
       <label>姓名</label>
       <view class="input-box">
-        <text class="iconfont icon-user1 label-icon"></text>
+        <text class="iconfont icon-user2 label-icon"></text>
         <input name="name" value="{{dayName}}" maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
         <text class="iconfont icon-star star {{starState}}" bindtap='starTapAction'></text>
       </view>
@@ -20,7 +20,7 @@
       <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
 
       <view class="input-box" wx:if="{{dateMode==0}}">
-        <text class="iconfont icon-date2 label-icon"></text>
+        <text class="iconfont icon-date1 label-icon"></text>
         <picker mode="date" name="date"
           fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
           <view class="picker">
@@ -30,7 +30,7 @@
       </view>
 
       <view class="input-box" wx:else>
-        <text class="iconfont icon-date2 label-icon"></text>
+        <text class="iconfont icon-date1 label-icon"></text>
         <picker mode="multiSelector" name="date"
             bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
           <view class="picker">
@@ -42,14 +42,20 @@
 
     </view>
 
-     <!-- <view class="section sec-other">
+     
+    <!-- <view class="section sec-other">
       <label>其他添加方式</label>
       <button class="share" bindtap='toSharePageAction'>邀请微信好友添加</button>
-    </view>  -->
+    </view>   -->
 
-    <view class="section sec-limit">
+    <!-- <view class="section sec-other">
+      <label style="opacity:0;height:40rpx;">...</label>
+      <button class="share">已用生日额度</button>
+    </view>   -->
+
+     <view class="section sec-limit">
       已用生日额度：{{daysCount}}/{{daysLimit}}
-    </view>
+    </view> 
 
     <view class="toolbar">
       <button wx:if="{{!isFull}}" class="again" formType="submit" id="again"  data-test="1">保存再记</button>

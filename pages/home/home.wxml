@@ -94,8 +94,12 @@
   </scroll-view>
 
   <view class="bottom-mask"></view>
-  <navigator wx:if="{{!isFull}}" class="add" url='/pages/edit/edit'>记录生日</navigator>
-  <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator>
+
+  <button wx:if="{{!isFull}}" class="add" bindtap='addAction'>记录生日</button>
+  <button wx:else class="add disable">额度已满</button>
+
+  <!-- <navigator  url='/pages/edit/edit'></navigator>
+  <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator> -->
 
 </view>
 
