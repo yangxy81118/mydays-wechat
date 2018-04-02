@@ -1,13 +1,4 @@
 <view class="wall">
-  <view id="fountainG">
-    <view id="fountainG_1" class="fountainG"></view>
-    <view id="fountainG_2" class="fountainG"></view>
-    <view id="fountainG_3" class="fountainG"></view>
-    <view id="fountainG_4" class="fountainG"></view>
-    <view id="fountainG_5" class="fountainG"></view>
-    <view id="fountainG_6" class="fountainG"></view>
-    <view id="fountainG_7" class="fountainG"></view>
-    <view id="fountainG_8" class="fountainG"></view>
-  </view>
-  <text>小程序加载中...</text>
+  <text>这是转发页面</text>
+  <button>点击此处转发</button>
 </view>

@@ -4,9 +4,9 @@
     <view class="section sec-name">
       <label>姓名</label>
       <view class="input-box">
-        <text class="font_family icon-user label-icon"></text>
+        <text class="iconfont icon-user1 label-icon"></text>
         <input name="name" value="{{dayName}}" maxlength='6' placeholder='6字以内，如爸爸妈妈' placeholder-class='placeholder'></input>
-        <text class="font_family icon-star star {{starState}}" bindtap='starTapAction'></text>
+        <text class="iconfont icon-star star {{starState}}" bindtap='starTapAction'></text>
       </view>
     </view>
 
@@ -20,7 +20,7 @@
       <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
 
       <view class="input-box" wx:if="{{dateMode==0}}">
-        <text class="font_family icon-date label-icon"></text>
+        <text class="iconfont icon-date2 label-icon"></text>
         <picker mode="date" name="date"
           fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
           <view class="picker">
@@ -30,7 +30,7 @@
       </view>
 
       <view class="input-box" wx:else>
-        <text class="font_family icon-date label-icon"></text>
+        <text class="iconfont icon-date label-icon"></text>
         <picker mode="multiSelector" name="date"
             bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
           <view class="picker">
