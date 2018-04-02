@@ -250,6 +250,11 @@ Page({
     })
     dateSelected = true
   },
+  toSharePageAction:function(e){
+    wx.navigateTo({
+      url: '/pages/fromOther/fromOther',
+    })
+  },
   formSubmit: function (e) {
     var formData = e.detail.value
 
