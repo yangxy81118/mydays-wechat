@@ -51,8 +51,8 @@
     <view class="section sec-limit">
       <view>
         已用生日额度
-        <text wx:if="{{fewerSpace}}" class="red">{{daysCount}}/{{daysLimit}}</text>
-        <text wx:else >{{daysCount}} /{{daysLimit}}</text>
+        <text wx:if="{{fewerSpace}}" class="red">{{daysCount}} / {{daysLimit}}</text>
+        <text wx:else >{{daysCount}} / {{daysLimit}}</text>
       </view>
     </view>   
 

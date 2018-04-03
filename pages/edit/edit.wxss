@@ -46,13 +46,12 @@ view.sec-other button:after{
 
 view.sec-limit{
   margin:40rpx 0 0 0;
-  box-shadow:0 0 4px rgba(216,216,216,0.25);
-  border-radius: 100rpx;
+  background: #F3F3F3;
+  border-radius: 6rpx;
 }
 
 view.sec-limit view{
   height:100rpx;
-  background: #FFF;
   padding: 0 0 0 30rpx;
   position: relative;
   line-height: 100rpx;
