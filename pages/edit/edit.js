@@ -26,6 +26,7 @@ Page({
   onLoad: function (option) {
 
     commonTool.showLastAction()
+    wx.hideShareMenu()
 
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
@@ -57,9 +58,6 @@ Page({
     }else{
       initLunarCompornt(that)
     }
-
-    console.log("edit:")
-    console.dir(option)
 
 
 
@@ -125,12 +123,14 @@ Page({
 
     var daysCount = wx.getStorageSync("daysCount")
     var daysLimit = wx.getStorageSync("daysLimit")
-    var isFull = ((daysCount + 1) >= daysLimit)
+    var nearlyFull = ((daysCount + 1) >= daysLimit)
+    var fewerSpace = daysCount >= daysLimit*0.9
 
     this.setData({
       daysCount: daysCount,
       daysLimit: daysLimit,
-      isFull:isFull
+      nearlyFull: nearlyFull,
+      fewerSpace: fewerSpace
     })
 
     wx.hideLoading();
@@ -249,11 +249,6 @@ Page({
     })
     dateSelected = true
   },
-  toSharePageAction:function(e){
-    wx.navigateTo({
-      url: '/pages/fromOther/fromOther',
-    })
-  },
   formSubmit: function (e) {
     var formData = e.detail.value
 
@@ -361,6 +356,22 @@ Page({
       this.setData({starState:"star-selected"})
     }else{
       this.setData({starState:""})
+    }
+  },
+  //分享
+  onShareAppMessage:function(options){
+    console.log('click share')
+    return {
+      title: "我忘记你的生日啦",
+      path: "/pages/fromOther/fromOther?inviterId=199",
+      success: function (res) {
+        console.log("share success:")
+        console.dir(res)
+      },
+      fail: function (res) {
+        console.log('failed...')
+
+      }
     }
   }
 

@@ -45,20 +45,19 @@
      
     <!-- <view class="section sec-other">
       <label>其他添加方式</label>
-      <button class="share" bindtap='toSharePageAction'>邀请微信好友添加</button>
-    </view>   -->
+      <button class="share" open-type='share'>邀请微信好友添加</button>
+    </view>    -->
 
-    <!-- <view class="section sec-other">
-      <label style="opacity:0;height:40rpx;">...</label>
-      <button class="share">已用生日额度</button>
-    </view>   -->
-
-     <view class="section sec-limit">
-      已用生日额度：{{daysCount}}/{{daysLimit}}
-    </view> 
+    <view class="section sec-limit">
+      <view>
+        已用生日额度
+        <text wx:if="{{fewerSpace}}" class="red">{{daysCount}}/{{daysLimit}}</text>
+        <text wx:else >{{daysCount}} /{{daysLimit}}</text>
+      </view>
+    </view>   
 
     <view class="toolbar">
-      <button wx:if="{{!isFull}}" class="again" formType="submit" id="again"  data-test="1">保存再记</button>
+      <button wx:if="{{!nearlyFull}}" class="again" formType="submit" id="again"  data-test="1">保存再记</button>
       <button wx:else class="again disable" id="again"  data-test="1" bindtap='againDisableAction'>保存再记</button>
       <button class="save" formType="submit" id="save" data-test="2">保存</button>
     </view>
