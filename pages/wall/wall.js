@@ -16,10 +16,6 @@ Page({
           success: function (loginRes) {
             wx.setStorageSync('userId', loginRes.data)
             initUserBaseData(loginRes.data)
-            wx.redirectTo({
-              url:'/pages/home/home'
-            })
-
             // setTimeout(test, 1500, that)
 
             // console.log("finish!")
@@ -51,6 +47,10 @@ function initUserBaseData(userId){
       wx.setStorageSync("daysLimit", u.limit)
       wx.setStorageSync("daysCount", u.daysCount)
       console.log("limit:"+u.limit+",count:"+u.daysCount)
+
+      wx.redirectTo({
+        url: '/pages/home/home'
+      })
     }
   });
 }

@@ -22,7 +22,8 @@ view.sec-name{
 }
 
 view.sec-time{
-
+  padding:0 0 40rpx 0;
+  border-bottom:2rpx solid #EAEAEA;
 }
 
 view.sec-other{
@@ -45,8 +46,23 @@ view.sec-other button:after{
 
 view.sec-limit{
   margin:40rpx 0 0 0;
-  border-top:2rpx solid #EAEAEA;
-  padding:40rpx 0 0 0;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+  border-radius: 100rpx;
+}
+
+view.sec-limit view{
+  height:100rpx;
+  background: #FFF;
+  padding: 0 0 0 30rpx;
+  position: relative;
+  line-height: 100rpx;
+}
+
+view.sec-limit text{
+  position: absolute;
+  right:30rpx;
+  top:0;
+  line-height: 100rpx;
 }
 
 view.section label{
@@ -108,7 +124,7 @@ view.sec-time button{
   width:48%;
   height:100rpx;
   line-height: 100rpx;
-  
+  color:#A8A8A8;
   display: inline-block;
   background: #FFF;
   margin:0 0 20rpx 0;

@@ -26,6 +26,7 @@ Page({
   onLoad: function (option) {
 
     commonTool.showLastAction()
+    wx.hideShareMenu()
 
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
@@ -38,10 +39,8 @@ Page({
 
     //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
-      wx.request({
-        url: 'https://www.yubopet.top/simple-query/lunar',
-        method: 'GET',
-        success: function (res) {
+      commonTool.request('simple-query/lunar','GET',
+        function (res) {
           var calendarSource = res.data
           cnCalendar = calTool.init(calendarSource)
           wx.setStorage({
@@ -50,85 +49,88 @@ Page({
           })
           initLunarCompornt(that)
         }
-      })
+      )
+      // wx.request({
+      //   url: 'https://www.yubopet.top/simple-query/lunar',
+      //   method: 'GET',
+      //   success: 
+      // })
     }else{
       initLunarCompornt(that)
     }
 
-    console.log("edit:")
-    console.dir(option)
+
+
     //如果是编辑，则去加载该天数据
     if (option && option.dayId){
       this.setData({ thisDayId: option.dayId})
-      wx.request({
-        url: 'https://www.yubopet.top/graphql/days',
-        method: 'POST',
-        data: '{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
-        header: {
-          'content-type': 'text/plain'
-        },
-        success: function (res) {
 
-          if (commonTool.checkError(res)) return
+      commonTool.graphReq('days', 
+                  '{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
+          function (res) {
 
-          var dayData = res.data.data.day
+            if (commonTool.checkError(res)) return
 
-          //检测是否是农历
-          if(dayData.lunar && dayData.lunar.length > 0){
-            
-            var lunarSplitArray = new Array()
-            var nian = dayData.lunar.indexOf("）")
-            var yue = dayData.lunar.indexOf("月")
-            lunarSplitArray[0] = dayData.lunar.substring(0,nian+1)
-            lunarSplitArray[1] = dayData.lunar.substring(nian+1,yue+1)
-            lunarSplitArray[2] = dayData.lunar.substring(yue+1, dayData.lunar.length)
-            
-            var result = calTool.getChoiceIndex(cnCalendar,lunarSplitArray,that.data.lunarArray)
-            var cnDateStr = lunarSplitArray[0] + lunarSplitArray[1] + lunarSplitArray[2]
+            var dayData = res.data.data.day
+            //检测是否是农历
+            if (dayData.lunar && dayData.lunar.length > 0) {
+
+              var lunarSplitArray = new Array()
+              var nian = dayData.lunar.indexOf("）")
+              var yue = dayData.lunar.indexOf("月")
+              lunarSplitArray[0] = dayData.lunar.substring(0, nian + 1)
+              lunarSplitArray[1] = dayData.lunar.substring(nian + 1, yue + 1)
+              lunarSplitArray[2] = dayData.lunar.substring(yue + 1, dayData.lunar.length)
+
+              var result = calTool.getChoiceIndex(cnCalendar, lunarSplitArray, that.data.lunarArray)
+              var cnDateStr = lunarSplitArray[0] + lunarSplitArray[1] + lunarSplitArray[2]
+              that.setData({
+                lunarArray: result.lunarArray,
+                lunarChoice: [result.year, result.month, result.day],
+                cnDate: cnDateStr,
+                vDate: cnDateStr,
+                dateClass: "selected",
+                dateMode: 1
+              })
+
+            } else {
+              var normalDateStr = dayData.year + "-" + dayData.month + "-" + dayData.date
+              that.setData({
+                dateValue: normalDateStr,
+                vDate: normalDateStr,
+                date: normalDateStr,
+                dateMode: "公历",
+                dateClass: "selected",
+                dateMode: 0
+              })
+            }
+
+            var favorState = ""
+            if (dayData.favor) {
+              favorState = "star-selected"
+            }
             that.setData({
-              lunarArray: result.lunarArray,
-              lunarChoice: [result.year, result.month, result.day],
-              cnDate: cnDateStr,
-              vDate: cnDateStr,
-              dateClass:"selected",
-              dateMode: 1
+              dayName: dayData.name,
+              starState: favorState
             })
 
-          }else{
-            var normalDateStr = dayData.year + "-" + dayData.month + "-" + dayData.date
-            that.setData({
-              dateValue: normalDateStr,
-              vDate: normalDateStr,
-              date: normalDateStr,
-              dateMode: "公历",
-              dateClass: "selected",
-              dateMode:0
-            })
-          }
-
-          var favorState = ""
-          if(dayData.favor){
-            favorState = "star-selected"
-          }
-          that.setData({
-            dayName: dayData.name,
-            starState: favorState
+            dateSelected = true
+            wx.hideLoading();
           })
+    } //endIf 编辑
 
-          dateSelected = true
-          wx.hideLoading();
-        }
-      })
-    }
+
 
     var daysCount = wx.getStorageSync("daysCount")
     var daysLimit = wx.getStorageSync("daysLimit")
-    var isFull = ((daysCount + 1) >= daysLimit)
+    var nearlyFull = ((daysCount + 1) >= daysLimit)
+    var fewerSpace = daysCount >= daysLimit*0.9
 
     this.setData({
       daysCount: daysCount,
       daysLimit: daysLimit,
-      isFull:isFull
+      nearlyFull: nearlyFull,
+      fewerSpace: fewerSpace
     })
 
     wx.hideLoading();
@@ -147,49 +149,46 @@ Page({
     var that = this
     var lastDate = this.data.vDate
 
-    if (lastDate.length > 0) {
+    if (lastDate.length <= 0) 
+      return
 
-      this.setData({
-        cnDate: "历法切换中...",
-        date: "历法切换中..."
-      })
+    this.setData({
+      cnDate: "历法切换中...",
+      date: "历法切换中..."
+    })
 
-      //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
-      //如果是切换到公历，则直接修改公历插件的value数值即可
-      if (dateMode == 0) {
-        wx.request({
-          url: 'https://www.yubopet.top/simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
-          method: 'GET',
-          success: function (res) {
-            if (commonTool.checkError(res)) return
-            that.setData({
-              dateValue: res.data,
-              vDate: res.data,
-              date: res.data
-            })
-          }
+    //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
+    //如果是切换到公历，则直接修改公历插件的value数值即可
+    if (dateMode == 0) {
+      commonTool.request('simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
+        'GET',
+        function (res) {
+          if (commonTool.checkError(res)) return
+          that.setData({
+            dateValue: res.data,
+            vDate: res.data,
+            date: res.data
+          })
+        }
+      )
+    }
+
+    //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
+    else {
+      var that = this
+      commonTool.request('simple-query/lunar/normalTolunar?date=' + lastDate,
+        'GET',
+        function (res) {
+          var lunarStr = res.data.split(",")
+          var result = calTool.getChoiceIndex(cnCalendar, lunarStr, that.data.lunarArray)
+          var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
+          that.setData({
+            lunarArray: result.lunarArray,
+            lunarChoice: [result.year, result.month, result.day],
+            cnDate: cnDateStr,
+            vDate: cnDateStr
+          })
         })
-      }
-
-      //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
-      else {
-        var that = this
-        wx.request({
-          url: 'https://www.yubopet.top/simple-query/lunar/normalTolunar?date=' + lastDate,
-          method: 'GET',
-          success: function (res) {
-            var lunarStr = res.data.split(",")
-            var result = calTool.getChoiceIndex(cnCalendar,lunarStr,that.data.lunarArray)
-            var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
-            that.setData({
-              lunarArray: result.lunarArray,
-              lunarChoice: [result.year, result.month, result.day],
-              cnDate: cnDateStr,
-              vDate: cnDateStr
-            })
-          }
-        })
-      }
     }
   },
   lunarFieldChange: function (e) {
@@ -250,11 +249,6 @@ Page({
     })
     dateSelected = true
   },
-  toSharePageAction:function(e){
-    wx.navigateTo({
-      url: '/pages/fromOther/fromOther',
-    })
-  },
   formSubmit: function (e) {
     var formData = e.detail.value
 
@@ -283,21 +277,11 @@ Page({
     var thisDayId = this.data.thisDayId
     var isFavor = this.data.starState.length > 0
     if(thisDayId > 0){
-      wx.request({
-        url: 'https://www.yubopet.top/customDay',
-        method: 'POST',
-        data: {
-          name: formData.name,
-          dateMode: dateMode,
-          date: formData.date,
-          favor: isFavor,
-          dayId: thisDayId,
-          comment: formData.comment
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
+
+      commonTool.request(
+        'customDay',
+        'POST',
+        function (res) {
           if (commonTool.checkError(res)) return
 
           if (again) {
@@ -310,24 +294,26 @@ Page({
               delta: 1
             })
           }
-        }
-      })
-    }else{
-      wx.request({
-        url: 'https://www.yubopet.top/customDay',
-        method: 'PUT',
-        data: {
+        },
+        {
           name: formData.name,
-          dateMode:dateMode,
+          dateMode: dateMode,
           date: formData.date,
           favor: isFavor,
-          userId: userId,
+          dayId: thisDayId,
           comment: formData.comment
         },
-        header: {
+        {
           'content-type': 'application/json'
-        },
-        success: function (res) {
+        }
+      )
+
+    }else{
+
+      commonTool.request(
+        'customDay',
+        'PUT',
+        function (res) {
           if (commonTool.checkError(res)) return
           wx.setStorageSync("newDayId", res.data)
 
@@ -337,9 +323,6 @@ Page({
 
           if (again) {
             wx.setStorageSync("lastActionState", "success:添加成功")
-
-
-            // console.log("存储:" + wx.getStorageSync("lastActionState"))
             wx.redirectTo({
               url: '/pages/edit/edit',
             })
@@ -348,12 +331,20 @@ Page({
               delta: 1
             })
           }
-          
+        },
+        {
+          name: formData.name,
+          dateMode: dateMode,
+          date: formData.date,
+          favor: isFavor,
+          userId: userId,
+          comment: formData.comment
+        },
+        {
+          'content-type': 'application/json'
         }
-      })
+      )
     }
-    
-
   },
 
   againDisableAction: function (e) {
@@ -365,6 +356,22 @@ Page({
       this.setData({starState:"star-selected"})
     }else{
       this.setData({starState:""})
+    }
+  },
+  //分享
+  onShareAppMessage:function(options){
+    console.log('click share')
+    return {
+      title: "我忘记你的生日啦",
+      path: "/pages/fromOther/fromOther?inviterId=199",
+      success: function (res) {
+        console.log("share success:")
+        console.dir(res)
+      },
+      fail: function (res) {
+        console.log('failed...')
+
+      }
     }
   }
 

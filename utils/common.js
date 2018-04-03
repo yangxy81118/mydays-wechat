@@ -50,8 +50,29 @@ const showLastAction = function(){
 const checkDaysCount = function(){
   var daysCount = wx.getStorageSync("daysCount")
   var daysLimit = wx.getStorageSync("daysLimit")
+  console.log("daysCount:")
   return daysCount >= daysLimit
 }
+
+
+const request = function(url,method,successCallBack,data,header){
+  wx.request({
+    url: 'https://www.yubopet.top/' + url,
+    method: method,
+    data:data,
+    header: header,
+    success: successCallBack
+  })
+}
+
+const graphReq = function (graphModule,data,callback){
+  request('graphql/' + graphModule, 
+          'POST', 
+          callback,
+          data, 
+           {'content-type': 'text/plain'})
+}
+
 
 module.exports = {
   warning: warning,
@@ -59,5 +80,7 @@ module.exports = {
   loading: loading,
   checkError: checkError,
   showLastAction: showLastAction,
-  checkDaysCount: checkDaysCount
+  checkDaysCount: checkDaysCount,
+  request: request,
+  graphReq: graphReq
 }
