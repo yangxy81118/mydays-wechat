@@ -35,6 +35,12 @@
 					"name": "编辑",
 					"pathName": "pages/edit/edit",
 					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "受到邀请",
+					"pathName": "pages/fromOther/fromOther",
+					"query": "inviterId=1"
 				}
 			]
 		}

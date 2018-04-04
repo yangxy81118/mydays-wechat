@@ -43,10 +43,10 @@
     </view>
 
      
-    <!-- <view class="section sec-other">
+    <view class="section sec-other" wx:if="{{thisDayId==0}}">
       <label>其他添加方式</label>
       <button class="share" open-type='share'>邀请微信好友添加</button>
-    </view>    -->
+    </view>    
 
     <view class="section sec-limit">
       <view>

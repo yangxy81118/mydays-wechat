@@ -1,6 +1,203 @@
-view{
-  text-align: center;
-  line-height: 50rpx;
-  font-size:28rpx;
-  color:#888;
+page{
+  background: #F9F9F9;
+  height:96%;
 }
+
+view.header{
+  height:400rpx;
+  width:100%;
+  position: relative;
+}
+
+view.header view.content{
+  position: absolute;
+  width:100%;
+  height:100%;
+  z-index: 2;
+  top:0;
+  left:0;
+
+}
+
+view.content image.avatar{
+  display: block;
+  width:140rpx;
+  height:140rpx;
+  margin:60rpx auto 20rpx;
+  border:8rpx solid #FFF;
+  border-radius: 50%;
+}
+
+view.header image.bk{
+  width:100%;
+  height:400rpx;
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+view.content text{
+  display: block;
+  text-align: center;
+  color:#FFF;
+}
+
+view.content text.username{
+  font-size: 36rpx;
+  line-height: 80rpx;
+}
+
+view.content text.greeting{
+  font-size: 24rpx;
+}
+
+.container{
+  width:84%;
+  margin:0 auto;
+}
+
+form{
+  color:#A8A8A8;
+  font-size:26rpx;
+}
+
+view.section{
+  margin:30rpx 0 0 0 ;
+}
+
+view.sec-name{
+
+}
+
+view.sec-time{
+  padding:0 0 40rpx 0;
+}
+
+view.section label{
+  display: block;
+  line-height: 70rpx;
+  font-size:26rpx;
+  color:#A8A8A8;
+  text-indent: 30rpx;
+}
+
+view.section .input-box{
+  position: relative;
+  background: #FFF;
+  height:100rpx;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+  border-radius: 8rpx;
+}
+
+view.section .iconfont{
+  color:#FF9940;
+  font-size:50rpx;  
+  position: absolute;
+  top:0;
+  line-height: 100rpx;
+}
+
+view.section text.label-icon{
+  position: absolute;
+  font-size:50rpx;
+  left:30rpx;
+  top:0rpx;
+  color:#FF9940;
+}
+
+view.section input{
+  height:100%;
+  width:70%;
+  margin:0 0 0 100rpx;
+  color:#000;
+}
+
+.placeholder{
+  color:#AAA;
+}
+
+view.sec-name text.star{
+  position: absolute;
+  top:0rpx;
+  right:30rpx;
+  font-size:40rpx;
+  color:#BBB;
+}
+
+view.sec-name text.star-selected{
+  color:#FF9940;
+}
+
+view.sec-time button{
+  width:48%;
+  height:100rpx;
+  line-height: 100rpx;
+  color:#A8A8A8;
+  display: inline-block;
+  background: #FFF;
+  margin:0 0 20rpx 0;
+  font-size:26rpx;
+}
+
+view.sec-time button:after{
+  border-color:#FFF;
+  border-width: 6rpx;
+}
+
+view.sec-time button.selected{
+  color:#ff9940;
+  box-shadow:0 0 12rpx rgba(255,153,64,0.35);
+}
+
+view.sec-time button.selected:after{
+  border-color:#ff9940;
+  
+}
+  
+
+view.sec-time picker{
+  width:80%;
+  height:100%;
+}
+
+view.sec-time view.picker{
+  height:100%;
+  width:100%;
+  margin:0 0 0 100rpx;
+}
+
+view.picker text{
+  line-height: 100rpx;
+}
+
+
+view.picker text.selected{
+  color:#000;
+}
+
+
+
+view.toolbar{
+  position: fixed;
+  bottom:20rpx;
+  width:100%;
+  /* height:80rpx; */
+}
+
+view.toolbar button{
+  font-size:30rpx;
+  display: inline-block;
+  line-height: 100rpx;
+  background: #FFF;
+  height:100rpx;
+  color:#FFF;
+  background: #ff9940;
+  width:80%;
+  margin:0 0 0 2%;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+}
+
+view.toolbar button::after{ 
+  border:none;
+}
+

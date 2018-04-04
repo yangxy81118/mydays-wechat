@@ -1,20 +1,54 @@
-<view class="wall">
-  <view>这是转发页面1</view>
-  <view>这是转发页面2</view>
-  <view>这是转发页面3</view>
-  <view>这是转发页面4</view>
-  <view>这是转发页面5</view>
-  <view>这是转发页面6</view>
-  <view>这是转发页面7</view>
-  <view>这是转发页面8</view>
-  <view>这是转发页面9</view>
-  <view>这是转发页面0</view>
-  <view>这是转发页面1</view>
-  <view>这是转发页面2</view>
-  <view>这是转发页面3</view>
-  <view>这是转发页面4</view>
-  <view>这是转发页面5</view>
-  <view>这是转发页面6</view>
+<view class="header">
+  <view class="content">
+    <image class="avatar" src='/images/avatar.png'></image> 
+    <text class="username">乖大敏</text>
+    <text class="greeting">邀请你添加你的生日</text>
+  </view>
+  <image class="bk" src="/images/share_bg.png" mode='aspectFill'></image>
+</view>
 
-  <button open-type='share'>点击此处转发</button>
+<view class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="section sec-name">
+      <label>姓名</label>
+      <view class="input-box">
+        <text class="iconfont icon-user2 label-icon"></text>
+        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder'></input>
+      </view>
+    </view>
+
+    <view class="section sec-time">
+      <label>生日</label>
+
+      <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+      <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+
+      <button wx:if="{{dateMode==1}}" class="selected" bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+      <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+
+      <view class="input-box" wx:if="{{dateMode==0}}">
+        <text class="iconfont icon-date1 label-icon"></text>
+        <picker mode="date" name="date"
+          fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
+          <view class="picker">
+            <text class="{{dateClass}}">{{date}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="input-box" wx:else>
+        <text class="iconfont icon-date1 label-icon"></text>
+        <picker mode="multiSelector" name="date"
+            bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
+          <view class="picker">
+            <text class="{{dateClass}}">{{cnDate}}</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="toolbar">
+      <button class="save" formType="submit" id="save">保存</button>
+    </view>
+  </form>
 </view>

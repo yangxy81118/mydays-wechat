@@ -22,8 +22,7 @@ view.sec-name{
 }
 
 view.sec-time{
-  padding:0 0 40rpx 0;
-  border-bottom:2rpx solid #EAEAEA;
+
 }
 
 view.sec-other{
@@ -46,11 +45,13 @@ view.sec-other button:after{
 
 view.sec-limit{
   margin:40rpx 0 0 0;
-  background: #F3F3F3;
-  border-radius: 6rpx;
+  padding:40rpx 0 0 0;
+  border-top:2rpx solid #EAEAEA;
 }
 
 view.sec-limit view{
+  background: #F3F3F3;
+  border-radius: 6rpx;
   height:100rpx;
   padding: 0 0 0 30rpx;
   position: relative;
@@ -166,15 +167,12 @@ view.picker text.selected{
   color:#000;
 }
 
-
-
 view.toolbar{
   position: fixed;
   bottom:20rpx;
   width:100%;
   /* height:80rpx; */
 }
-
 
 view.toolbar button{
   font-size:30rpx;

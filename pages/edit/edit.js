@@ -1,11 +1,4 @@
-//index.js
-//获取应用实例
-const date = new Date()
-const months = []
-const days = []
-
 var cnCalendar
-
 var dateSelected = false
 
 const calTool = require("../../utils/cn-cal.js")
@@ -31,12 +24,6 @@ Page({
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
     
-    //处理样式
-    var res = wx.getSystemInfoSync()
-    if (res.system.toLowerCase().indexOf("ios") >= 0) {
-      this.setData({ ios: "ios" })
-    }
-
     //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
       commonTool.request('simple-query/lunar','GET',
@@ -50,11 +37,6 @@ Page({
           initLunarCompornt(that)
         }
       )
-      // wx.request({
-      //   url: 'https://www.yubopet.top/simple-query/lunar',
-      //   method: 'GET',
-      //   success: 
-      // })
     }else{
       initLunarCompornt(that)
     }
@@ -361,16 +343,17 @@ Page({
   //分享
   onShareAppMessage:function(options){
     console.log('click share')
+    var userId = wx.getStorageSync('userId')
+
     return {
-      title: "我忘记你的生日啦",
-      path: "/pages/fromOther/fromOther?inviterId=199",
+      title: "我又忘记你的生日啦",
+      path: "/pages/fromOther/fromOther?inviterId=" + userId,
+      imageUrl:"/images/share_cover.png",
       success: function (res) {
         console.log("share success:")
-        console.dir(res)
       },
       fail: function (res) {
-        console.log('failed...')
-
+        console.log("share success:")
       }
     }
   }
