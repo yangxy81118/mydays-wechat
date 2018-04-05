@@ -56,6 +56,20 @@ page{
 }
 
 
+.submit-btn{
+  font-size:30rpx;
+  display: block;
+  line-height: 100rpx;
+  height:100rpx;
+  color:#FFF;
+  background: #ff9940;
+  width:100%;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+  text-align: center;
+  border-radius: 10rpx;
+}
+
+
 /*reset*/
 input,button,select,textarea{outline:none}
 textarea{resize:none} 

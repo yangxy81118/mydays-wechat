@@ -43,6 +43,10 @@ view.sec-other button:after{
   border:none;
 }
 
+view.sec-other text.arrow{
+  
+}
+
 view.sec-limit{
   margin:40rpx 0 0 0;
   padding:40rpx 0 0 0;

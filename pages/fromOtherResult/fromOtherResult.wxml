@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="img">
+    <view class="front">
+      <image src="/images/{{img}}" mode="aspectFit"></image>
+      <text class="result">{{title}}</text>
+      <view class="tips">{{tips}}</view>
+    </view>
+    <view class="shadow s1"></view>
+    <view class="shadow s2"></view>
+  </view>
+  <view class="action">
+    <navigator open-type='redirect' class="submit-btn" url='/pages/home/home'>我也来记一个</navigator>
+  </view>
+</view>

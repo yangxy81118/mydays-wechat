@@ -15,7 +15,10 @@ Page({
     dayFavor: false,
     thisDayId: 0,
     dateMode: 0,
-    starState: ""
+    starState: "",
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    userInfo: {},
+    inviter:{}
   },
   onLoad: function (options) {
     console.log("Enter share Page,123,this is options:")
@@ -23,13 +26,44 @@ Page({
     inviterId = options.inviterId
 
     initComponents(this)
-    //注意这里可能要“加载中”
 
-    //首先wx.getStorage获取用户ID
-      //如果获取到了，则说明是老用户，则去查询用户信息，尽量拿到userName
-        //如果拿到了userName，填充到input name里
-        //如果没有拿到，则调用getUserInfo去授权获取
-      //如果是新用户，并且调用getUserInfo去授权获取，并调用login
+    //注意这里可能要“加载中”
+    wx.showLoading({
+      title: '加载中'
+    })
+
+    var that = this
+
+    //加载邀请人的数据
+    commonTool.graphReq(
+      'days',
+      '{user(userId:' + inviterId +') { nickName,avatarUrl }}',
+      function (res) {
+        if (commonTool.checkError(res)) return
+
+        var inviter = res.data.data.user
+        if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
+          inviter.avatarUrl = "/images/avatar.png"
+        }
+
+        if (!inviter.nickName || inviter.nickName.length <= 0) {
+          inviter.nickName = "神秘人"
+        }
+
+        that.setData({
+            inviter: res.data.data.user
+        })
+      }
+    )
+
+    wx.hideLoading()
+
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    this.setData({
+      userInfo: e.detail.userInfo
+    })
   },
   userForward:function(e){
     //用户点击“我也参与”，跳转到首页
@@ -162,6 +196,10 @@ Page({
       return
     }
 
+    wx.showLoading({
+      title: '提交中',
+    })
+
     var dateMode = this.data.dateMode;
     if (dateMode == 1) {
       var cnCalendarArray = this.data.lunarArray
@@ -173,13 +211,25 @@ Page({
       'PUT',
       function (res) {
         if (commonTool.checkError(res)) return
-        commonTool.success('添加成功!')
+        
+        wx.hideLoading()
+        
+        if(res.data.code == 0){
+          wx.navigateTo({
+            url: '/pages/fromOtherResult/fromOtherResult?result=1',
+          })
+        }else{
+          wx.navigateTo({
+            url: '/pages/fromOtherResult/fromOtherResult?result=2',
+          })
+        }
       },
       {
         name: formData.name,
         dateMode: dateMode,
         date: formData.date,
-        userId: inviterId
+        userId: inviterId,
+        beInviterId: inviterId
       },
       {
         'content-type': 'application/json'

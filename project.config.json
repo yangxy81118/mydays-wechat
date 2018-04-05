@@ -41,6 +41,12 @@
 					"name": "受到邀请",
 					"pathName": "pages/fromOther/fromOther",
 					"query": "inviterId=1"
+				},
+				{
+					"id": 2,
+					"name": "邀请结果",
+					"pathName": "pages/fromOtherResult/fromOtherResult",
+					"query": "result=2"
 				}
 			]
 		}

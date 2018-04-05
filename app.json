@@ -3,7 +3,8 @@
     "pages/wall/wall",
     "pages/home/home",
     "pages/edit/edit",
-    "pages/fromOther/fromOther"
+    "pages/fromOther/fromOther",
+    "pages/fromOtherResult/fromOtherResult"
   ],
   "window":{
     "backgroundTextStyle":"light",

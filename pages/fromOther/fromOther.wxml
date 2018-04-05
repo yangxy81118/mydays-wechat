@@ -1,10 +1,10 @@
 <view class="header">
   <view class="content">
-    <image class="avatar" src='/images/avatar.png'></image> 
-    <text class="username">乖大敏</text>
-    <text class="greeting">邀请你添加你的生日</text>
+    <image class="avatar" src='{{inviter.avatarUrl}}'></image> 
+    <text class="username">{{inviter.nickName}}</text>
+    <text class="greeting">"忘记你的生日了，真是怪难为情的~ ԾㅂԾ"</text>
   </view>
-  <image class="bk" src="/images/share_bg.png" mode='aspectFill'></image>
+  <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
 
 <view class="container">
@@ -13,7 +13,8 @@
       <label>姓名</label>
       <view class="input-box">
         <text class="iconfont icon-user2 label-icon"></text>
-        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder'></input>
+        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>
+        <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="copy">使用昵称</button>
       </view>
     </view>
 
