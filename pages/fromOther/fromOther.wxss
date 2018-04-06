@@ -144,6 +144,10 @@ view.sec-name button.copy:after{
   border:none;
 }
 
+view.sec-name button.copy:active{
+  top:28rpx;
+}
+
 view.sec-time button{
   width:48%;
   height:100rpx;

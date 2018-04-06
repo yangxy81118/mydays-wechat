@@ -29,7 +29,8 @@
     </view>
   </view>
   <scroll-view wx:else scroll-y='true' class="list">
-    <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
+    <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" 
+      wx:for="{{days}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
         <view class="day-box" bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}">
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
@@ -47,7 +48,7 @@
             <text class="date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
             <text class="date" wx:else>{{item.lunar}}</text>
           </block>
-          <image class="star" wx:if="{{item.favor}}" src="/images/star-s.png" />
+          <text wx:if="{{item.favor}}" class="star iconfont icon-star"></text>
           <view class="new" wx:if="{{item.id == newId }}">
              <text>新</text> 
           </view>
@@ -60,7 +61,8 @@
     </scroll-view>
 
 
-    <view wx:if="{{layout == 2}}" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" 
+    <view wx:if="{{layout == 2}}" 
+      wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" wx:key="id"
       bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}"
       class="day-item-v">
         <view wx:if="{{item.remain <= 60}}" class="item-v-main close-v" data-dayId="{{item.id}}">
@@ -95,7 +97,10 @@
 
   <view class="bottom-mask"></view>
 
-  <button wx:if="{{!isFull}}" class="add" bindtap='addAction'>记录生日</button>
+  <!-- <button hover-class='add-hover' wx:if="{{!isFull}}" class="add" bindtap='addAction'>记录生日</button>
+  <button wx:else class="add disable">额度已满</button> -->
+
+  <button wx:if="{{!isFull}}" class="add" hover-class='add-hover' bindtap='addAction'>记录生日</button>
   <button wx:else class="add disable">额度已满</button>
 
   <!-- <navigator  url='/pages/edit/edit'></navigator>

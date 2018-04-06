@@ -42,6 +42,10 @@ view.tab-nav view.layout-btn {
   width: 15.5%;
 }
 
+view.tab-nav view.layout-btn:active{
+  background: #F9F9F9;
+}
+
 view.tab-nav view.layout-btn text.icon {
   font-size: 38rpx;
 }
@@ -197,6 +201,14 @@ view.item-scroll-wrap .day-box {
   top: 30%;
 }
 
+.day-box text.icon-star{
+  position: absolute;
+  top:20rpx;
+  right:20rpx;
+  color:#EEE;
+  font-size:22rpx;
+}
+
 .day-item-h view.item-scroll-wrap .opt-box {
   width: 25.8%;
   position: relative;
@@ -235,14 +247,20 @@ button.add {
   font-size: 40rpx;
   line-height: 140rpx;
   box-shadow: 0 2rpx 8px #ff9940;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 button.add:after{
   border:none;
 }
+
+button.add:active{
+  background: #FA8836; 
+  bottom:1.8%;
+}
+
+/* .add-hover{
+  background: #FAFAFA;
+} */
 
 button.disable{
   color:#FFCA9C;
@@ -256,8 +274,6 @@ button.disable{
   bottom:0;
   left:0;
   background: -webkit-linear-gradient( top, rgba(249,249,249,0) , rgba(249,249,249,1)); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* Firefox 3.6 - 15 */
   background: linear-gradient(to bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* 标准的语法 */
 }
 
@@ -274,6 +290,11 @@ navigator.add:active {
   box-shadow: 2rpx 4rpx 12rpx #eaeaea;
   background: #fff;
   border-radius: 12rpx;
+}
+
+.day-item-v:active{
+  top:6rpx;
+  box-shadow: 0 1rpx 4rpx #eaeaea;
 }
 
 .day-item-v .item-v-main {

@@ -21,13 +21,11 @@ view.sec-name{
 
 }
 
-view.sec-time{
-
-}
-
 view.sec-other{
   margin:40rpx 0 0 0;
   border-top:2rpx solid #EAEAEA;
+  position: relative;
+  color:#A8A8A8;
 }
 
 view.sec-other button{
@@ -39,12 +37,21 @@ view.sec-other button{
   background: #FFF;
 }
 
+view.sec-other button:active{
+  position: relative;
+  top:4rpx;
+}
+
 view.sec-other button:after{
   border:none;
 }
 
 view.sec-other text.arrow{
-  
+  position: absolute;
+  right:4%;
+  top:70rpx;
+  font-size:30rpx;
+  color:#A8A8A8;
 }
 
 view.sec-limit{
@@ -99,7 +106,13 @@ view.section text.label-icon{
   left:30rpx;
   top:0rpx;
   color:#FF9940;
+  transition: all 1.5s ease-in-out;
+  -webkit-transition: all 1.5s ease-in-out;
 }
+
+/* view.sec-time view.input-box:active text.label-icon{
+  transform: scale(1.5);
+} */
 
 view.section input{
   height:100%;
@@ -118,10 +131,14 @@ view.sec-name text.star{
   right:30rpx;
   font-size:40rpx;
   color:#BBB;
+  transition: all 1.5s ease-in-out;
+  -webkit-transition: all 1.5s ease-in-out;
 }
 
 view.sec-name text.star-selected{
   color:#FF9940;
+  transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);  
 }
 
 view.sec-time button{
@@ -133,6 +150,8 @@ view.sec-time button{
   background: #FFF;
   margin:0 0 20rpx 0;
   font-size:26rpx;
+  transition: all 2s;
+  -webkit-transition: all 2s;
 }
 
 view.sec-time button:after{
@@ -199,6 +218,11 @@ view.toolbar button.save{
   width:50%;
   margin:0 0 0 2%;
   box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+}
+
+view.toolbar button:active{
+  position: relative;
+  top:4rpx;
 }
 
 view.toolbar button.disable{
