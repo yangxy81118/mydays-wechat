@@ -30,17 +30,18 @@ Page({
 
     if (userId == inviterId){
       this.setData({self:true})
-      commonTool.graphReq(
-        'days',
-        '{user(userId:' + inviterId + ') { invitedCount }}',
-        function(res){
-          if (commonTool.checkError(res)) return
-          var inviter = res.data.data.user
-          that.setData({
-            invitedCount : inviter.invitedCount
-          })
-        }
-      )
+
+      commonTool.graphReq({
+          module:'days',
+          data:'{user(userId:' + inviterId + ') { invitedCount }}',
+          callback:function(res){
+            if (commonTool.checkError(res)) return
+            var inviter = res.data.data.user
+            that.setData({
+              invitedCount : inviter.invitedCount
+            })
+          }
+      })
     }
 
     initComponents(this)
@@ -53,27 +54,26 @@ Page({
 
 
     //加载邀请人的数据
-    commonTool.graphReq(
-      'days',
-      '{user(userId:' + inviterId +') { nickName,avatarUrl }}',
-      function (res) {
-        if (commonTool.checkError(res)) return
+    commonTool.graphReq({
+          module:'days',
+          data:'{user(userId:' + inviterId +') { nickName,avatarUrl }}',
+          callback:function (res) {
+            if (commonTool.checkError(res)) return
 
-        var inviter = res.data.data.user
-        if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
-          inviter.avatarUrl = "/images/avatar.png"
-        }
+            var inviter = res.data.data.user
+            if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
+              inviter.avatarUrl = "/images/avatar.png"
+            }
 
-        if (!inviter.nickName || inviter.nickName.length <= 0) {
-          inviter.nickName = "神秘人"
-        }
+            if (!inviter.nickName || inviter.nickName.length <= 0) {
+              inviter.nickName = "神秘人"
+            }
 
-        that.setData({
-            inviter: res.data.data.user
-        })
-      }
-    )
-
+            that.setData({
+                inviter: res.data.data.user
+            })
+          }
+    })
 
     //最大日期到今天（阳历)
     var today = new Date()
@@ -122,10 +122,12 @@ Page({
 
     //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
     //如果是切换到公历，则直接修改公历插件的value数值即可
-    if (dateMode == 0) {
-      commonTool.request('simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
-        'GET',
-        function (res) {
+     if (dateMode == 0) {
+
+      commonTool.request({
+        url:'simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
+        method:'GET',
+        callback:function (res) {
           if (commonTool.checkError(res)) return
           that.setData({
             dateValue: res.data,
@@ -133,15 +135,17 @@ Page({
             date: res.data
           })
         }
-      )
+      })
+
     }
 
     //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
     else {
-      var that = this
-      commonTool.request('simple-query/lunar/normalTolunar?date=' + lastDate,
-        'GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar/normalTolunar?date=' + lastDate,
+        method:'GET',
+        callback:function (res) {
           var lunarStr = res.data.split(",")
           var result = calTool.getChoiceIndex(cnCalendar, lunarStr, that.data.lunarArray)
           var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
@@ -151,7 +155,9 @@ Page({
             cnDate: cnDateStr,
             vDate: cnDateStr
           })
-        })
+        }
+      })
+
     }
   },
   lunarFieldChange: function (e) {
@@ -238,10 +244,20 @@ Page({
       formData.date = cnCalendarArray[0][formData.date[0]] + cnCalendarArray[1][formData.date[1]] + cnCalendarArray[2][formData.date[2]]
     }
 
-    commonTool.request(
-      'customDay/byOther',
-      'PUT',
-      function (res) {
+     commonTool.request({
+        url:'customDay/byOther',
+        method:'PUT',
+        data:{
+          name: formData.name,
+          dateMode: dateMode,
+          date: formData.date,
+          userId: inviterId,
+          beInviterId: inviterId
+        },
+        header:{
+          'content-type': 'application/json'
+        },
+        callback:function (res) {
         if (commonTool.checkError(res)) return
         
         wx.hideLoading()
@@ -255,19 +271,8 @@ Page({
             url: '/pages/fromOtherResult/fromOtherResult?result=2',
           })
         }
-      },
-      {
-        name: formData.name,
-        dateMode: dateMode,
-        date: formData.date,
-        userId: inviterId,
-        beInviterId: inviterId
-      },
-      {
-        'content-type': 'application/json'
       }
-    )
-
+    })
 
   },
   onShareAppMessage: function (options) {
@@ -299,20 +304,23 @@ function initComponents(page){
 
   //检查加载农历组件
   if (!cnCalendar || cnCalendar == "") {
-    commonTool.request('simple-query/lunar', 'GET',
-      function (res) {
-        var calendarSource = res.data
-        cnCalendar = calTool.init(calendarSource)
-        wx.setStorage({
-          key: 'cnCalendar',
-          data: cnCalendar,
-        })
-        initLunarCompornt(page)
-      }
-    )
-  } else {
-    initLunarCompornt(page)
-  }
+
+      commonTool.request({
+        url:'simple-query/lunar',
+        method:'GET',
+        callback:function(res){
+          var calendarSource = res.data
+          cnCalendar = calTool.init(calendarSource)
+          wx.setStorage({
+            key: 'cnCalendar',
+            data: cnCalendar,
+          })
+          initLunarCompornt(page)
+        }
+      })
+    }else{
+      initLunarCompornt(page)
+    }
 }
 
 function initLunarCompornt(pageObj) {
