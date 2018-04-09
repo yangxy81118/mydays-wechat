@@ -197,34 +197,34 @@ function loadPopUp(that,dayId,idx){
     modelShow: "block"
   })
 
-  commonTool.graphReq(
-    'days',
-    '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
-    function (res) {
-      if (commonTool.checkError(res)) return
+  commonTool.graphReq({
+        module:'days',
+        data: '{day(dayId:' + dayId + ') { id name year month date remain custom lunar age favor greeting }}',
+        callback:function (res) {
+          if (commonTool.checkError(res)) return
 
-      var dayData = res.data.data.day
-      that.setData({
-        popUpDay: dayData
-      })
-    }
-  )
+          var dayData = res.data.data.day
+          that.setData({
+            popUpDay: dayData
+          })
+        }
+   })
 }
 
 function loadDays(that,userId){
 
-  commonTool.graphReq(
-    'days',
-    '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor }}',
-    function (res) {
-      if (commonTool.checkError(res)) return
+    commonTool.graphReq({
+          module:'days',
+          data:'{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor }}',
+          callback:function (res) {
+            if (commonTool.checkError(res)) return
 
-      var daysData = res.data.data.days
-      that.setData({
-        days: daysData,
-        daysCnt: daysData.length
-      })
-    }
-  )
+            var daysData = res.data.data.days
+            that.setData({
+              days: daysData,
+              daysCnt: daysData.length
+            })
+          }
+     })
 }
 

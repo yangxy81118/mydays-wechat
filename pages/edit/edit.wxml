@@ -22,7 +22,7 @@
       <view class="input-box" wx:if="{{dateMode==0}}">
         <text class="iconfont icon-date1 label-icon"></text>
         <picker mode="date" name="date"
-          fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
+          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" bindchange="bindDateChange">
           <view class="picker">
             <text class="{{dateClass}}">{{date}}</text>
           </view>

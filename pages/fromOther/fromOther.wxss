@@ -53,6 +53,31 @@ view.content text.greeting{
   font-size: 24rpx;
 }
 
+
+view.self{
+  height:50%
+}
+
+view.self image{
+  display: block;
+  width:80%;
+  height:64%;
+  margin:60rpx auto;
+}
+
+view.self view.invited-info{
+  display: block;
+  text-align: center;
+  font-size:28rpx;
+  color:#444;
+}
+
+view.invited-info text{
+  margin:0 10rpx;
+  font-size: 36rpx;
+}
+
+
 .container{
   width:84%;
   margin:0 auto;

@@ -26,8 +26,11 @@ Page({
     
     //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
-      commonTool.request('simple-query/lunar','GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar',
+        method:'GET',
+        callback:function(res){
           var calendarSource = res.data
           cnCalendar = calTool.init(calendarSource)
           wx.setStorage({
@@ -36,7 +39,7 @@ Page({
           })
           initLunarCompornt(that)
         }
-      )
+      })
     }else{
       initLunarCompornt(that)
     }
@@ -47,9 +50,10 @@ Page({
     if (option && option.dayId){
       this.setData({ thisDayId: option.dayId})
 
-      commonTool.graphReq('days', 
-                  '{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
-          function (res) {
+      commonTool.graphReq({
+          module:'days',
+          data:'{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
+          callback:function (res) {
 
             if (commonTool.checkError(res)) return
 
@@ -98,7 +102,8 @@ Page({
 
             dateSelected = true
             wx.hideLoading();
-          })
+          }
+      })
     } //endIf 编辑
 
 
@@ -108,11 +113,19 @@ Page({
     var nearlyFull = ((daysCount + 1) >= daysLimit)
     var fewerSpace = daysCount >= daysLimit*0.9
 
+    //最大日期到今天（阳历)
+    var today = new Date()
+    var day = today.getDate()
+    var month = today.getMonth()+1
+    var year = today.getFullYear()
+    var endTimeStr = year + "-" + month + "-" + day
+
     this.setData({
       daysCount: daysCount,
       daysLimit: daysLimit,
       nearlyFull: nearlyFull,
-      fewerSpace: fewerSpace
+      fewerSpace: fewerSpace,
+      endDate: endTimeStr
     })
 
     wx.hideLoading();
@@ -142,9 +155,11 @@ Page({
     //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
     //如果是切换到公历，则直接修改公历插件的value数值即可
     if (dateMode == 0) {
-      commonTool.request('simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
-        'GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
+        method:'GET',
+        callback:function (res) {
           if (commonTool.checkError(res)) return
           that.setData({
             dateValue: res.data,
@@ -152,15 +167,18 @@ Page({
             date: res.data
           })
         }
-      )
+      })
+
     }
 
     //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
     else {
       var that = this
-      commonTool.request('simple-query/lunar/normalTolunar?date=' + lastDate,
-        'GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar/normalTolunar?date=' + lastDate,
+        method:'GET',
+        callback:function (res) {
           var lunarStr = res.data.split(",")
           var result = calTool.getChoiceIndex(cnCalendar, lunarStr, that.data.lunarArray)
           var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
@@ -170,7 +188,9 @@ Page({
             cnDate: cnDateStr,
             vDate: cnDateStr
           })
-        })
+        }
+      })
+
     }
   },
   lunarFieldChange: function (e) {
@@ -260,10 +280,21 @@ Page({
     var isFavor = this.data.starState.length > 0
     if(thisDayId > 0){
 
-      commonTool.request(
-        'customDay',
-        'POST',
-        function (res) {
+      commonTool.request({
+        url:'customDay',
+        method:'POST',
+        data:{
+          name: formData.name,
+          dateMode: dateMode,
+          date: formData.date,
+          favor: isFavor,
+          dayId: thisDayId,
+          comment: formData.comment
+        },
+        header:{
+          'content-type': 'application/json'
+        },
+        callback:function (res) {
           if (commonTool.checkError(res)) return
 
           if (again) {
@@ -276,26 +307,26 @@ Page({
               delta: 1
             })
           }
-        },
-        {
+        }
+      })
+
+    }else{
+
+      commonTool.request({
+        url:'customDay',
+        method:'PUT',
+        data:{
           name: formData.name,
           dateMode: dateMode,
           date: formData.date,
           favor: isFavor,
-          dayId: thisDayId,
+          userId: userId,
           comment: formData.comment
         },
-        {
+        header:{
           'content-type': 'application/json'
-        }
-      )
-
-    }else{
-
-      commonTool.request(
-        'customDay',
-        'PUT',
-        function (res) {
+        },
+        callback:function (res) {
           if (commonTool.checkError(res)) return
           wx.setStorageSync("newDayId", res.data)
 
@@ -313,19 +344,8 @@ Page({
               delta: 1
             })
           }
-        },
-        {
-          name: formData.name,
-          dateMode: dateMode,
-          date: formData.date,
-          favor: isFavor,
-          userId: userId,
-          comment: formData.comment
-        },
-        {
-          'content-type': 'application/json'
         }
-      )
+      })
     }
   },
 

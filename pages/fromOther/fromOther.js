@@ -25,6 +25,24 @@ Page({
     console.log("inviterId:"+options.inviterId)
     inviterId = options.inviterId
 
+    var userId = wx.getStorageSync('userId')
+    var that = this
+
+    if (userId == inviterId){
+      this.setData({self:true})
+      commonTool.graphReq(
+        'days',
+        '{user(userId:' + inviterId + ') { invitedCount }}',
+        function(res){
+          if (commonTool.checkError(res)) return
+          var inviter = res.data.data.user
+          that.setData({
+            invitedCount : inviter.invitedCount
+          })
+        }
+      )
+    }
+
     initComponents(this)
 
     //注意这里可能要“加载中”
@@ -32,7 +50,7 @@ Page({
       title: '加载中'
     })
 
-    var that = this
+
 
     //加载邀请人的数据
     commonTool.graphReq(
@@ -55,6 +73,20 @@ Page({
         })
       }
     )
+
+
+    //最大日期到今天（阳历)
+    var today = new Date()
+    var day = today.getDate()
+    var month = today.getMonth() + 1
+    var year = today.getFullYear()
+    var endTimeStr = year + "-" + month + "-" + day
+
+    this.setData({
+      endDate: endTimeStr
+    })
+
+
 
     wx.hideLoading()
 
@@ -237,6 +269,21 @@ Page({
     )
 
 
+  },
+  onShareAppMessage: function (options) {
+    var userId = wx.getStorageSync('userId')
+
+    return {
+      title: "我又忘记你的生日啦",
+      path: "/pages/fromOther/fromOther?inviterId=" + userId,
+      imageUrl: "/images/share_cover.png",
+      success: function (res) {
+        console.log("share success:")
+      },
+      fail: function (res) {
+        console.log("share success:")
+      }
+    }
   }
 
 

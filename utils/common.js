@@ -55,22 +55,37 @@ const checkDaysCount = function(){
 }
 
 
-const request = function(url,method,successCallBack,data,header){
+// const request = function(url,method,successCallBack,data,header){
+//   wx.request({
+//     url: 'https://www.yubopet.top/' + url,
+//     method: method,
+//     data:data,
+//     header: header,
+//     success: successCallBack
+//   })
+// }
+
+
+const request = function (obj) {
   wx.request({
-    url: 'https://www.yubopet.top/' + url,
-    method: method,
-    data:data,
-    header: header,
-    success: successCallBack
+    url: 'https://www.yubopet.top/' + obj.url,
+    method: obj.method,
+    data: obj.data,
+    header: obj.header,
+    success: obj.callback
   })
 }
 
-const graphReq = function (graphModule,data,callback){
-  request('graphql/' + graphModule, 
-          'POST', 
-          callback,
-          data, 
-           {'content-type': 'text/plain'})
+
+const graphReq = function (graphObj){
+  var obj = {
+    url: 'graphql/' + graphObj.module,
+    method:'POST',
+    header: { 'content-type': 'text/plain' },
+    data: graphObj.data,
+    callback: graphObj.callback
+  }
+  request(obj)
 }
 
 

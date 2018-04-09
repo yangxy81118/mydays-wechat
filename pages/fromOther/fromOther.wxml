@@ -7,13 +7,24 @@
   <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
 
-<view class="container">
+<view wx:if="{{self}}" class="self">
+  <image src="/images/cake.png" mode="aspectFit"></image>
+
+  <view wx:if="{{invitedCount>0}}" class="invited-info">已经有<text>{{invitedCount}}</text>位好友为你贡献了生日记录！</view>
+  <view wx:else class="invited-info">你的好友或许正在帮你记录，等着好消息吧~</view>
+  
+  <view class="toolbar">
+    <button class="save" open-type='share'>转发给好友</button>
+  </view>
+</view>
+
+<view wx:else class="container">
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section sec-name">
       <label>姓名</label>
       <view class="input-box">
         <text class="iconfont icon-user2 label-icon"></text>
-        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>
+        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>  
         <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="copy">使用昵称</button>
       </view>
     </view>
@@ -30,7 +41,7 @@
       <view class="input-box" wx:if="{{dateMode==0}}">
         <text class="iconfont icon-date1 label-icon"></text>
         <picker mode="date" name="date"
-          fields="day" value="{{date}}" start="1950-01-01" value="{{dateValue}}" end="2018-12-31" bindchange="bindDateChange">
+          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" bindchange="bindDateChange">
           <view class="picker">
             <text class="{{dateClass}}">{{date}}</text>
           </view>
