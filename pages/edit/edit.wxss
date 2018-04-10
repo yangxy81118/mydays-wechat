@@ -235,3 +235,69 @@ view.toolbar button::after{
   border:none;
 }
 
+
+view.model-bk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+view.model-bk view.model-content {
+  position: absolute;
+  z-index: 100;
+  bottom: 32%;
+  left: 14%;
+  width: 56%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10% 8%;
+  background: #fff;
+  border-radius: 20rpx;
+}
+
+view.model-content view.tip{
+  font-size: 28rpx;
+  color:#444;
+  text-align: center;
+  padding:0 0 30rpx; 
+}
+
+view.model-content button{
+  font-size: 32rpx;
+  color:#FFF;
+  border-radius: 8rpx;
+  margin:32rpx 0 0 0 ;
+  position: relative;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+}
+
+view.model-content button:after{
+  border:none;
+}
+
+view.model-content button.share{
+  background: #FF9940; 
+}
+
+view.model-content button.disabled{
+  background: #CCC!important; 
+  color:#FFF;
+}
+
+view.model-content button.auth{
+  background: #41B035;
+}
+
+view.model-content button text.iconfont{
+  color:#FFF;
+  position: absolute;
+  top:14rpx;
+  left:20%;
+  font-size: 54rpx;
+  line-height: 54rpx;
+}
+

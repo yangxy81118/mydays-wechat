@@ -45,7 +45,8 @@
      
     <view class="section sec-other" wx:if="{{thisDayId==0}}">
       <label>其他添加方式</label>
-      <button class="share" open-type='share'>邀请微信好友添加</button>
+      <button wx:if="{{hasUserInfo}}" class="share" open-type='share'>邀请微信好友添加</button>
+      <button wx:else class="share" bindtap='shareCheckAction'>邀请微信好友添加</button>
       <text class="arrow iconfont icon-next"></text>
     </view>    
 
@@ -63,6 +64,21 @@
       <button class="save" formType="submit" id="save" data-test="2">保存</button>
     </view>
   </form>
+</view>
+
+<view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
+  <view class="model-content" id="popContent" catchtap='modelTapAction'>
+    <view class='tip'>
+      <view>邀请好友添加生日需要同意使用</view>
+      <view>您的微信头像和昵称</view>
+    </view>
+    <button wx:if="{{!authFinish}}" class="auth" 
+      open-type="getUserInfo" bindgetuserinfo="getUserInfo"><text class="iconfont icon-weixin"></text>微信授权</button>
+    <button wx:else class="auth disabled" disabled><text class="iconfont icon-weixin"></text>已授权</button>
+
+    <button wx:if="{{!authFinish}}" class="share disabled" disabled open-type='share'>发送邀请</button>
+    <button wx:else class="share" open-type='share'>发送邀请</button>
+  </view>
 </view>
 
 

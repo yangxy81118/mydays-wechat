@@ -244,6 +244,8 @@ Page({
       formData.date = cnCalendarArray[0][formData.date[0]] + cnCalendarArray[1][formData.date[1]] + cnCalendarArray[2][formData.date[2]]
     }
 
+    var userId = wx.getStorageSync('userId')
+
      commonTool.request({
         url:'customDay/byOther',
         method:'PUT',
@@ -252,7 +254,7 @@ Page({
           dateMode: dateMode,
           date: formData.date,
           userId: inviterId,
-          beInviterId: inviterId
+          beInviterId: userId
         },
         header:{
           'content-type': 'application/json'

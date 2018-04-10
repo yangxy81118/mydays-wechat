@@ -111,11 +111,11 @@ Page({
         if (res.confirm) {
           var dayId = e.currentTarget.dataset.dayid
           var userId = wx.getStorageSync('userId')   
-      
-          wx.request({
-            url: 'https://www.yubopet.top/customDay?dayId='+dayId,
-            method: 'DELETE',
-            success: function (res) {
+
+          commonTool.request({
+            url:'customDay?dayId='+dayId,
+            method:'DELETE',
+            callback:function (res) {
               if (commonTool.checkError(res)) return
 
               var daysCount = wx.getStorageSync("daysCount")

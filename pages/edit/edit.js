@@ -13,7 +13,8 @@ Page({
     dayFavor:false,
     thisDayId:0,
     dateMode:0,
-    starState:""
+    starState:"",
+    modelShow:"none"
   },
 
   onLoad: function (option) {
@@ -107,7 +108,7 @@ Page({
     } //endIf 编辑
 
 
-
+    //额度
     var daysCount = wx.getStorageSync("daysCount")
     var daysLimit = wx.getStorageSync("daysLimit")
     var nearlyFull = ((daysCount + 1) >= daysLimit)
@@ -120,12 +121,20 @@ Page({
     var year = today.getFullYear()
     var endTimeStr = year + "-" + month + "-" + day
 
+    //获取这个用户信息
+    var userInfo = wx.getStorageSync("userInfo")
+    var hasUserInfo = false
+    if(userInfo.nickName && userInfo.nickName.length > 0){
+      hasUserInfo = true
+    }
+
     this.setData({
       daysCount: daysCount,
       daysLimit: daysLimit,
       nearlyFull: nearlyFull,
       fewerSpace: fewerSpace,
-      endDate: endTimeStr
+      endDate: endTimeStr,
+      hasUserInfo: hasUserInfo
     })
 
     wx.hideLoading();
@@ -360,17 +369,65 @@ Page({
       this.setData({starState:""})
     }
   },
+  shareCheckAction:function(e){
+    this.setData({
+      modelShow:"block"
+    })
+  },
+  getUserInfo: function (e) {
+
+    //如果拒绝，则不做响应
+    if(!e.detail.userInfo){
+      return
+    }
+
+    //去同步userInfo到数据库
+    var userInfo = e.detail.userInfo
+    console.dir(userInfo)
+
+    var userId = wx.getStorageSync('userId')
+    var that = this
+    commonTool.request({
+      url:"user",
+      method:"POST",
+      data:{
+        id: userId,
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl
+      },
+      callback:function(res){
+        if (commonTool.checkError(res)) return
+
+        var localUserInfo = wx.getStorageSync("userInfo")
+        localUserInfo.nickName = userInfo.nickName
+        localUserInfo.avatarUrl = userInfo.avatarUrl
+        wx.setStorageSync("userInfo", localUserInfo)
+
+        //然后修改按钮状态
+        that.setData({
+          authFinish: true
+        })
+      }
+    })
+    
+  },
+  modelTapAction: function (e) {
+    if (e.currentTarget.id == "popBk") {
+      this.setData({ modelShow: "none" })
+    }
+  },
   //分享
   onShareAppMessage:function(options){
     console.log('click share')
     var userId = wx.getStorageSync('userId')
-
+    var that = this
     return {
       title: "我又忘记你的生日啦",
       path: "/pages/fromOther/fromOther?inviterId=" + userId,
       imageUrl:"/images/share_cover.png",
       success: function (res) {
         console.log("share success:")
+        that.setData({ modelShow: "none",hasUserInfo:true })
       },
       fail: function (res) {
         console.log("share success:")
