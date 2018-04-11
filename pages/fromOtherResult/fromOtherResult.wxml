@@ -9,6 +9,12 @@
     <view class="shadow s2"></view>
   </view>
   <view class="action">
-    <navigator open-type='redirect' class="submit-btn" url='/pages/home/home'>我也来记一个</navigator>
+    <view class="copy">
+      <checkbox-group bindchange="checkboxChange">
+       <checkbox value="1" checked="{{readyCopy}}" ></checkbox>我也记录下这一天
+      </checkbox-group>
+    </view>
+    <!-- <navigator open-type='redirect' class="submit-btn" url='/pages/home/home'>我也来记一个</navigator> -->
+    <button class="submit-btn" bindtap='redirectAction'>{{btnText}}</button>
   </view>
 </view>

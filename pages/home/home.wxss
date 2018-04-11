@@ -234,28 +234,124 @@ view.item-scroll-wrap .day-box {
   border-bottom-right-radius: 10rpx;
 }
 
+
 button.add {
   position: fixed;
   z-index: 2;
-  bottom: 2%;
-  left: 4%;
-  height: 12%;
-  width: 92%;
+  width:62%;
+  height:10%;
+  bottom:4%;
+  left:8%;
   background: #ff9940;
   color: #fff;
   text-align: center;
   font-size: 40rpx;
-  line-height: 140rpx;
-  box-shadow: 0 2rpx 8px #ff9940;
+  box-shadow: 0 2rpx 6px #ff9940;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button.add:after{
+button:after{
   border:none;
 }
 
 button.add:active{
   background: #FA8836; 
-  bottom:1.8%;
+  bottom:3.6%;
+}
+
+button.byShare{
+  position: fixed;
+  display: block;
+  bottom:4%;
+  right:8%;
+  z-index: 2;
+  background: #ff9940;
+  width:18%;
+  height:10%;
+  box-shadow: 0 2rpx 6px #ff9940;
+  border-radius: 10rpx;
+}
+
+button.byShare image{
+  position: absolute;
+  display: block;
+  z-index: 3;
+}
+
+button.byShare image.wx{
+  width:56rpx;
+  height:56rpx;
+  top:26%;
+  left:32%;
+}
+
+button.byShare image.plus{
+  width:34rpx;
+  height:34rpx;
+  bottom:24%;
+  right:22%;
+}
+
+
+/* button.byShare image.wx-move{
+  animation:wxmove 0.7s infinite;
+  animation-delay: 0.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes wxmove
+{
+  0%   {
+    transform:scale(1.6);
+    opacity: 0;}
+  100%  {
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+button.byShare image.plus-move{
+  animation:plusmove 0.7s infinite;
+  animation-delay: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes plusmove
+{
+  0%   {transform:scale(0.5);opacity: 0}
+  80%  {transform:scale(1.2);opacity:1}
+  100%  {transform:scale(1);opacity:1}
+} */
+
+view.share-tip{
+  position: absolute;
+  bottom:17%;
+  right:7%;
+  width:40%;
+  height:70rpx;
+  background: #FFE8D3;
+  border-radius: 28rpx;
+  text-align: center;
+  color:#FF9940;
+  font-size:26rpx;
+  line-height: 70rpx;
+  box-shadow: 0 4rpx 6rpx #E8DECA;
+  display: none;
+}
+
+view.share-tip view.arrow{
+  position: absolute;
+  bottom:-28rpx;
+  right:20%;
+  height:0px;
+  width:0px;
+  border-right:18rpx solid transparent;
+  border-top:37rpx solid #FFE8D3;
+  border-left:9px solid transparent;
 }
 
 /* .add-hover{
@@ -534,4 +630,71 @@ view.prev{
 
 view.next{
   right:0;
+}
+
+
+/* wxAuth */
+view.wxAutuModel-bk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+view.wxAutuModel-bk view.wxAutuModel {
+  position: absolute;
+  z-index: 100;
+  bottom: 32%;
+  left: 14%;
+  width: 56%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10% 8%;
+  background: #fff;
+  border-radius: 20rpx;
+}
+
+view.wxAutuModel view.tip{
+  font-size: 28rpx;
+  color:#444;
+  text-align: center;
+  padding:0 0 30rpx; 
+}
+
+view.wxAutuModel button{
+  font-size: 32rpx;
+  color:#FFF;
+  border-radius: 8rpx;
+  margin:32rpx 0 0 0 ;
+  position: relative;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+}
+
+view.wxAutuModel button:after{
+  border:none;
+}
+
+view.wxAutuModel button.share{
+  background: #FF9940; 
+}
+
+view.wxAutuModel button.disabled{
+  background: #CCC!important; 
+  color:#FFF;
+}
+
+view.wxAutuModel button.auth{
+  background: #41B035;
+}
+
+view.wxAutuModel button text.iconfont{
+  color:#FFF;
+  position: absolute;
+  top:14rpx;
+  left:20%;
+  font-size: 54rpx;
+  line-height: 54rpx;
 }

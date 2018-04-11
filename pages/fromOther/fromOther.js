@@ -21,7 +21,6 @@ Page({
     inviter:{}
   },
   onLoad: function (options) {
-    console.log("Enter share Page,123,this is options:")
     console.log("inviterId:"+options.inviterId)
     inviterId = options.inviterId
 
@@ -55,24 +54,24 @@ Page({
 
     //加载邀请人的数据
     commonTool.graphReq({
-          module:'days',
-          data:'{user(userId:' + inviterId +') { nickName,avatarUrl }}',
-          callback:function (res) {
-            if (commonTool.checkError(res)) return
+      module:'days',
+      data:'{user(userId:' + inviterId +') { nickName,avatarUrl }}',
+      callback:function (res) {
+        if (commonTool.checkError(res)) return
 
-            var inviter = res.data.data.user
-            if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
-              inviter.avatarUrl = "/images/avatar.png"
-            }
+        var inviter = res.data.data.user
+        if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
+          inviter.avatarUrl = "/images/avatar.png"
+        }
 
-            if (!inviter.nickName || inviter.nickName.length <= 0) {
-              inviter.nickName = "神秘人"
-            }
+        if (!inviter.nickName || inviter.nickName.length <= 0) {
+          inviter.nickName = "神秘人"
+        }
 
-            that.setData({
-                inviter: res.data.data.user
-            })
-          }
+        that.setData({
+            inviter: res.data.data.user
+        })
+      }
     })
 
     //最大日期到今天（阳历)
@@ -86,19 +85,40 @@ Page({
       endDate: endTimeStr
     })
 
-
-
     wx.hideLoading()
 
   },
   getUserInfo: function (e) {
-    console.log(e)
+
+    var userInfo = e.detail.userInfo
+    if(!userInfo){
+      return;
+    }
+
+    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
     this.setData({
-      userInfo: e.detail.userInfo
+      userInfo: userInfo
     })
-  },
-  userForward:function(e){
-    //用户点击“我也参与”，跳转到首页
+
+    var userId = wx.getStorageSync('userId')
+    var that = this
+    commonTool.request({
+      url: "user",
+      method: "POST",
+      data: {
+        id: userId,
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl
+      },
+      callback: function (res) {
+
+        var localUserInfo = wx.getStorageSync("userInfo")
+        localUserInfo.nickName = userInfo.nickName
+        localUserInfo.avatarUrl = userInfo.avatarUrl
+        wx.setStorageSync("userInfo", localUserInfo)
+      }
+    })
+
   },
   dateModeSwitch: function (e) {
 
@@ -266,11 +286,11 @@ Page({
         
         if(res.data.code == 0){
           wx.navigateTo({
-            url: '/pages/fromOtherResult/fromOtherResult?result=1',
+            url: '/pages/fromOtherResult/fromOtherResult?result=1&newDayId=' + res.data.msg,
           })
         }else{
           wx.navigateTo({
-            url: '/pages/fromOtherResult/fromOtherResult?result=2',
+            url: '/pages/fromOtherResult/fromOtherResult?result=2&newDayId=' + res.data.msg,
           })
         }
       }

@@ -16,7 +16,6 @@ view.header view.content{
   z-index: 2;
   top:0;
   left:0;
-
 }
 
 view.content image.avatar{
@@ -50,7 +49,7 @@ view.content text.username{
 
 view.content text.greeting{
   margin:30rpx 0 0 0;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 
 

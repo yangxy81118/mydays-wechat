@@ -1,6 +1,5 @@
 {
   "pages":[
-    "pages/wall/wall",
     "pages/home/home",
     "pages/edit/edit",
     "pages/fromOther/fromOther",

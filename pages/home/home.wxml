@@ -12,11 +12,10 @@
       <view class="underline"></view>
     </view>
     <view class="layout-btn" bindtap='layoutAction'>
-      <text class="icon iconfont {{layoutBtnClass}}"></text>
+      <text class="icon iconfont {{layoutBtnClass}} layout-icon"></text>
     </view>
     <!-- <image class="star" src="/images/star.png" /> -->
   </view>
-  <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
     <image src='/images/empty-list.png' mode='aspectFit'></image>
     
@@ -97,17 +96,43 @@
 
   <view class="bottom-mask"></view>
 
-  <!-- <button hover-class='add-hover' wx:if="{{!isFull}}" class="add" bindtap='addAction'>记录生日</button>
-  <button wx:else class="add disable">额度已满</button> -->
+    <block wx:if="{{!isFull}}">
+      <button class="add" bindtap='addAction'>记录生日</button>
 
-  <button wx:if="{{!isFull}}" class="add" hover-class='add-hover' bindtap='addAction'>记录生日</button>
-  <button wx:else class="add disable">额度已满</button>
+      <button wx:if="{{!hasUserInfo}}" class="byShare" bindtap='shareCheckAction'>
+          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
+          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
+      </button>
+      <button wx:else class="byShare" open-type='share'>
+          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
+          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
+      </button>
+      <view class="share-tip {{shareTipClass}}">
+        <text>邀请好友添加生日吧</text>
+        <view class='arrow'></view>
+      </view>
+    </block>
+    <button wx:else class="add disable">额度已满</button>
 
   <!-- <navigator  url='/pages/edit/edit'></navigator>
   <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator> -->
 
 </view>
 
+<view class="wxAutuModel-bk" id="wxModelBk" style="display:{{wxModelShow}}" bindtap='wxModelTapAction'>
+  <view class="wxAutuModel" id="wxModelContent" catchtap='wxModelTapAction'>
+    <view class='tip'>
+      <view>首次邀请好友添加生日需要同意使用</view>
+      <view>您的微信头像和昵称</view>
+    </view>
+    <button wx:if="{{!authFinish}}" class="auth" 
+      open-type="getUserInfo" bindgetuserinfo="getUserInfo"><text class="iconfont icon-weixin"></text>微信授权</button>
+    <button wx:else class="auth disabled" disabled><text class="iconfont icon-weixin"></text>已授权</button>
+
+    <button wx:if="{{!authFinish}}" class="share disabled" disabled open-type='share'>发送邀请</button>
+    <button wx:else class="share" open-type='share'>发送邀请</button>
+  </view>
+</view>
 
 <view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
   <view class="main" id="popContent" catchtap='modelTapAction'>

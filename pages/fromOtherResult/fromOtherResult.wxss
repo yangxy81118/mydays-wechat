@@ -24,7 +24,7 @@ view.front{
 
 view.front image{
   width:60%;
-  height:300rpx;
+  height:260rpx;
   margin:0 auto;
 }
 
@@ -37,13 +37,13 @@ view.front text{
 
 view.front view.tips{
   text-align: center;
-  font-size:24rpx;
+  font-size:26rpx;
   line-height: 40rpx;
   height:84rpx;
   overflow: hidden;
   width:80%;
   margin:0 auto;
-  color:#CACACA;
+  color:#AAA;
 }
 
 view.shadow{
@@ -63,7 +63,15 @@ view.action{
 }
 
 
-view.action navigator{
-  margin:100rpx 0 0 0;
+view.action button{
+  margin:40rpx 0 0 0;
+}
+
+view.copy{
+  margin:80rpx 0 0 0;
+  font-size: 24rpx;
+  color:#444;
+  text-align: center;
+  line-height: 50rpx;
 }
 

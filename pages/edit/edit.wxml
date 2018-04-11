@@ -69,7 +69,7 @@
 <view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
   <view class="model-content" id="popContent" catchtap='modelTapAction'>
     <view class='tip'>
-      <view>邀请好友添加生日需要同意使用</view>
+      <view>首次邀请好友添加生日需要同意使用</view>
       <view>您的微信头像和昵称</view>
     </view>
     <button wx:if="{{!authFinish}}" class="auth" 

@@ -4,6 +4,7 @@ var dateSelected = false
 const calTool = require("../../utils/cn-cal.js")
 const commonTool = require("../../utils/common.js")
 
+
 Page({
   data: {
     date: "点击选择",   //阳历组件显示值
@@ -383,7 +384,7 @@ Page({
 
     //去同步userInfo到数据库
     var userInfo = e.detail.userInfo
-    console.dir(userInfo)
+    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
 
     var userId = wx.getStorageSync('userId')
     var that = this
@@ -421,8 +422,9 @@ Page({
     console.log('click share')
     var userId = wx.getStorageSync('userId')
     var that = this
+    var constants = require("../../utils/constants.js")
     return {
-      title: "我又忘记你的生日啦",
+      title: constants.SHARE_TITLE,
       path: "/pages/fromOther/fromOther?inviterId=" + userId,
       imageUrl:"/images/share_cover.png",
       success: function (res) {

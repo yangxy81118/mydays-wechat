@@ -89,6 +89,11 @@ const graphReq = function (graphObj){
 }
 
 
+const replaceEmoji = function(content){
+  return unescape(escape(content).replace(/\%uD.{3}/g, ''))
+}
+
+
 module.exports = {
   warning: warning,
   success:success,
@@ -97,5 +102,6 @@ module.exports = {
   showLastAction: showLastAction,
   checkDaysCount: checkDaysCount,
   request: request,
-  graphReq: graphReq
+  graphReq: graphReq,
+  replaceEmoji: replaceEmoji 
 }

@@ -2,7 +2,7 @@
   <view class="content">
     <image class="avatar" src='{{inviter.avatarUrl}}'></image> 
     <text class="username">{{inviter.nickName}}</text>
-    <text class="greeting">"忘记你的生日了，真是怪难为情的~ ԾㅂԾ"</text>
+    <text class="greeting">"忘记你的生日了，麻烦写给我吧，谢谢啦~"</text>
   </view>
   <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
@@ -60,7 +60,7 @@
     </view>
 
     <view class="toolbar">
-      <button class="save" formType="submit" id="save">保存</button>
+      <button class="save" formType="submit" id="save">发送给好友</button>
     </view>
   </form>
 </view>

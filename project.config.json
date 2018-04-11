@@ -40,7 +40,7 @@
 					"id": 1,
 					"name": "受到邀请",
 					"pathName": "pages/fromOther/fromOther",
-					"query": "inviterId=1"
+					"query": "inviterId=2"
 				},
 				{
 					"id": 2,

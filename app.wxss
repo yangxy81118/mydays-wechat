@@ -71,6 +71,14 @@ page{
   border-radius: 10rpx;
 }
 
+.show-block{
+  display: block!important;
+}
+
+.show-hidden{
+  display: none!important;
+}
+
 
 /*reset*/
 input,button,select,textarea{outline:none}
