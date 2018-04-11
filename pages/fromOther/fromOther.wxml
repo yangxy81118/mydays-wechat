@@ -2,7 +2,7 @@
   <view class="content">
     <image class="avatar" src='{{inviter.avatarUrl}}'></image> 
     <text class="username">{{inviter.nickName}}</text>
-    <text class="greeting">"忘记你的生日了，麻烦写给我吧，谢谢啦~"</text>
+    <text class="greeting">“我希望记住你的生日，到那天你又能多收到一份祝福”</text>
   </view>
   <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
@@ -30,7 +30,7 @@
     </view>
 
     <view class="section sec-time">
-      <label>生日</label>
+      <label>生日<text class="funny">不想透露年龄？那就随意选个年份吧</text></label>
 
       <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
       <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
@@ -40,8 +40,9 @@
 
       <view class="input-box" wx:if="{{dateMode==0}}">
         <text class="iconfont icon-date1 label-icon"></text>
-        <picker mode="date" name="date"
-          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" bindchange="bindDateChange">
+        <picker mode="date" name="date" 
+          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" 
+          bindchange="bindDateChange">
           <view class="picker">
             <text class="{{dateClass}}">{{date}}</text>
           </view>

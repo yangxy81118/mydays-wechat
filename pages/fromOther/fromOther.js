@@ -18,7 +18,7 @@ Page({
     starState: "",
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
-    inviter:{}
+    inviter:{},
   },
   onLoad: function (options) {
     console.log("inviterId:"+options.inviterId)

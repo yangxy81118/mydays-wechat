@@ -49,7 +49,7 @@ view.content text.username{
 
 view.content text.greeting{
   margin:30rpx 0 0 0;
-  font-size: 28rpx;
+  font-size: 26rpx;
 }
 
 
@@ -95,6 +95,9 @@ view.sec-name{
 
 }
 
+
+
+
 view.sec-time{
   padding:0 0 40rpx 0;
 }
@@ -105,6 +108,8 @@ view.section label{
   font-size:26rpx;
   color:#A8A8A8;
   text-indent: 30rpx;
+  position: relative;
+  font-weight: 700;
 }
 
 view.section .input-box{
@@ -142,16 +147,13 @@ view.section input{
   color:#AAA;
 }
 
-view.sec-name text.star{
+view.sec-time label text.funny{
+  font-size:22rpx;
+  color:#B5B5B5;
   position: absolute;
-  top:0rpx;
-  right:30rpx;
-  font-size:40rpx;
-  color:#BBB;
-}
-
-view.sec-name text.star-selected{
-  color:#FF9940;
+  right:0;
+  bottom:0;
+  font-weight: 200;
 }
 
 view.sec-name button.copy{
