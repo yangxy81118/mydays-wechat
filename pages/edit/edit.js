@@ -417,6 +417,11 @@ Page({
       this.setData({ modelShow: "none" })
     }
   },
+  shareTapAction: function (e) {
+    wx.navigateTo({
+      url: '/pages/shareTemplate/shareTemplate',
+    })
+  },
   //分享
   onShareAppMessage:function(options){
     console.log('click share')

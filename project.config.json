@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -47,6 +47,12 @@
 					"name": "邀请结果",
 					"pathName": "pages/fromOtherResult/fromOtherResult",
 					"query": "result=2"
+				},
+				{
+					"id": -1,
+					"name": "邀请模板",
+					"pathName": "pages/shareTemplate/shareTemplate",
+					"query": ""
 				}
 			]
 		}

@@ -38,17 +38,14 @@
           </view>
         </picker>
       </view>
-
-
     </view>
-
      
-    <view class="section sec-other" wx:if="{{thisDayId==0}}">
+    <!-- <view class="section sec-other" wx:if="{{thisDayId==0}}">
       <label>其他添加方式</label>
       <button wx:if="{{hasUserInfo}}" class="share" open-type='share'>邀请微信好友添加</button>
       <button wx:else class="share" bindtap='shareCheckAction'>邀请微信好友添加</button>
       <text class="arrow iconfont icon-next"></text>
-    </view>    
+    </view>     -->
 
     <view class="section sec-limit">
       <view>

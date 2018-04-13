@@ -1,0 +1,112 @@
+view.container{
+  padding:5% 8% 18%;
+  background:#f9f9f9;
+}
+
+view.container scroll-view{
+  width:100%;
+}
+
+view.template-box{
+  background-color: #FFF;
+  width:100%;
+  border-radius: 20rpx;
+  position: relative;
+  margin: 0 0 30rpx 0;
+  padding:40rpx 0;
+  box-shadow: 0rpx 4rpx 12rpx #eaeaea;
+  overflow: hidden;
+}
+
+view.template-box image{
+  position: absolute;
+  top:15%;
+  left:-2rpx;
+  opacity:0.2;
+  height:70%;
+  max-width: 20%;
+  transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+}
+
+view.selected image{
+  opacity:1;
+}
+
+view.template-box text{
+  display: block;
+
+}
+
+view.template-box text.words{
+  padding:0 20% 0 26%  ;
+}
+
+view.template-box text.title{
+  color:#FF9940;
+  font-size:30rpx;
+  margin:0 0 30rpx 0;
+  min-height:80rpx;
+  display: flex;
+  align-items: center; 
+}
+
+
+view.template-box text.content{
+  color:#A8A8A8;
+  font-size:24rpx;
+}
+
+view.template-box text.iconfont{
+  color:#ffe8d3;
+  position: absolute;
+  padding:40rpx;
+  font-size:50rpx;
+  top:30%;
+  right:0;
+}
+
+view.selected{
+  
+}
+
+view.selected text.iconfont{
+  color:#FF9940;
+}
+
+view.selected text.title{
+  font-weight: 700;
+
+}
+
+view.selected text.content{
+  color:#444;
+}
+
+button.submit-btn{
+  position: fixed;
+  bottom:3%;
+  left:8%;
+  margin:0 auto;
+  width:84%;
+  z-index: 2;
+}
+
+button.disabled{
+  color:#fff;
+  background: #ccc;
+  box-shadow:0 2rpx 6rpx rgba(230,230,230,0.40);
+}
+
+
+.bottom-mask{
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 12%;
+  bottom:0;
+  left:0;
+  background: -webkit-linear-gradient( top, rgba(249,249,249,0) , rgba(249,249,249,1)); /* Safari 5.1 - 6.0 */
+  background: linear-gradient(to bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* 标准的语法 */
+}
+

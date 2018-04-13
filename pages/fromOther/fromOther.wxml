@@ -4,6 +4,7 @@
     <text class="username">{{inviter.nickName}}</text>
     <text class="greeting">“我希望记住你的生日，到那天你又能多收到一份祝福”</text>
   </view>
+  <view class='home'><text class="iconfont icon-shouye2"></text>回首页</view>
   <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
 

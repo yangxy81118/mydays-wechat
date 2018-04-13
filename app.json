@@ -2,6 +2,7 @@
   "pages":[
     "pages/home/home",
     "pages/edit/edit",
+    "pages/shareTemplate/shareTemplate",
     "pages/fromOther/fromOther",
     "pages/fromOtherResult/fromOtherResult"
   ],

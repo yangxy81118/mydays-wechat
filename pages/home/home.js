@@ -184,9 +184,16 @@ Page({
 
   //微信分享验证逻辑
   shareCheckAction: function (e) {
-    this.setData({
-      wxModelShow: "block"
-    })
+    if(!this.data.hasUserInfo){
+      this.setData({
+        wxModelShow: "block"
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/shareTemplate/shareTemplate',
+      })
+    }
+
   },
   getUserInfo: function (e) {
 
@@ -229,6 +236,11 @@ Page({
     if (e.currentTarget.id == "wxModelBk") {
       this.setData({ wxModelShow: "none" })
     }
+  },
+  shareTapAction:function(e){
+    wx.navigateTo({
+      url: '/pages/shareTemplate/shareTemplate',
+    })
   },
   //分享
   onShareAppMessage: function (options) {

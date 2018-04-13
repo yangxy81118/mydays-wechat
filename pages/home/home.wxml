@@ -99,14 +99,14 @@
     <block wx:if="{{!isFull}}">
       <button class="add" bindtap='addAction'>记录生日</button>
 
-      <button wx:if="{{!hasUserInfo}}" class="byShare" bindtap='shareCheckAction'>
+      <button class="byShare" bindtap='shareCheckAction'>
           <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
           <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
       </button>
-      <button wx:else class="byShare" open-type='share'>
+      <!-- <button wx:else class="byShare" open-type='share'>
           <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
           <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
-      </button>
+      </button> -->
       <view class="share-tip {{shareTipClass}}">
         <text>邀请好友添加生日吧</text>
         <view class='arrow'></view>
@@ -130,7 +130,7 @@
     <button wx:else class="auth disabled" disabled><text class="iconfont icon-weixin"></text>已授权</button>
 
     <button wx:if="{{!authFinish}}" class="share disabled" disabled open-type='share'>发送邀请</button>
-    <button wx:else class="share" open-type='share'>发送邀请</button>
+    <button wx:else class="share" bindtap="shareTapAction">发送邀请</button>
   </view>
 </view>
 

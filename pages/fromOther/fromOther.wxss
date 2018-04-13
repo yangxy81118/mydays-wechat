@@ -9,6 +9,19 @@ view.header{
   position: relative;
 }
 
+view.header view.home{
+  position: fixed;
+  right: 10%;
+  top:5%;
+  color:#FFF;
+  font-size:30rpx;
+  z-index: 3;
+}
+
+view.header view.home text.iconfont{
+  font-size: 40rpx;
+}
+
 view.header view.content{
   position: absolute;
   width:100%;
