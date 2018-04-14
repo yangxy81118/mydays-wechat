@@ -455,82 +455,65 @@ navigator.add:active {
   color: #ff9940;
 }
 
-view.model-bk {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-}
 
-view.model-bk view.main {
-  width: 56%;
-  height: auto;
-  margin: 0 auto;
+view.detailBox {
   padding: 8%;
-  background: #fff;
-  border-radius: 20rpx;
-  z-index: 100;
-  bottom: 32%;
-  position: absolute;
-  left: 14%;
-  overflow: hidden;
+  z-index: 91;
+  top:-9%;
 }
 
-view.model-bk view.main view.content{
+view.detailBox view.content{
   height:440rpx;
 }
 
-view.model-bk view.main view.content text.special{
+view.detailBox view.content text.special{
   font-size:80rpx;
   margin:40rpx 0;
 }
 
-view.model-bk view.main text {
+view.detailBox text {
   display: block;
   color: #444;
   text-align: center;
   width: 100%;
 }
 
-view.model-bk view.main text.small {
+view.detailBox text.small {
   color: #bbb;
   font-size: 22rpx;
 }
 
-view.model-bk view.main text.remain {
+view.detailBox text.remain {
   color: #444;
   font-size: 38rpx;
   margin: 10rpx 0 0;
 }
 
-view.model-bk view.main text.name {
+view.detailBox text.name {
   font-size: 38rpx;
   margin: 24rpx 0 5rpx;
   font-weight: 700;
 }
 
-view.model-bk view.main text.birthday {
+view.detailBox text.birthday {
   font-size: 34rpx;
   margin: 0 0 15rpx 0;
 }
 
-view.model-bk view.main view.greeting {
+view.detailBox view.greeting {
   padding:30rpx 0;
 }
 
-view.model-bk view.main view.greeting text {
+view.detailBox view.greeting text {
   font-size: 24rpx;
   color: #bbb;
 }
 
-view.model-bk view.main .toolBar {
+view.detailBox .toolBar {
   width: 100%;
 }
 
-view.model-bk view.main navigator {
+view.detailBox navigator {
   display: inline-block;
   font-size: 48rpx;
   color: #aaa;
@@ -539,7 +522,7 @@ view.model-bk view.main navigator {
   text-align: center;
 }
 
-view.model-bk view.main .highLight{
+view.detailBox .highLight{
   position: absolute;
   background: #FFF;
   height:36rpx;
@@ -547,9 +530,11 @@ view.model-bk view.main .highLight{
   top:-10rpx;
   width:100%;
   z-index:9;
+  border-top-right-radius: 20rpx;
+  border-top-left-radius: 20rpx;
 }
 
-view.model-bk view.main .hl{
+view.detailBox .hl{
   background: #ff9940;
 }
 
@@ -564,14 +549,14 @@ view.shadow {
 }
 
 view.s1 {
-  bottom: 30.5%;
+  bottom: 32.5%;
   left: 17%;
   width: 66%;
   background: rgba(255, 255, 255, 0.6);
 }
 
 view.s2 {
-  bottom: 29.5%;
+  bottom: 31.5%;
   left: 19%;
   width: 62%;
   background: rgba(255, 255, 255, 0.25);
@@ -634,37 +619,19 @@ view.next{
 
 
 /* wxAuth */
-view.wxAutuModel-bk {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
+view.authBox{
+  padding:10% 8%;
 }
 
-view.wxAutuModel-bk view.wxAutuModel {
-  position: absolute;
-  z-index: 100;
-  bottom: 32%;
-  left: 14%;
-  width: 56%;
-  height: auto;
-  margin: 0 auto;
-  padding: 10% 8%;
-  background: #fff;
-  border-radius: 20rpx;
-}
 
-view.wxAutuModel view.tip{
+view.authBox view.tip{
   font-size: 28rpx;
   color:#444;
   text-align: center;
   padding:0 0 30rpx; 
 }
 
-view.wxAutuModel button{
+view.authBox button{
   font-size: 32rpx;
   color:#FFF;
   border-radius: 8rpx;
@@ -673,24 +640,24 @@ view.wxAutuModel button{
   box-shadow:0 0 4px rgba(216,216,216,0.25);
 }
 
-view.wxAutuModel button:after{
+view.authBox button:after{
   border:none;
 }
 
-view.wxAutuModel button.share{
+view.authBox button.share{
   background: #FF9940; 
 }
 
-view.wxAutuModel button.disabled{
+view.authBox button.disabled{
   background: #CCC!important; 
   color:#FFF;
 }
 
-view.wxAutuModel button.auth{
+view.authBox button.auth{
   background: #41B035;
 }
 
-view.wxAutuModel button text.iconfont{
+view.authBox button text.iconfont{
   color:#FFF;
   position: absolute;
   top:14rpx;

@@ -183,10 +183,10 @@ Page({
   },
 
   //微信分享验证逻辑
-  shareCheckAction: function (e) {
+  shareCheckAction: function (e) {  
     if(!this.data.hasUserInfo){
       this.setData({
-        wxModelShow: "block"
+        wxModelShow: "flex"
       })
     }else{
       this.setData({
@@ -195,6 +195,7 @@ Page({
       wx.navigateTo({
         url: '/pages/shareTemplate/shareTemplate',
       })
+      console.log('finsih!!!!')
     }
 
   },
@@ -263,7 +264,7 @@ function loadPopUp(that,dayId,idx){
       remain: "..."
     },
     popUpIdx: idx,
-    modelShow: "block"
+    modelShow: "flex"
   })
 
   commonTool.graphReq({

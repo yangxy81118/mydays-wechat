@@ -2,7 +2,7 @@ const SHARE_TITLE = "我希望能知道你的生日"
 
 const SHARE_CHOICES = [
   {
-    title: "嘿，能告诉我一下你的生日吗?",
+    title: "嘿，能告诉我你的生日吗?",
     content: "别误会，我没忘...只是怕记错了，真的，嘿嘿...",
     img:"/images/share_cover.png",
     bk:"/images/tplt-bk1.png"

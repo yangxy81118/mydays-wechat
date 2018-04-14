@@ -9,17 +9,14 @@ view.header{
   position: relative;
 }
 
-view.header view.home{
+view.header navigator.home{
   position: fixed;
-  right: 10%;
-  top:5%;
+  right: 7%;
+  top:4%;
   color:#FFF;
-  font-size:30rpx;
+  font-size:50rpx;
   z-index: 3;
-}
-
-view.header view.home text.iconfont{
-  font-size: 40rpx;
+  padding:20rpx;
 }
 
 view.header view.content{
