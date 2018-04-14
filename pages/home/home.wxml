@@ -119,10 +119,10 @@
 
 </view>
 
-<view class="wxAutuModel-bk" id="wxModelBk" style="display:{{wxModelShow}}" bindtap='wxModelTapAction'>
-  <view class="wxAutuModel" id="wxModelContent" catchtap='wxModelTapAction'>
+<view class="popUpBk" id="wxModelBk" style="display:{{wxModelShow}}" bindtap='wxModelTapAction'>
+  <view class="popUpBox authBox" id="wxModelContent" catchtap='wxModelTapAction'>
     <view class='tip'>
-      <view>首次邀请好友添加生日需要同意使用</view>
+      <view>首次邀请好友需要同意使用</view>
       <view>您的微信头像和昵称</view>
     </view>
     <button wx:if="{{!authFinish}}" class="auth" 
@@ -134,8 +134,8 @@
   </view>
 </view>
 
-<view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
-  <view class="main" id="popContent" catchtap='modelTapAction'>
+<view class="popUpBk " style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
+  <view class="popUpBox detailBox" id="popContent" catchtap='modelTapAction'>
 
     <view class="content">
       <block wx:if="{{popUpDay.remain < 2}}">

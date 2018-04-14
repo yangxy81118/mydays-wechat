@@ -21,6 +21,9 @@ Page({
       btnWords: "转发给好友"
     })
   },
+  previewAction:function(e){
+    
+  },
   onShareAppMessage: function (options) {
 
     if(this.data.selectedIdx < 0){

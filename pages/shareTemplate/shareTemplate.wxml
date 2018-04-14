@@ -2,7 +2,7 @@
   <scroll-view>
     <view class="template-box" wx:for="{{choices}}" 
       wx:for-index="idx" wx:for-item="item">
-      <view wx:if="{{idx == selectedIdx}}" class="wrap selected">
+      <view wx:if="{{idx == selectedIdx}}" class="wrap selected" bindtap='previewAction'>
         <text class="words title">{{item.title}}</text>
         <text class="words content">{{item.content}}</text>
         <text class="iconfont icon-mark" catchtap='selectTemplateAction' data-idx="{{idx}}"></text>
@@ -19,4 +19,10 @@
   <button class="submit-btn disabled" wx:if="{{selectedIdx < 0}}">{{btnWords}}</button>
   <button class="submit-btn" wx:else open-type='share'>{{btnWords}}</button>
   <view class="bottom-mask"></view>
+  <view class="popUpBk">
+    <view class='popUpBox shareImgBox'>
+      <text class='title'>嘿，能告诉我一下你的生日吗?</text>
+      <image src='/images/share_cover.png' mode="aspectFit"></image>
+    </view>
+  </view>
 </view>

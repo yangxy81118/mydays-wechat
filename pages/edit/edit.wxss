@@ -128,9 +128,10 @@ view.section input{
 view.sec-name text.star{
   position: absolute;
   top:0rpx;
-  right:30rpx;
+  right:0rpx;
   font-size:40rpx;
   color:#BBB;
+  padding:0 30rpx;
   transition: all 1.5s ease-in-out;
   -webkit-transition: all 1.5s ease-in-out;
 }
