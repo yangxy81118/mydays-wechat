@@ -189,6 +189,9 @@ Page({
         wxModelShow: "block"
       })
     }else{
+      this.setData({
+        wxModelShow: "none"
+      })
       wx.navigateTo({
         url: '/pages/shareTemplate/shareTemplate',
       })
@@ -238,34 +241,14 @@ Page({
     }
   },
   shareTapAction:function(e){
+    this.setData({
+      wxModelShow: "none"
+    })
+
     wx.navigateTo({
       url: '/pages/shareTemplate/shareTemplate',
     })
-  },
-  //分享
-  onShareAppMessage: function (options) {
-    console.log('click share')
-    var userId = wx.getStorageSync('userId')
-    var that = this
-    var constants = require("../../utils/constants.js")
-    return {
-      title: constants.SHARE_TITLE,
-      path: "/pages/fromOther/fromOther?inviterId=" + userId,
-      imageUrl: "/images/share_cover.png",
-      success: function (res) {
-        that.setData({ 
-          wxModelShow: "none", 
-          hasUserInfo: true,
-          shareTipClass:"show-hidden"
-           })
-      },
-      fail: function (res) {
-        console.log("share success:")
-      }
-    }
   }
-
-
 
 })
 
