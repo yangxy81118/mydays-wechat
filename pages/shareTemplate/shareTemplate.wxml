@@ -19,7 +19,7 @@
   <button class="submit-btn disabled" wx:if="{{selectedIdx < 0}}">{{btnWords}}</button>
   <button class="submit-btn" wx:else open-type='share'>{{btnWords}}</button>
   <view class="bottom-mask"></view>
-  <view class="popUpBk">
+  <view class="popUpBk" style="display:none;">
     <view class='popUpBox shareImgBox'>
       <text class='title'>嘿，能告诉我一下你的生日吗?</text>
       <image src='/images/share_cover.png' mode="aspectFit"></image>
