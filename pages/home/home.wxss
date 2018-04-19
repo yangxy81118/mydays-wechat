@@ -42,6 +42,10 @@ view.tab-nav view.layout-btn {
   width: 15.5%;
 }
 
+view.tab-nav view.layout-btn:active{
+  background: #F9F9F9;
+}
+
 view.tab-nav view.layout-btn text.icon {
   font-size: 38rpx;
 }
@@ -197,6 +201,14 @@ view.item-scroll-wrap .day-box {
   top: 30%;
 }
 
+.day-box text.icon-star{
+  position: absolute;
+  top:20rpx;
+  right:20rpx;
+  color:#EEE;
+  font-size:22rpx;
+}
+
 .day-item-h view.item-scroll-wrap .opt-box {
   width: 25.8%;
   position: relative;
@@ -222,27 +234,129 @@ view.item-scroll-wrap .day-box {
   border-bottom-right-radius: 10rpx;
 }
 
+
 button.add {
   position: fixed;
   z-index: 2;
-  bottom: 2%;
-  left: 4%;
-  height: 12%;
-  width: 92%;
+  width:62%;
+  height:10%;
+  bottom:4%;
+  left:8%;
   background: #ff9940;
   color: #fff;
   text-align: center;
   font-size: 40rpx;
-  line-height: 140rpx;
-  box-shadow: 0 2rpx 8px #ff9940;
+  box-shadow: 0 2rpx 6px #ff9940;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-button.add:after{
+button:after{
   border:none;
 }
+
+button.add:active{
+  background: #FA8836; 
+  bottom:3.6%;
+}
+
+button.byShare{
+  position: fixed;
+  display: block;
+  bottom:4%;
+  right:8%;
+  z-index: 2;
+  background: #ff9940;
+  width:18%;
+  height:10%;
+  box-shadow: 0 2rpx 6px #ff9940;
+  border-radius: 10rpx;
+}
+
+button.byShare image{
+  position: absolute;
+  display: block;
+  z-index: 3;
+}
+
+button.byShare image.wx{
+  width:56rpx;
+  height:56rpx;
+  top:26%;
+  left:32%;
+}
+
+button.byShare image.plus{
+  width:34rpx;
+  height:34rpx;
+  bottom:24%;
+  right:22%;
+}
+
+
+/* button.byShare image.wx-move{
+  animation:wxmove 0.7s infinite;
+  animation-delay: 0.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes wxmove
+{
+  0%   {
+    transform:scale(1.6);
+    opacity: 0;}
+  100%  {
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+button.byShare image.plus-move{
+  animation:plusmove 0.7s infinite;
+  animation-delay: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes plusmove
+{
+  0%   {transform:scale(0.5);opacity: 0}
+  80%  {transform:scale(1.2);opacity:1}
+  100%  {transform:scale(1);opacity:1}
+} */
+
+view.share-tip{
+  position: absolute;
+  bottom:17%;
+  right:7%;
+  width:40%;
+  height:70rpx;
+  background: #FFE8D3;
+  border-radius: 28rpx;
+  text-align: center;
+  color:#FF9940;
+  font-size:26rpx;
+  line-height: 70rpx;
+  box-shadow: 0 4rpx 6rpx #E8DECA;
+  display: none;
+}
+
+view.share-tip view.arrow{
+  position: absolute;
+  bottom:-28rpx;
+  right:20%;
+  height:0px;
+  width:0px;
+  border-right:18rpx solid transparent;
+  border-top:37rpx solid #FFE8D3;
+  border-left:9px solid transparent;
+}
+
+/* .add-hover{
+  background: #FAFAFA;
+} */
 
 button.disable{
   color:#FFCA9C;
@@ -256,8 +370,6 @@ button.disable{
   bottom:0;
   left:0;
   background: -webkit-linear-gradient( top, rgba(249,249,249,0) , rgba(249,249,249,1)); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* Firefox 3.6 - 15 */
   background: linear-gradient(to bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* 标准的语法 */
 }
 
@@ -274,6 +386,11 @@ navigator.add:active {
   box-shadow: 2rpx 4rpx 12rpx #eaeaea;
   background: #fff;
   border-radius: 12rpx;
+}
+
+.day-item-v:active{
+  top:6rpx;
+  box-shadow: 0 1rpx 4rpx #eaeaea;
 }
 
 .day-item-v .item-v-main {
@@ -338,82 +455,65 @@ navigator.add:active {
   color: #ff9940;
 }
 
-view.model-bk {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-}
 
-view.model-bk view.main {
-  width: 56%;
-  height: auto;
-  margin: 0 auto;
+view.detailBox {
   padding: 8%;
-  background: #fff;
-  border-radius: 20rpx;
-  z-index: 100;
-  bottom: 32%;
-  position: absolute;
-  left: 14%;
-  overflow: hidden;
+  z-index: 91;
+  top:-9%;
 }
 
-view.model-bk view.main view.content{
+view.detailBox view.content{
   height:440rpx;
 }
 
-view.model-bk view.main view.content text.special{
+view.detailBox view.content text.special{
   font-size:80rpx;
   margin:40rpx 0;
 }
 
-view.model-bk view.main text {
+view.detailBox text {
   display: block;
   color: #444;
   text-align: center;
   width: 100%;
 }
 
-view.model-bk view.main text.small {
+view.detailBox text.small {
   color: #bbb;
   font-size: 22rpx;
 }
 
-view.model-bk view.main text.remain {
+view.detailBox text.remain {
   color: #444;
   font-size: 38rpx;
   margin: 10rpx 0 0;
 }
 
-view.model-bk view.main text.name {
+view.detailBox text.name {
   font-size: 38rpx;
   margin: 24rpx 0 5rpx;
   font-weight: 700;
 }
 
-view.model-bk view.main text.birthday {
+view.detailBox text.birthday {
   font-size: 34rpx;
   margin: 0 0 15rpx 0;
 }
 
-view.model-bk view.main view.greeting {
+view.detailBox view.greeting {
   padding:30rpx 0;
 }
 
-view.model-bk view.main view.greeting text {
+view.detailBox view.greeting text {
   font-size: 24rpx;
   color: #bbb;
 }
 
-view.model-bk view.main .toolBar {
+view.detailBox .toolBar {
   width: 100%;
 }
 
-view.model-bk view.main navigator {
+view.detailBox navigator {
   display: inline-block;
   font-size: 48rpx;
   color: #aaa;
@@ -422,7 +522,7 @@ view.model-bk view.main navigator {
   text-align: center;
 }
 
-view.model-bk view.main .highLight{
+view.detailBox .highLight{
   position: absolute;
   background: #FFF;
   height:36rpx;
@@ -430,9 +530,11 @@ view.model-bk view.main .highLight{
   top:-10rpx;
   width:100%;
   z-index:9;
+  border-top-right-radius: 20rpx;
+  border-top-left-radius: 20rpx;
 }
 
-view.model-bk view.main .hl{
+view.detailBox .hl{
   background: #ff9940;
 }
 
@@ -447,14 +549,14 @@ view.shadow {
 }
 
 view.s1 {
-  bottom: 30.5%;
+  bottom: 32.5%;
   left: 17%;
   width: 66%;
   background: rgba(255, 255, 255, 0.6);
 }
 
 view.s2 {
-  bottom: 29.5%;
+  bottom: 31.5%;
   left: 19%;
   width: 62%;
   background: rgba(255, 255, 255, 0.25);
@@ -513,4 +615,53 @@ view.prev{
 
 view.next{
   right:0;
+}
+
+
+/* wxAuth */
+view.authBox{
+  padding:10% 8%;
+}
+
+
+view.authBox view.tip{
+  font-size: 28rpx;
+  color:#444;
+  text-align: center;
+  padding:0 0 30rpx; 
+}
+
+view.authBox button{
+  font-size: 32rpx;
+  color:#FFF;
+  border-radius: 8rpx;
+  margin:32rpx 0 0 0 ;
+  position: relative;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+}
+
+view.authBox button:after{
+  border:none;
+}
+
+view.authBox button.share{
+  background: #FF9940; 
+}
+
+view.authBox button.disabled{
+  background: #CCC!important; 
+  color:#FFF;
+}
+
+view.authBox button.auth{
+  background: #41B035;
+}
+
+view.authBox button text.iconfont{
+  color:#FFF;
+  position: absolute;
+  top:14rpx;
+  left:20%;
+  font-size: 54rpx;
+  line-height: 54rpx;
 }

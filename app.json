@@ -1,9 +1,10 @@
 {
   "pages":[
-    "pages/wall/wall",
     "pages/home/home",
     "pages/edit/edit",
-    "pages/fromOther/fromOther"
+    "pages/shareTemplate/shareTemplate",
+    "pages/fromOther/fromOther",
+    "pages/fromOtherResult/fromOtherResult"
   ],
   "window":{
     "backgroundTextStyle":"light",

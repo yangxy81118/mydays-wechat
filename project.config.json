@@ -28,12 +28,30 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "编辑",
 					"pathName": "pages/edit/edit",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "受到邀请",
+					"pathName": "pages/fromOther/fromOther",
+					"query": "inviterId=2"
+				},
+				{
+					"id": 2,
+					"name": "邀请结果",
+					"pathName": "pages/fromOtherResult/fromOtherResult",
+					"query": "result=2"
+				},
+				{
+					"id": -1,
+					"name": "邀请模板",
+					"pathName": "pages/shareTemplate/shareTemplate",
 					"query": ""
 				}
 			]

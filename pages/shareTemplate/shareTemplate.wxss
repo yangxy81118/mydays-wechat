@@ -1,0 +1,157 @@
+view.container{
+  padding:5% 8% 18%;
+  background:#f9f9f9;
+}
+
+view.container scroll-view{
+  width:100%;
+}
+
+view.template-box{
+  background-color: #FFF;
+  width:100%;
+  border-radius: 20rpx;
+  position: relative;
+  margin: 0 0 30rpx 0;
+  padding:40rpx 0;
+  box-shadow: 0rpx 4rpx 12rpx #eaeaea;
+  overflow: hidden;
+}
+
+view.template-box image{
+  position: absolute;
+  top:10%;
+  left:-20rpx;
+  height:80%;
+  max-width: 20%;
+  transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+}
+
+view.selected image{
+  opacity:1;
+}
+
+view.template-box text{
+  display: block;
+
+}
+
+view.template-box text.words{
+  padding:0 20% 0 26%  ;
+}
+
+view.template-box text.title{
+  color:#FF9940;
+  font-size:30rpx;
+  margin:0 0 30rpx 0;
+  min-height:80rpx;
+  display: flex;
+  align-items: center; 
+}
+
+
+view.template-box text.content{
+  color:#A8A8A8;
+  font-size:24rpx;
+}
+
+view.template-box text.iconfont{
+  color:#ffe8d3;
+  position: absolute;
+  padding:50rpx;
+  font-size:50rpx;
+  top:20%;
+  right:0;
+}
+
+view.selected{
+  
+}
+
+view.selected text.iconfont{
+  color:#FF9940;
+}
+
+view.selected text.title{
+  font-weight: 700;
+}
+
+view.selected image{
+  left:10rpx;
+}
+
+view.selected text.content{
+  color:#444;
+}
+
+button.submit-btn{
+  position: fixed;
+  bottom:3%;
+  left:8%;
+  margin:0 auto;
+  width:84%;
+  z-index: 2;
+}
+
+button.disabled{
+  color:#fff;
+  background: #ccc;
+  box-shadow:0 2rpx 6rpx rgba(230,230,230,0.40);
+}
+
+
+.bottom-mask{
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 12%;
+  bottom:0;
+  left:0;
+  background: -webkit-linear-gradient( top, rgba(249,249,249,0) , rgba(249,249,249,1)); /* Safari 5.1 - 6.0 */
+  background: linear-gradient(to bottom , rgba(249,249,249,0) , rgba(249,249,249,1)); /* 标准的语法 */
+}
+
+view.popUpBk{
+  background: rgba(0,0,0)
+}
+
+view.popUpBk view.shareImgBox{
+  padding:5% 5% 10%;
+  width:80%;
+  border-radius: 0;
+  position: relative;
+  background: none;
+}
+
+view.shareImgBox text.title{
+  display:block;
+  font-size:28rpx;
+  text-align:center;
+  position:absolute;
+  top:120rpx;
+  left:11%;
+  background:#FFF;
+  color:#000;
+  line-height:60rpx;
+  padding:0 100rpx  0  32rpx;
+}
+
+view.shareImgBox image{
+  width:100%;
+}
+
+view.shareImgBox image.bk{
+  width:100%;
+  height:620rpx;
+}
+
+view.shareImgBox image.content{
+  position:absolute;
+  width:72%;
+  top:19%;
+  left:14%;
+}
+
+
+

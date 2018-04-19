@@ -1,0 +1,77 @@
+page{
+  background: #f9f9f9;
+  height:auto;
+}
+
+.container{
+  padding:0 10%;
+}
+
+view.img{
+  margin:20% 0 0 0;
+  width:100%;
+}
+
+view.front{
+  margin: 0 auto;
+  text-align: center;
+  background: #FFF;
+  box-shadow: 0 6rpx 10rpx rgba(188,188,188,0.50);
+  /* height:600rpx; */
+  border-radius: 20rpx;
+  padding:80rpx 0 50rpx;
+}
+
+view.front image{
+  width:60%;
+  height:260rpx;
+  margin:0 auto;
+}
+
+view.front text{
+  display: block;
+  color:#444;
+  font-weight: 700;
+  line-height: 120rpx;
+}
+
+view.front view.tips{
+  text-align: center;
+  font-size:26rpx;
+  line-height: 40rpx;
+  height:84rpx;
+  overflow: hidden;
+  width:80%;
+  margin:0 auto;
+  color:#AAA;
+}
+
+view.shadow{
+
+}
+
+view.s1{
+
+}
+
+view.s2{
+
+}
+
+view.action{
+
+}
+
+
+view.action button{
+  margin:40rpx 0 0 0;
+}
+
+view.copy{
+  margin:80rpx 0 0 0;
+  font-size: 24rpx;
+  color:#444;
+  text-align: center;
+  line-height: 50rpx;
+}
+

@@ -12,11 +12,10 @@
       <view class="underline"></view>
     </view>
     <view class="layout-btn" bindtap='layoutAction'>
-      <text class="icon iconfont {{layoutBtnClass}}"></text>
+      <text class="icon iconfont {{layoutBtnClass}} layout-icon"></text>
     </view>
     <!-- <image class="star" src="/images/star.png" /> -->
   </view>
-  <!--style='height:{{listHeight}}px' -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
     <image src='/images/empty-list.png' mode='aspectFit'></image>
     
@@ -29,7 +28,8 @@
     </view>
   </view>
   <scroll-view wx:else scroll-y='true' class="list">
-    <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item">
+    <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" 
+      wx:for="{{days}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
         <view class="day-box" bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}">
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
@@ -47,7 +47,7 @@
             <text class="date" wx:if="{{item.lunar.length == 0}}">{{item.month}}月{{item.date}}日</text>
             <text class="date" wx:else>{{item.lunar}}</text>
           </block>
-          <image class="star" wx:if="{{item.favor}}" src="/images/star-s.png" />
+          <text wx:if="{{item.favor}}" class="star iconfont icon-star"></text>
           <view class="new" wx:if="{{item.id == newId }}">
              <text>新</text> 
           </view>
@@ -60,7 +60,8 @@
     </scroll-view>
 
 
-    <view wx:if="{{layout == 2}}" wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" 
+    <view wx:if="{{layout == 2}}" 
+      wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" wx:key="id"
       bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}"
       class="day-item-v">
         <view wx:if="{{item.remain <= 60}}" class="item-v-main close-v" data-dayId="{{item.id}}">
@@ -95,17 +96,46 @@
 
   <view class="bottom-mask"></view>
 
-  <button wx:if="{{!isFull}}" class="add" bindtap='addAction'>记录生日</button>
-  <button wx:else class="add disable">额度已满</button>
+    <block wx:if="{{!isFull}}">
+      <button class="add" bindtap='addAction'>记录生日</button>
+
+      <button class="byShare" bindtap='shareCheckAction'>
+          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
+          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
+      </button>
+      <!-- <button wx:else class="byShare" open-type='share'>
+          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
+          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
+      </button> -->
+      <view class="share-tip {{shareTipClass}}">
+        <text>邀请好友添加生日吧</text>
+        <view class='arrow'></view>
+      </view>
+    </block>
+    <button wx:else class="add disable">额度已满</button>
 
   <!-- <navigator  url='/pages/edit/edit'></navigator>
   <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator> -->
 
 </view>
 
+<view class="popUpBk" id="wxModelBk" style="display:{{wxModelShow}}" bindtap='wxModelTapAction'>
+  <view class="popUpBox authBox" id="wxModelContent" catchtap='wxModelTapAction'>
+    <view class='tip'>
+      <view>首次邀请好友需要同意使用</view>
+      <view>您的微信头像和昵称</view>
+    </view>
+    <button wx:if="{{!authFinish}}" class="auth" 
+      open-type="getUserInfo" bindgetuserinfo="getUserInfo"><text class="iconfont icon-weixin"></text>微信授权</button>
+    <button wx:else class="auth disabled" disabled><text class="iconfont icon-weixin"></text>已授权</button>
 
-<view class="model-bk" style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
-  <view class="main" id="popContent" catchtap='modelTapAction'>
+    <button wx:if="{{!authFinish}}" class="share disabled" disabled open-type='share'>发送邀请</button>
+    <button wx:else class="share" bindtap="shareTapAction">发送邀请</button>
+  </view>
+</view>
+
+<view class="popUpBk " style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
+  <view class="popUpBox detailBox" id="popContent" catchtap='modelTapAction'>
 
     <view class="content">
       <block wx:if="{{popUpDay.remain < 2}}">

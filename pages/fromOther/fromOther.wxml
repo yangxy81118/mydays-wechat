@@ -1,20 +1,69 @@
-<view class="wall">
-  <view>这是转发页面1</view>
-  <view>这是转发页面2</view>
-  <view>这是转发页面3</view>
-  <view>这是转发页面4</view>
-  <view>这是转发页面5</view>
-  <view>这是转发页面6</view>
-  <view>这是转发页面7</view>
-  <view>这是转发页面8</view>
-  <view>这是转发页面9</view>
-  <view>这是转发页面0</view>
-  <view>这是转发页面1</view>
-  <view>这是转发页面2</view>
-  <view>这是转发页面3</view>
-  <view>这是转发页面4</view>
-  <view>这是转发页面5</view>
-  <view>这是转发页面6</view>
+<view class="header">
+  <view class="content">
+    <image class="avatar" src='{{inviter.avatarUrl}}'></image> 
+    <text class="username">{{inviter.nickName}}</text>
+    <!-- <text class="greeting">{{template.title}}</text> -->
+    <text class="greeting">{{template.content}}</text>
+  </view>
+  <navigator class="iconfont icon-shouye2 home" open-type='redirect' url='/pages/home/home'></navigator>
+  <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
+</view>
 
-  <button open-type='share'>点击此处转发</button>
+<view wx:if="{{self}}" class="self">
+  <image src="/images/cake.png" mode="aspectFit"></image>
+
+  <view wx:if="{{invitedCount>0}}" class="invited-info">已经有<text>{{invitedCount}}</text>位好友为你贡献了生日记录！</view>
+  <view wx:else class="invited-info">你的好友或许正在帮你记录，等着好消息吧~</view>
+  
+  <view class="toolbar">
+    <button class="save" open-type='share'>转发给好友</button>
+  </view>
+</view>
+
+<view wx:else class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="section sec-name">
+      <label>姓名</label>
+      <view class="input-box">
+        <text class="iconfont icon-user2 label-icon"></text>
+        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>  
+        <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="copy">使用昵称</button>
+      </view>
+    </view>
+
+    <view class="section sec-time">
+      <label>生日<text class="funny">不想透露年龄？那就随意选个年份吧</text></label>
+
+      <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+      <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+
+      <button wx:if="{{dateMode==1}}" class="selected" bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+      <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+
+      <view class="input-box" wx:if="{{dateMode==0}}">
+        <text class="iconfont icon-date1 label-icon"></text>
+        <picker mode="date" name="date" 
+          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" 
+          bindchange="bindDateChange">
+          <view class="picker">
+            <text class="{{dateClass}}">{{date}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="input-box" wx:else>
+        <text class="iconfont icon-date1 label-icon"></text>
+        <picker mode="multiSelector" name="date"
+            bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
+          <view class="picker">
+            <text class="{{dateClass}}">{{cnDate}}</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="toolbar">
+      <button class="save" formType="submit" id="save">发送给好友</button>
+    </view>
+  </form>
 </view>

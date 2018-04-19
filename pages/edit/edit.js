@@ -1,15 +1,9 @@
-//index.js
-//获取应用实例
-const date = new Date()
-const months = []
-const days = []
-
 var cnCalendar
-
 var dateSelected = false
 
 const calTool = require("../../utils/cn-cal.js")
 const commonTool = require("../../utils/common.js")
+
 
 Page({
   data: {
@@ -20,7 +14,8 @@ Page({
     dayFavor:false,
     thisDayId:0,
     dateMode:0,
-    starState:""
+    starState:"",
+    modelShow:"none"
   },
 
   onLoad: function (option) {
@@ -31,16 +26,13 @@ Page({
     var that = this
     cnCalendar = wx.getStorageSync("cnCalendar")
     
-    //处理样式
-    var res = wx.getSystemInfoSync()
-    if (res.system.toLowerCase().indexOf("ios") >= 0) {
-      this.setData({ ios: "ios" })
-    }
-
     //检查加载农历组件
     if (!cnCalendar || cnCalendar == "") {
-      commonTool.request('simple-query/lunar','GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar',
+        method:'GET',
+        callback:function(res){
           var calendarSource = res.data
           cnCalendar = calTool.init(calendarSource)
           wx.setStorage({
@@ -49,12 +41,7 @@ Page({
           })
           initLunarCompornt(that)
         }
-      )
-      // wx.request({
-      //   url: 'https://www.yubopet.top/simple-query/lunar',
-      //   method: 'GET',
-      //   success: 
-      // })
+      })
     }else{
       initLunarCompornt(that)
     }
@@ -65,9 +52,10 @@ Page({
     if (option && option.dayId){
       this.setData({ thisDayId: option.dayId})
 
-      commonTool.graphReq('days', 
-                  '{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
-          function (res) {
+      commonTool.graphReq({
+          module:'days',
+          data:'{day(dayId:' + option.dayId + ') { name year month date lunar favor comment }}',
+          callback:function (res) {
 
             if (commonTool.checkError(res)) return
 
@@ -116,21 +104,38 @@ Page({
 
             dateSelected = true
             wx.hideLoading();
-          })
+          }
+      })
     } //endIf 编辑
 
 
-
+    //额度
     var daysCount = wx.getStorageSync("daysCount")
     var daysLimit = wx.getStorageSync("daysLimit")
     var nearlyFull = ((daysCount + 1) >= daysLimit)
     var fewerSpace = daysCount >= daysLimit*0.9
 
+    //最大日期到今天（阳历)
+    var today = new Date()
+    var day = today.getDate()
+    var month = today.getMonth()+1
+    var year = today.getFullYear()
+    var endTimeStr = year + "-" + month + "-" + day
+
+    //获取这个用户信息
+    var userInfo = wx.getStorageSync("userInfo")
+    var hasUserInfo = false
+    if(userInfo.nickName && userInfo.nickName.length > 0){
+      hasUserInfo = true
+    }
+
     this.setData({
       daysCount: daysCount,
       daysLimit: daysLimit,
       nearlyFull: nearlyFull,
-      fewerSpace: fewerSpace
+      fewerSpace: fewerSpace,
+      endDate: endTimeStr,
+      hasUserInfo: hasUserInfo
     })
 
     wx.hideLoading();
@@ -160,9 +165,11 @@ Page({
     //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
     //如果是切换到公历，则直接修改公历插件的value数值即可
     if (dateMode == 0) {
-      commonTool.request('simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
-        'GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
+        method:'GET',
+        callback:function (res) {
           if (commonTool.checkError(res)) return
           that.setData({
             dateValue: res.data,
@@ -170,15 +177,18 @@ Page({
             date: res.data
           })
         }
-      )
+      })
+
     }
 
     //如果是切换到农历，则根据返回的(AA,BB,CC)来分析：先通过AA找到对应的年index，然后逐步找到BB,CC的index，最后绑定数据
     else {
       var that = this
-      commonTool.request('simple-query/lunar/normalTolunar?date=' + lastDate,
-        'GET',
-        function (res) {
+
+      commonTool.request({
+        url:'simple-query/lunar/normalTolunar?date=' + lastDate,
+        method:'GET',
+        callback:function (res) {
           var lunarStr = res.data.split(",")
           var result = calTool.getChoiceIndex(cnCalendar, lunarStr, that.data.lunarArray)
           var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
@@ -188,7 +198,9 @@ Page({
             cnDate: cnDateStr,
             vDate: cnDateStr
           })
-        })
+        }
+      })
+
     }
   },
   lunarFieldChange: function (e) {
@@ -278,10 +290,21 @@ Page({
     var isFavor = this.data.starState.length > 0
     if(thisDayId > 0){
 
-      commonTool.request(
-        'customDay',
-        'POST',
-        function (res) {
+      commonTool.request({
+        url:'customDay',
+        method:'POST',
+        data:{
+          name: formData.name,
+          dateMode: dateMode,
+          date: formData.date,
+          favor: isFavor,
+          dayId: thisDayId,
+          comment: formData.comment
+        },
+        header:{
+          'content-type': 'application/json'
+        },
+        callback:function (res) {
           if (commonTool.checkError(res)) return
 
           if (again) {
@@ -294,26 +317,26 @@ Page({
               delta: 1
             })
           }
-        },
-        {
+        }
+      })
+
+    }else{
+
+      commonTool.request({
+        url:'customDay',
+        method:'PUT',
+        data:{
           name: formData.name,
           dateMode: dateMode,
           date: formData.date,
           favor: isFavor,
-          dayId: thisDayId,
+          userId: userId,
           comment: formData.comment
         },
-        {
+        header:{
           'content-type': 'application/json'
-        }
-      )
-
-    }else{
-
-      commonTool.request(
-        'customDay',
-        'PUT',
-        function (res) {
+        },
+        callback:function (res) {
           if (commonTool.checkError(res)) return
           wx.setStorageSync("newDayId", res.data)
 
@@ -331,19 +354,8 @@ Page({
               delta: 1
             })
           }
-        },
-        {
-          name: formData.name,
-          dateMode: dateMode,
-          date: formData.date,
-          favor: isFavor,
-          userId: userId,
-          comment: formData.comment
-        },
-        {
-          'content-type': 'application/json'
         }
-      )
+      })
     }
   },
 
@@ -358,19 +370,74 @@ Page({
       this.setData({starState:""})
     }
   },
+  shareCheckAction:function(e){
+    this.setData({
+      modelShow:"block"
+    })
+  },
+  getUserInfo: function (e) {
+
+    //如果拒绝，则不做响应
+    if(!e.detail.userInfo){
+      return
+    }
+
+    //去同步userInfo到数据库
+    var userInfo = e.detail.userInfo
+    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
+
+    var userId = wx.getStorageSync('userId')
+    var that = this
+    commonTool.request({
+      url:"user",
+      method:"POST",
+      data:{
+        id: userId,
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl
+      },
+      callback:function(res){
+        if (commonTool.checkError(res)) return
+
+        var localUserInfo = wx.getStorageSync("userInfo")
+        localUserInfo.nickName = userInfo.nickName
+        localUserInfo.avatarUrl = userInfo.avatarUrl
+        wx.setStorageSync("userInfo", localUserInfo)
+
+        //然后修改按钮状态
+        that.setData({
+          authFinish: true
+        })
+      }
+    })
+    
+  },
+  modelTapAction: function (e) {
+    if (e.currentTarget.id == "popBk") {
+      this.setData({ modelShow: "none" })
+    }
+  },
+  shareTapAction: function (e) {
+    wx.navigateTo({
+      url: '/pages/shareTemplate/shareTemplate',
+    })
+  },
   //分享
   onShareAppMessage:function(options){
     console.log('click share')
+    var userId = wx.getStorageSync('userId')
+    var that = this
+    var constants = require("../../utils/constants.js")
     return {
-      title: "我忘记你的生日啦",
-      path: "/pages/fromOther/fromOther?inviterId=199",
+      title: constants.SHARE_TITLE,
+      path: "/pages/fromOther/fromOther?inviterId=" + userId,
+      imageUrl:"/images/share_cover.png",
       success: function (res) {
         console.log("share success:")
-        console.dir(res)
+        that.setData({ modelShow: "none",hasUserInfo:true })
       },
       fail: function (res) {
-        console.log('failed...')
-
+        console.log("share success:")
       }
     }
   }

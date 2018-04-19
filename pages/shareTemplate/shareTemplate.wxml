@@ -1,0 +1,30 @@
+<view class="container">
+  <scroll-view>
+    <view class="template-box" wx:for="{{choices}}" 
+      wx:for-index="idx" wx:for-item="item">
+      <view wx:if="{{idx == selectedIdx}}" class="wrap selected" bindtap='previewAction' data-idx="{{idx}}">
+        <text class="words title">{{item.title}}</text>
+        <text class="words content">{{item.content}}</text>
+        <text class="iconfont icon-mark" catchtap='selectTemplateAction' data-idx="{{idx}}"></text>
+        <image src='{{item.bk}}' mode='aspectFit'></image>
+      </view>
+      <view wx:else class="wrap" bindtap='previewAction' data-idx="{{idx}}">
+        <text class="words title">{{item.title}}</text>
+        <text class="words content">{{item.content}}</text>
+        <text class="iconfont icon-mark" catchtap='selectTemplateAction' data-idx="{{idx}}"></text>
+        <image src='{{item.bk}}' mode='aspectFit'></image>
+      </view>
+    </view>
+  </scroll-view>
+  <button class="submit-btn disabled" wx:if="{{selectedIdx < 0}}">{{btnWords}}</button>
+  <button class="submit-btn" wx:else open-type='share'>{{btnWords}}</button>
+  <view class="bottom-mask"></view>
+  <view class="popUpBk" style="display:{{previewDisplay}}" id="previewBk" bindtap='previewTapAction'>
+    <view class='popUpBox shareImgBox' id="previewBox" catchtap='previewTapAction'>
+      <text class='title'>{{previewTitle}}</text>
+      <image class="bk" src="/images/share_preview_wrap.png" mode="aspectFit"></image>
+      <image class="content" src='{{previewImg}}' mode="aspectFit"></image>
+    </view>
+  </view>
+</view>
+

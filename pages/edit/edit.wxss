@@ -21,14 +21,11 @@ view.sec-name{
 
 }
 
-view.sec-time{
-  padding:0 0 40rpx 0;
-  border-bottom:2rpx solid #EAEAEA;
-}
-
 view.sec-other{
   margin:40rpx 0 0 0;
   border-top:2rpx solid #EAEAEA;
+  position: relative;
+  color:#A8A8A8;
 }
 
 view.sec-other button{
@@ -40,19 +37,33 @@ view.sec-other button{
   background: #FFF;
 }
 
+view.sec-other button:active{
+  position: relative;
+  top:4rpx;
+}
+
 view.sec-other button:after{
   border:none;
 }
 
+view.sec-other text.arrow{
+  position: absolute;
+  right:4%;
+  top:70rpx;
+  font-size:30rpx;
+  color:#A8A8A8;
+}
+
 view.sec-limit{
   margin:40rpx 0 0 0;
-  box-shadow:0 0 4px rgba(216,216,216,0.25);
-  border-radius: 100rpx;
+  padding:40rpx 0 0 0;
+  border-top:2rpx solid #EAEAEA;
 }
 
 view.sec-limit view{
+  background: #F3F3F3;
+  border-radius: 6rpx;
   height:100rpx;
-  background: #FFF;
   padding: 0 0 0 30rpx;
   position: relative;
   line-height: 100rpx;
@@ -95,7 +106,13 @@ view.section text.label-icon{
   left:30rpx;
   top:0rpx;
   color:#FF9940;
+  transition: all 1.5s ease-in-out;
+  -webkit-transition: all 1.5s ease-in-out;
 }
+
+/* view.sec-time view.input-box:active text.label-icon{
+  transform: scale(1.5);
+} */
 
 view.section input{
   height:100%;
@@ -111,13 +128,18 @@ view.section input{
 view.sec-name text.star{
   position: absolute;
   top:0rpx;
-  right:30rpx;
+  right:0rpx;
   font-size:40rpx;
   color:#BBB;
+  padding:0 30rpx;
+  transition: all 1.5s ease-in-out;
+  -webkit-transition: all 1.5s ease-in-out;
 }
 
 view.sec-name text.star-selected{
   color:#FF9940;
+  transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);  
 }
 
 view.sec-time button{
@@ -129,6 +151,8 @@ view.sec-time button{
   background: #FFF;
   margin:0 0 20rpx 0;
   font-size:26rpx;
+  transition: all 2s;
+  -webkit-transition: all 2s;
 }
 
 view.sec-time button:after{
@@ -167,15 +191,12 @@ view.picker text.selected{
   color:#000;
 }
 
-
-
 view.toolbar{
   position: fixed;
-  bottom:20rpx;
+  bottom:30rpx;
   width:100%;
   /* height:80rpx; */
 }
-
 
 view.toolbar button{
   font-size:30rpx;
@@ -200,6 +221,11 @@ view.toolbar button.save{
   box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
 }
 
+view.toolbar button:active{
+  position: relative;
+  top:4rpx;
+}
+
 view.toolbar button.disable{
   color:#BDBDBD;
   background: #E3E3E3;
@@ -208,5 +234,71 @@ view.toolbar button.disable{
 
 view.toolbar button::after{ 
   border:none;
+}
+
+
+view.model-bk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+view.model-bk view.model-content {
+  position: absolute;
+  z-index: 100;
+  bottom: 32%;
+  left: 14%;
+  width: 56%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10% 8%;
+  background: #fff;
+  border-radius: 20rpx;
+}
+
+view.model-content view.tip{
+  font-size: 28rpx;
+  color:#444;
+  text-align: center;
+  padding:0 0 30rpx; 
+}
+
+view.model-content button{
+  font-size: 32rpx;
+  color:#FFF;
+  border-radius: 8rpx;
+  margin:32rpx 0 0 0 ;
+  position: relative;
+  box-shadow:0 0 4px rgba(216,216,216,0.25);
+}
+
+view.model-content button:after{
+  border:none;
+}
+
+view.model-content button.share{
+  background: #FF9940; 
+}
+
+view.model-content button.disabled{
+  background: #CCC!important; 
+  color:#FFF;
+}
+
+view.model-content button.auth{
+  background: #41B035;
+}
+
+view.model-content button text.iconfont{
+  color:#FFF;
+  position: absolute;
+  top:14rpx;
+  left:20%;
+  font-size: 54rpx;
+  line-height: 54rpx;
 }
 
