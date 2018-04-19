@@ -13,7 +13,7 @@ Page({
     this.setData({
       choices: constants.SHARE_CHOICES
     })
-
+    wx.hideShareMenu()
   },
   selectTemplateAction:function(e){
 

@@ -195,7 +195,6 @@ Page({
       wx.navigateTo({
         url: '/pages/shareTemplate/shareTemplate',
       })
-      console.log('finsih!!!!')
     }
 
   },

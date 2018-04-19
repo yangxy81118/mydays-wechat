@@ -1,12 +1,12 @@
 <!--index.wxml-->
 <view class="main">
   <view class="tab-nav">
-    <view class="nav {{navAllClass}}" bindtap='listNavAction'>
+    <view class="nav {{navAllClass}}" id="normal-list" bindtap='listNavAction'>
       <text class="icon iconfont icon-all"></text>
       <text class="word">全部</text>
       <view class="underline"></view>
     </view>
-    <view class="nav {{navFavorClass}}" bindtap='listNavAction' data-favor="1">
+    <view class="nav {{navFavorClass}}" id="star-list" bindtap='listNavAction' data-favor="1">
       <text class="icon iconfont icon-star"></text>
       <text class="word">星标</text>
       <view class="underline"></view>

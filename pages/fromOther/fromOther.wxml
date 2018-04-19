@@ -16,7 +16,7 @@
   <view wx:else class="invited-info">你的好友或许正在帮你记录，等着好消息吧~</view>
   
   <view class="toolbar">
-    <button class="save" open-type='share'>转发给好友</button>
+    <button class="save" open-type='share' id="share-again">转发给好友</button>
   </view>
 </view>
 
