@@ -3,8 +3,11 @@ var dateSelected = false
 
 const calTool = require("../../utils/cn-cal.js")
 const commonTool = require("../../utils/common.js")
+const constants = require("../../utils/constants.js")
 
 var inviterId
+
+var templateId
 
 Page({
   data: {
@@ -51,6 +54,12 @@ Page({
     })
 
 
+    //获取模板数据
+    if (!options.template){
+      options.template = 2
+    }
+    var template = constants.SHARE_CHOICES[options.template]
+    templateId = options.template
 
     //加载邀请人的数据
     commonTool.graphReq({
@@ -69,7 +78,8 @@ Page({
         }
 
         that.setData({
-            inviter: res.data.data.user
+            inviter: res.data.data.user,
+            template: template
         })
       }
     })
@@ -300,10 +310,11 @@ Page({
   onShareAppMessage: function (options) {
     var userId = wx.getStorageSync('userId')
 
+    var shareObj = constants.SHARE_CHOICES[templateId]
     return {
-      title: "我又忘记你的生日啦",
-      path: "/pages/fromOther/fromOther?inviterId=" + userId,
-      imageUrl: "/images/share_cover.png",
+      title: shareObj.title,
+      path: "/pages/fromOther/fromOther?inviterId=" + userId + "&template=" + templateId,
+      imageUrl: shareObj.img,
       success: function (res) {
         console.log("share success:")
       },

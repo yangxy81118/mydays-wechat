@@ -55,11 +55,12 @@ view.content text.username{
   font-size: 36rpx;
   line-height: 40rpx;
   font-weight: 700;
+  margin:0 0 35rpx 0;
 }
 
 view.content text.greeting{
-  margin:30rpx 0 0 0;
-  font-size: 26rpx;
+  margin:6rpx 0;
+  font-size: 24rpx;
 }
 
 
