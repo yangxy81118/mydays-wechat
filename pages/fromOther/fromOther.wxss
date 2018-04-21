@@ -4,7 +4,7 @@ page{
 }
 
 view.header{
-  height:400rpx;
+  height:40%;
   width:100%;
   position: relative;
 }
@@ -63,17 +63,53 @@ view.content text.greeting{
   font-size: 24rpx;
 }
 
+view.container{
+  height:60%;
+}
+
 
 view.self{
-  height:50%
+  height:60%;
+}
+
+view.container view.self{
+  height:100%;
+  position: relative;
 }
 
 view.self image{
   display: block;
   width:80%;
-  height:64%;
+  height:320rpx;
   margin:60rpx auto;
 }
+
+view.self image.cake{
+  position:absolute;
+  width:60%;
+  height:80%;
+  left:19%;
+  bottom:22%;
+}
+
+view.self image.line{
+  position:absolute;
+  width:20%;
+  height:40%;
+  left:73%;
+  bottom:8%;
+}
+
+view.help{
+  position: absolute;
+  bottom:23%;
+  left:23%;
+  margin:0 auto;
+  font-size:28rpx;
+  color:#444;
+}
+
+
 
 view.self view.invited-info{
   display: block;
@@ -237,21 +273,36 @@ view.toolbar{
   bottom:30rpx;
   left:8%;
   width:84%;
+  overflow: hidden;
 }
 
-view.toolbar button{
+view.toolbar .btn{
   font-size:30rpx;
   display: block;
+  float:left;
   line-height: 100rpx;
-  height:100rpx;
   color:#FFF;
   background: #ff9940;
-  width:100%;
-  margin:0 auto;
   box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+  text-align: center;
 }
 
 view.toolbar button::after{ 
   border:none;
+}
+
+view.toolbar .home{
+  background: #ffe8d3;
+  width:30%;
+  color:#ff9940;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+  border-radius: 5px;
+  margin:0 5% 0 0;
+}
+
+view.toolbar .save{
+  background: #ff9940;
+  width:64%;
+  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
 }
 

@@ -48,23 +48,16 @@ const showLastAction = function(){
 }
 
 const checkDaysCount = function(){
-  var daysCount = wx.getStorageSync("daysCount")
-  var daysLimit = wx.getStorageSync("daysLimit")
-  console.log("daysCount:")
-  return daysCount >= daysLimit
+  var userInfo = wx.getStorageSync("userInfo")
+  var daysCount = userInfo.daysCount
+  var daysLimit = userInfo.limit
+  return daysCount >= daysLimit 
 }
 
-
-// const request = function(url,method,successCallBack,data,header){
-//   wx.request({
-//     url: 'https://www.yubopet.top/' + url,
-//     method: method,
-//     data:data,
-//     header: header,
-//     success: successCallBack
-//   })
-// }
-
+const daysChange = function(change){
+  var userInfo = wx.getStorageSync("userInfo")
+  userInfo.daysCount += change 
+}
 
 const request = function (obj) {
   wx.request({
@@ -101,6 +94,7 @@ module.exports = {
   checkError: checkError,
   showLastAction: showLastAction,
   checkDaysCount: checkDaysCount,
+  daysChange : daysChange,
   request: request,
   graphReq: graphReq,
   replaceEmoji: replaceEmoji 

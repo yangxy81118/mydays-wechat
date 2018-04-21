@@ -46,7 +46,7 @@
 					"id": 2,
 					"name": "邀请结果",
 					"pathName": "pages/fromOtherResult/fromOtherResult",
-					"query": "result=2"
+					"query": "result=1"
 				},
 				{
 					"id": -1,
