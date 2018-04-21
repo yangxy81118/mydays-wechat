@@ -6,7 +6,7 @@ Page({
     title:"",
     tips:"",
     img:"",
-    btnText:"我也来记一个",
+    btnText:"我也想用",
     readyCopy:true
   },
   onLoad: function (options) {
@@ -29,11 +29,11 @@ Page({
     newDayId = options.newDayId
     
     //获取该用户是否为新用户（没有任何数据的新用户）
-    var count = wx.getStorageSync("daysCount")
-    if (count>0){
+    var userInfo = wx.getStorageSync("userInfo")
+    if (userInfo.daysCount>0){
       this.setData({
         readyCopy: false,
-        btnText:"返回我的主页"
+        btnText:"返回我自己的主页"
       })
     }
   },
@@ -59,13 +59,15 @@ Page({
           userId: wx.getStorageSync('userId')
         },
         callback:function(e){
-          wx.redirectTo({
+          wx.reLaunch({
             url: '/pages/home/home',
           })
+
+          //count + 1
         }
       })
     }else{
-      wx.redirectTo({
+      wx.reLaunch({
         url: '/pages/home/home',
       })
     }

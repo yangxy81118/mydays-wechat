@@ -16,42 +16,19 @@ Page({
   },
   onShow: function () {
 
-    //手机信息
-    var that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        windowHeight = res.windowHeight;
-        that.setData({
-          listHeight: res.windowHeight-80
-        })
-      }
-    })
+    //首先判断userId是否已经获取到
+    var userId = wx.getStorageSync('userId')
 
-    //额度
-    var isFull = commonTool.checkDaysCount()
-    //第一次打开
-    var firstOpen = wx.getStorageSync('RESET_OPEN_HOME')
-    var shareTipClass = ""
-    if (firstOpen) shareTipClass = "show-block"
-    //清空一些可能的多余状态
-    this.setData({
-      modelShow: "none",
-      newId: 0,
-      isFull: isFull,
-      shareTipClass: shareTipClass
-    })
-    wx.setStorageSync('RESET_OPEN_HOME', false)
-
-    var userId =  wx.getStorageSync('userId')   
-    loadDays(that,userId)
-
-
-    //如果navigateBack能够带参数，就不需要这么绕了
-    var newDayId = wx.getStorageSync('newDayId')   
-    console.log("home页获取：" + newDayId)
-    if(newDayId){
-      this.setData({ newId: newDayId})
-      wx.removeStorageSync('newDayId')
+    //如果获取到了，直接进入到正常数据获取流程
+    if(userId){
+      initOnOpen(this,userId)
+    }else{
+      //如果没有，则显示加载中，并等待2秒后重试
+      wx.showLoading({
+        title:'首次进入加载中'
+      })
+      userId = wx.getStorageSync('userId')
+      setTimeout(initOnOpen,1500,this,userId) 
     }
   },
 
@@ -118,9 +95,7 @@ Page({
             callback:function (res) {
               if (commonTool.checkError(res)) return
 
-              var daysCount = wx.getStorageSync("daysCount")
-              daysCount--
-              wx.setStorageSync("daysCount", daysCount)
+              commonTool.daysChange(-1)
 
               that.onShow()
               that.setData({modelShow:"none"})
@@ -280,8 +255,9 @@ function loadPopUp(that,dayId,idx){
    })
 }
 
-function loadDays(that,userId){
+function loadDays(page,userId){
 
+  // userId = 42
   commonTool.graphReq({
         module:'days',
         data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor } user(userId:'+userId+') { nickName avatarUrl } }',
@@ -292,13 +268,44 @@ function loadDays(that,userId){
           var hasUserInfo = false
           if(res.data.data.user.nickName.length > 0)  hasUserInfo = true
 
-          that.setData({
+          page.setData({
             days: daysData,
             daysCnt: daysData.length,
             hasUserInfo:hasUserInfo
-
           })
         }
     })
+}
+
+function initOnOpen(page,userId){
+    //额度
+    var isFull = commonTool.checkDaysCount()
+
+    //第一次打开
+    var firstOpen = wx.getStorageSync('RESET_OPEN_HOME')
+    var shareTipClass = ""
+    if (firstOpen) shareTipClass = "show-block"
+    
+    //清空一些可能的多余状态
+    page.setData({
+      modelShow: "none",
+      newId: 0,
+      isFull: isFull,
+      shareTipClass: shareTipClass
+    })
+    wx.setStorageSync('RESET_OPEN_HOME', false)
+
+
+    loadDays(page,userId)
+
+    //如果navigateBack能够带参数，就不需要这么绕了
+    var newDayId = wx.getStorageSync('newDayId')   
+    console.log("home页获取：" + newDayId)
+    if(newDayId){
+      page.setData({ newId: newDayId})
+      wx.removeStorageSync('newDayId')
+    }
+
+    wx.hideLoading()
 }
 

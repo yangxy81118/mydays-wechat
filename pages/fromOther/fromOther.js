@@ -22,8 +22,15 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: {},
     inviter:{},
+    showForm:false,
+    contributeCount:0
   },
   onLoad: function (options) {
+
+    wx.showLoading({
+      title: '加载中',
+    })
+
     console.log("inviterId:"+options.inviterId)
     inviterId = options.inviterId
 
@@ -48,12 +55,6 @@ Page({
 
     initComponents(this)
 
-    //注意这里可能要“加载中”
-    wx.showLoading({
-      title: '加载中'
-    })
-
-
     //获取模板数据
     if (!options.template){
       options.template = 2
@@ -64,11 +65,12 @@ Page({
     //加载邀请人的数据
     commonTool.graphReq({
       module:'days',
-      data:'{user(userId:' + inviterId +') { nickName,avatarUrl }}',
+      data:'{user(userId:' + inviterId +') { nickName,avatarUrl },contribute(contributorId:'+userId+',ownerId:'+inviterId+')}',
       callback:function (res) {
         if (commonTool.checkError(res)) return
 
         var inviter = res.data.data.user
+        var contributeCount = res.data.data.contribute
         if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
           inviter.avatarUrl = "/images/avatar.png"
         }
@@ -77,9 +79,11 @@ Page({
           inviter.nickName = "神秘人"
         }
 
+        // var showForm = contributeCount <= 0
         that.setData({
             inviter: res.data.data.user,
-            template: template
+            template: template,
+            contributeCount: contributeCount
         })
       }
     })
@@ -247,6 +251,16 @@ Page({
       vDate: e.detail.value
     })
     dateSelected = true
+  },
+  toAddAction:function(e){
+    this.setData({
+      showForm: true
+    })
+  },
+  formReturnAction:function(e){
+    this.setData({
+      showForm:false
+    })
   },
   formSubmit: function (e) {
     var formData = e.detail.value
