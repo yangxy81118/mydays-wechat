@@ -1,3 +1,4 @@
+<!-- 头部不变 -->
 <view class="header">
   <view class="content">
     <image class="avatar" src='{{inviter.avatarUrl}}'></image> 
@@ -5,10 +6,12 @@
     <!-- <text class="greeting">{{template.title}}</text> -->
     <text class="greeting">{{template.content}}</text>
   </view>
-  <navigator class="iconfont icon-shouye2 home" open-type='redirect' url='/pages/home/home'></navigator>
+  
   <image class="bk" src="/images/share_bg2.png" mode='aspectFill'></image>
 </view>
 
+
+<!-- 下方，如果是自己 -->
 <view wx:if="{{self}}" class="self">
   <image src="/images/cake.png" mode="aspectFit"></image>
 
@@ -16,54 +19,86 @@
   <view wx:else class="invited-info">你的好友或许正在帮你记录，等着好消息吧~</view>
   
   <view class="toolbar">
-    <button class="save" open-type='share' id="share-again">转发给好友</button>
+    <navigator class="btn home" id="self-home" url='/pages/home/home'>我的主页</navigator>
+    <button class="btn save" open-type='share' id="share-again">转发给好友</button>
   </view>
 </view>
 
+<!-- 下方，如果是别人 -->
 <view wx:else class="container">
-  <form bindsubmit="formSubmit" bindreset="formReset">
-    <view class="section sec-name">
-      <label>姓名</label>
-      <view class="input-box">
-        <text class="iconfont icon-user2 label-icon"></text>
-        <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>  
-        <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="copy">使用昵称</button>
+
+  <!--  -->
+  <view wx:if="{{!showForm}}" class="self">
+
+    <block wx:if="{{contributeCount==0}}">
+      <image src="/images/cake-wait.png" class="cake" mode="aspectFit"></image>
+      <image src="/images/cake-line.png" class="line" mode="aspectFit"></image>
+      <view class="help">
+        <view>快告诉<text>{{inviter.nickName}}</text>你的生日吧，</view>
+        <view>TA已经迫不及待了！</view>
       </view>
-    </view>
+      <view class="toolbar">
+        <navigator class="btn home" id="return-my-home" url='/pages/home/home'>我的主页</navigator>
+        <button class="btn save" id="to-add" bindtap='toAddAction'>帮TA添加</button>
+      </view>
+    </block>
+    <block wx:else class="self">
+       <image src="/images/cake.png" mode="aspectFit"></image>
+       <view class="invited-info">你已经帮TA贡献了<text>{{contributeCount}}</text>条生日记录哦~</view>
+       <view class="toolbar">
+        <navigator class="btn home" id="return-my-home" url='/pages/home/home'>我的主页</navigator>
+        <button class="btn save" id="to-add" bindtap='toAddAction'>继续帮TA添加</button>
+      </view>
+    </block>
+  
+  </view>
 
-    <view class="section sec-time">
-      <label>生日<text class="funny">不想透露年龄？那就随意选个年份吧</text></label>
-
-      <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
-      <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
-
-      <button wx:if="{{dateMode==1}}" class="selected" bindtap="dateModeSwitch" data-mode='1'>阴历</button>
-      <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
-
-      <view class="input-box" wx:if="{{dateMode==0}}">
-        <text class="iconfont icon-date1 label-icon"></text>
-        <picker mode="date" name="date" 
-          fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" 
-          bindchange="bindDateChange">
-          <view class="picker">
-            <text class="{{dateClass}}">{{date}}</text>
-          </view>
-        </picker>
+  <view wx:else class="form">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <view class="section sec-name">
+        <label>姓名</label>
+        <view class="input-box">
+          <text class="iconfont icon-user2 label-icon"></text>
+          <input name="name" value="{{dayName}}" maxlength='6' placeholder='你的大名' placeholder-class='placeholder' value="{{userInfo.nickName}}"></input>  
+          <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="copy">使用昵称</button>
+        </view>
       </view>
 
-      <view class="input-box" wx:else>
-        <text class="iconfont icon-date1 label-icon"></text>
-        <picker mode="multiSelector" name="date"
-            bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
-          <view class="picker">
-            <text class="{{dateClass}}">{{cnDate}}</text>
-          </view>
-        </picker>
-      </view>
-    </view>
+      <view class="section sec-time">
+        <label>生日<text class="funny">不想透露年龄？那就随意选个年份吧</text></label>
 
-    <view class="toolbar">
-      <button class="save" formType="submit" id="save">发送给好友</button>
-    </view>
-  </form>
+        <button wx:if="{{dateMode==0}}" class="selected" style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+        <button wx:else style='margin-right:4%' bindtap="dateModeSwitch" data-mode='0'>阳历</button>
+
+        <button wx:if="{{dateMode==1}}" class="selected" bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+        <button wx:else bindtap="dateModeSwitch" data-mode='1'>阴历</button>
+
+        <view class="input-box" wx:if="{{dateMode==0}}">
+          <text class="iconfont icon-date1 label-icon"></text>
+          <picker mode="date" name="date" 
+            fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" 
+            bindchange="bindDateChange">
+            <view class="picker">
+              <text class="{{dateClass}}">{{date}}</text>
+            </view>
+          </picker>
+        </view>
+
+        <view class="input-box" wx:else>
+          <text class="iconfont icon-date1 label-icon"></text>
+          <picker mode="multiSelector" name="date"
+              bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
+            <view class="picker">
+              <text class="{{dateClass}}">{{cnDate}}</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="toolbar">
+        <button class="btn home" bindtap='formReturnAction'>返回</button>
+        <button class="btn save" formType="submit" id="save">发送给好友</button>
+      </view>
+    </form>
+  </view>
 </view>

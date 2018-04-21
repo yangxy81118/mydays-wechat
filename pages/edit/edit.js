@@ -108,10 +108,10 @@ Page({
       })
     } //endIf 编辑
 
-
     //额度
-    var daysCount = wx.getStorageSync("daysCount")
-    var daysLimit = wx.getStorageSync("daysLimit")
+    var userInfo = wx.getStorageSync("userInfo")
+    var daysCount = userInfo.daysCount
+    var daysLimit = userInfo.limit
     var nearlyFull = ((daysCount + 1) >= daysLimit)
     var fewerSpace = daysCount >= daysLimit*0.9
 
@@ -340,9 +340,7 @@ Page({
           if (commonTool.checkError(res)) return
           wx.setStorageSync("newDayId", res.data)
 
-          var daysCount = wx.getStorageSync("daysCount")
-          daysCount++
-          wx.setStorageSync("daysCount", daysCount)
+          commonTool.daysChange(1)
 
           if (again) {
             wx.setStorageSync("lastActionState", "success:添加成功")

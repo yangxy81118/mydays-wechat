@@ -75,7 +75,8 @@
 
           <text class="name">{{item.name}}</text>
           <text class="disc">{{item.age}}岁生日</text>
-          <text class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+          <text wx:if="{{item.lunar.length == 0}}" class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
+          <text wx:else class="date">{{item.year}}年{{item.lunar}}</text>
         </view>
         <view wx:else class="item-v-main" data-dayId="{{item.id}}">
           <text wx:if="{{item.favor}}" class="star iconfont icon-star"></text>
@@ -83,7 +84,7 @@
           <text class="name">{{item.name}}</text>
           <text class="disc">{{item.age}}岁生日</text>
           <text wx:if="{{item.lunar.length == 0}}" class="date">{{item.year}}-{{item.month}}-{{item.date}}</text>
-          <text wx:else class="date">{{item.lunar}}</text>
+          <text wx:else class="date">{{item.year}}年{{item.lunar}}</text>
         </view>
         <view class="new" wx:if="{{item.id == newId }}" >
             <text>新</text> 
