@@ -7,28 +7,32 @@ App({
 
     //重置数据
     wx.setStorageSync('RESET_OPEN_HOME', true)
+    // wx.removeStorageSync('token')
 
-    // 登录
-    if(!wx.getStorageSync("userId")){
+    var userId = wx.getStorageSync("userId")
+    var token = wx.getStorageSync("token")
+
+    console.log("app:[" + userId+"],["+token+"]")
+
+    if(userId > 0 && token.length > 0){
+      initUserBaseData(userId)
+    }else{
+      // 登录
       wx.login({
         success: res => {
           console.log(res)
           wx.request({
             url: 'https://www.yubopet.top/login?code=' + res.code,
             success: function (loginRes) {
-              wx.setStorageSync('userId', loginRes.data)
+              wx.setStorageSync('userId', loginRes.data.userId)
+              wx.setStorageSync('token', loginRes.data.token)
+              console.log('app获取到用户data:' + wx.getStorageSync('userId') + "," + wx.getStorageSync('token'))
+              initUserBaseData(wx.getStorageSync('userId'))
             }
           })
         }
       })
-    }else{
-      initUserBaseData(wx.getStorageSync("userId"))
-
-      //TODO 异步更新用户最近登陆时间
-
-
     }
-
   },
   globalData: {
     userInfo: null
@@ -40,8 +44,9 @@ function initUserBaseData(userId) {
 
   //查询额度信息
   var userId = wx.getStorageSync('userId')
+  var token = wx.getStorageSync('token')
   wx.request({
-    url: 'https://www.yubopet.top/graphql/days',
+    url: 'https://www.yubopet.top/graphql/days?token=' + token,
     method: 'POST',
     data: '{user(userId:' + userId + '){limit daysCount nickName avatarUrl} }',
     header: {
@@ -51,8 +56,6 @@ function initUserBaseData(userId) {
 
       var u = res.data.data.user
       wx.setStorageSync('userInfo', u)
-      // wx.setStorageSync("daysLimit", u.limit)
-      // wx.setStorageSync("daysCount", u.daysCount)
       console.log("limit:" + u.limit + ",count:" + u.daysCount)
     }
   });

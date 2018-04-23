@@ -27,79 +27,23 @@ Page({
   },
   onLoad: function (options) {
 
-    wx.showLoading({
-      title: '加载中',
-    })
-
-    console.log("inviterId:"+options.inviterId)
     inviterId = options.inviterId
 
     var userId = wx.getStorageSync('userId')
+    var token = wx.getStorageSync('token')
+
     var that = this
 
-    if (userId == inviterId){
-      this.setData({self:true})
-
-      commonTool.graphReq({
-          module:'days',
-          data:'{user(userId:' + inviterId + ') { invitedCount }}',
-          callback:function(res){
-            if (commonTool.checkError(res)) return
-            var inviter = res.data.data.user
-            that.setData({
-              invitedCount : inviter.invitedCount
-            })
-          }
+    //这里也要进行home一样的延迟判断
+    if (userId > 0 && token.length > 0) {
+      initOnOpen(this, options)
+    } else {
+      //如果没有，则显示加载中，并等待2秒后重试
+      wx.showLoading({
+        title: '登陆中,请稍等'
       })
+      setTimeout(initOnOpen, 3000, this, options)
     }
-
-    initComponents(this)
-
-    //获取模板数据
-    if (!options.template){
-      options.template = 2
-    }
-    var template = constants.SHARE_CHOICES[options.template]
-    templateId = options.template
-
-    //加载邀请人的数据
-    commonTool.graphReq({
-      module:'days',
-      data:'{user(userId:' + inviterId +') { nickName,avatarUrl },contribute(contributorId:'+userId+',ownerId:'+inviterId+')}',
-      callback:function (res) {
-        if (commonTool.checkError(res)) return
-
-        var inviter = res.data.data.user
-        var contributeCount = res.data.data.contribute
-        if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0){
-          inviter.avatarUrl = "/images/avatar.png"
-        }
-
-        if (!inviter.nickName || inviter.nickName.length <= 0) {
-          inviter.nickName = "神秘人"
-        }
-
-        // var showForm = contributeCount <= 0
-        that.setData({
-            inviter: res.data.data.user,
-            template: template,
-            contributeCount: contributeCount
-        })
-      }
-    })
-
-    //最大日期到今天（阳历)
-    var today = new Date()
-    var day = today.getDate()
-    var month = today.getMonth() + 1
-    var year = today.getFullYear()
-    var endTimeStr = year + "-" + month + "-" + day
-
-    this.setData({
-      endDate: endTimeStr
-    })
-
-    wx.hideLoading()
 
   },
   getUserInfo: function (e) {
@@ -380,4 +324,79 @@ function initLunarCompornt(pageObj) {
     lunarArray: [cnYears, cnMonths, cnDays],
     lunarChoice: [108, 0, 0]
   })
+}
+
+function initOnOpen(page,options){
+
+  var userId = wx.getStorageSync('userId')
+
+  //邀请人信息
+  if (userId == inviterId) {
+    page.setData({ self: true })
+
+    commonTool.graphReq({
+      module: 'days',
+      data: '{user(userId:' + inviterId + ') { invitedCount }}',
+      callback: function (res) {
+        if (commonTool.checkError(res)) return
+
+        if (res.data.data){
+          var inviter = res.data.data.user
+          console.dir(inviter)
+          page.setData({
+            invitedCount: inviter.invitedCount
+          })
+        }
+        
+      }
+    })
+  }
+
+  initComponents(page)
+
+  //获取模板数据
+  if (!options.template) {
+    options.template = 2
+  }
+  var template = constants.SHARE_CHOICES[options.template]
+  templateId = options.template
+
+  //加载邀请人的数据
+  commonTool.graphReq({
+    module: 'days',
+    data: '{user(userId:' + inviterId + ') { nickName,avatarUrl },contribute(contributorId:' + userId + ',ownerId:' + inviterId + ')}',
+    callback: function (res) {
+      if (commonTool.checkError(res)) return
+
+      var inviter = res.data.data.user
+      var contributeCount = res.data.data.contribute
+      if (!inviter.avatarUrl || inviter.avatarUrl.length <= 0) {
+        inviter.avatarUrl = "/images/avatar.png"
+      }
+
+      if (!inviter.nickName || inviter.nickName.length <= 0) {
+        inviter.nickName = "神秘人"
+      }
+
+      // var showForm = contributeCount <= 0
+      page.setData({
+        inviter: res.data.data.user,
+        template: template,
+        contributeCount: contributeCount
+      })
+    }
+  })
+
+  //最大日期到今天（阳历)
+  var today = new Date()
+  var day = today.getDate()
+  var month = today.getMonth() + 1
+  var year = today.getFullYear()
+  var endTimeStr = year + "-" + month + "-" + day
+
+  page.setData({
+    endDate: endTimeStr
+  })
+
+  wx.hideLoading()
 }

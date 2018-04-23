@@ -130,8 +130,8 @@ Page({
     }
 
     this.setData({
-      daysCount: daysCount,
-      daysLimit: daysLimit,
+      daysCount: userInfo.daysCount,
+      daysLimit: userInfo.limit,
       nearlyFull: nearlyFull,
       fewerSpace: fewerSpace,
       endDate: endTimeStr,
@@ -167,6 +167,7 @@ Page({
     if (dateMode == 0) {
 
       commonTool.request({
+        tokenAppend:true,
         url:'simple-query/lunar/lunarToNormal?date=' + encodeURI(lastDate),
         method:'GET',
         callback:function (res) {
@@ -186,6 +187,7 @@ Page({
       var that = this
 
       commonTool.request({
+        tokenAppend: true,
         url:'simple-query/lunar/normalTolunar?date=' + lastDate,
         method:'GET',
         callback:function (res) {
