@@ -18,17 +18,21 @@ Page({
 
     //首先判断userId是否已经获取到
     var userId = wx.getStorageSync('userId')
+    var token = wx.getStorageSync('token')
+
+    console.log('首次进入home查询用户ID:'+userId)
 
     //如果获取到了，直接进入到正常数据获取流程
-    if(userId){
-      initOnOpen(this,userId)
+    if (userId > 0 && token.length > 0){
+      console.log("居然有数据？userId:["+userId+"]")
+      initOnOpen(this)
     }else{
+      console.log("果然没数据! userId:["+userId+"]")
       //如果没有，则显示加载中，并等待2秒后重试
       wx.showLoading({
-        title:'首次进入加载中'
+        title:'登陆中,请稍等'
       })
-      userId = wx.getStorageSync('userId')
-      setTimeout(initOnOpen,1500,this,userId) 
+      setTimeout(initOnOpen,2000,this) 
     }
   },
 
@@ -90,6 +94,7 @@ Page({
           var userId = wx.getStorageSync('userId')   
 
           commonTool.request({
+            tokenAppend:true,
             url:'customDay?dayId='+dayId,
             method:'DELETE',
             callback:function (res) {
@@ -257,27 +262,43 @@ function loadPopUp(that,dayId,idx){
 
 function loadDays(page,userId){
 
-  // userId = 42
   commonTool.graphReq({
-        module:'days',
-        data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor } user(userId:'+userId+') { nickName avatarUrl } }',
-        callback:function (res) {
-          if (commonTool.checkError(res)) return
+      module:'days',
+      data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor } user(userId:'+userId+') { nickName avatarUrl } }',
+      callback:function (res) {
+        if (commonTool.checkError(res)) return
 
+        //如果一切正常
+        if(res.data.data){
           var daysData = res.data.data.days
           var hasUserInfo = false
-          if(res.data.data.user.nickName.length > 0)  hasUserInfo = true
+          if (res.data.data.user.nickName.length > 0) hasUserInfo = true
 
           page.setData({
             days: daysData,
             daysCnt: daysData.length,
-            hasUserInfo:hasUserInfo
+            hasUserInfo: hasUserInfo
           })
         }
-    })
+        
+        //如果出现异常
+        else{
+          page.setData({
+            days: [],
+            daysCnt: 0,
+            hasUserInfo: false
+          })
+        }           
+      }
+  })
 }
 
-function initOnOpen(page,userId){
+function initOnOpen(page){
+
+    var userId = wx.getStorageSync('userId')
+
+    console.log("initOpen,userId:["+userId+"]")
+
     //额度
     var isFull = commonTool.checkDaysCount()
 
@@ -300,7 +321,6 @@ function initOnOpen(page,userId){
 
     //如果navigateBack能够带参数，就不需要这么绕了
     var newDayId = wx.getStorageSync('newDayId')   
-    console.log("home页获取：" + newDayId)
     if(newDayId){
       page.setData({ newId: newDayId})
       wx.removeStorageSync('newDayId')

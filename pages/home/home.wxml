@@ -104,10 +104,6 @@
           <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
           <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
       </button>
-      <!-- <button wx:else class="byShare" open-type='share'>
-          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
-          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
-      </button> -->
       <view class="share-tip {{shareTipClass}}">
         <text>邀请好友添加生日吧</text>
         <view class='arrow'></view>
