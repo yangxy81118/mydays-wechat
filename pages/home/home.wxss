@@ -362,6 +362,10 @@ button.disable{
   color:#FFCA9C;
 }
 
+button.full{
+  width:84%;
+}
+
 .bottom-mask{
   position: fixed;
   z-index: 1;

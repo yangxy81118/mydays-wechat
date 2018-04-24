@@ -22,7 +22,7 @@ App({
         success: res => {
           console.log(res)
           wx.request({
-            url: 'https://www.yubopet.top/login?code=' + res.code,
+            url: 'http://139.199.73.105/login?code=' + res.code,
             success: function (loginRes) {
               wx.setStorageSync('userId', loginRes.data.userId)
               wx.setStorageSync('token', loginRes.data.token)
@@ -46,7 +46,7 @@ function initUserBaseData(userId) {
   var userId = wx.getStorageSync('userId')
   var token = wx.getStorageSync('token')
   wx.request({
-    url: 'https://www.yubopet.top/graphql/days?token=' + token,
+    url: 'http://139.199.73.105/graphql/days?token=' + token,
     method: 'POST',
     data: '{user(userId:' + userId + '){limit daysCount nickName avatarUrl} }',
     header: {

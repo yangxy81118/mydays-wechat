@@ -109,10 +109,7 @@
         <view class='arrow'></view>
       </view>
     </block>
-    <button wx:else class="add disable">额度已满</button>
-
-  <!-- <navigator  url='/pages/edit/edit'></navigator>
-  <navigator wx:else class="add disable" bindtap="fullAction">额度已满</navigator> -->
+    <button wx:else class="add full disable" bindtap="fullAction">额度已满</button>
 
 </view>
 
@@ -172,5 +169,4 @@
   <view wx:if="{{popUpIdx+1 < daysCnt}}"class="seq next" catchtap='popSeqAction' id="next"><text class="iconfont icon-next"></text></view>
   <view class="shadow s1"></view> 
   <view class="shadow s2"></view> 
-  <!-- <text class="quit" bindtap='quitModel'>×</text> -->
 </view>
