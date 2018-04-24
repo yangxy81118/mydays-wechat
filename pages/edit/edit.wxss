@@ -132,8 +132,8 @@ view.sec-name text.star{
   font-size:40rpx;
   color:#BBB;
   padding:0 30rpx;
-  transition: all 1.5s ease-in-out;
-  -webkit-transition: all 1.5s ease-in-out;
+  transition: all 1s ease-in-out;
+  -webkit-transition: all 1s ease-in-out;
 }
 
 view.sec-name text.star-selected{

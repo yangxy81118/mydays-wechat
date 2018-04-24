@@ -57,6 +57,7 @@ const checkDaysCount = function(){
 const daysChange = function(change){
   var userInfo = wx.getStorageSync("userInfo")
   userInfo.daysCount += change 
+  wx.setStorageSync("userInfo",userInfo)
 }
 
 const request = function (obj) {
