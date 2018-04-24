@@ -57,12 +57,13 @@ const checkDaysCount = function(){
 const daysChange = function(change){
   var userInfo = wx.getStorageSync("userInfo")
   userInfo.daysCount += change 
+  wx.setStorageSync("userInfo",userInfo)
 }
 
 const request = function (obj) {
   var token = wx.getStorageSync("token")
 
-  var url = 'https://www.yubopet.top/' + obj.url
+  var url = 'http://139.199.73.105/' + obj.url
   if(obj.tokenAppend){
     url = url + "&"
   }else{

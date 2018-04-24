@@ -103,7 +103,10 @@ Page({
               commonTool.daysChange(-1)
 
               that.onShow()
-              that.setData({modelShow:"none"})
+              that.setData({
+                modelShow:"none",
+                isFull: commonTool.checkDaysCount()
+              })
               commonTool.success('删除成功')
             }
           })
@@ -121,9 +124,6 @@ Page({
     if(e.currentTarget.id=="popBk"){
       this.setData({ modelShow: "none" })
     }
-  },
-  quitModel:function(e){
-    this.setData({ modelShow: "none"})
   },
   shareAction:function(e){
     commonTool.warning("暂未开放~")
@@ -274,13 +274,20 @@ function loadDays(page,userId){
           var hasUserInfo = false
           if (res.data.data.user.nickName.length > 0) hasUserInfo = true
 
+          //这里还要多检查一次用户的额度，因为有可能这时候有其他用户填写完邀请，数量其实就发生了变化
+          var daysCnt = daysData.length
+          var userInfo = wx.getStorageSync("userInfo")
+          userInfo.daysCount = daysCnt
+          wx.setStorageSync("userInfo", userInfo)
+
           page.setData({
             days: daysData,
-            daysCnt: daysData.length,
-            hasUserInfo: hasUserInfo
+            daysCnt: daysCnt,
+            hasUserInfo: hasUserInfo,
+            isFull: daysCnt >= userInfo.limit
           })
         }
-        
+
         //如果出现异常
         else{
           page.setData({

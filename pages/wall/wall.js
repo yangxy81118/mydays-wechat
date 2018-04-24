@@ -17,7 +17,7 @@ function initUserBaseData(userId){
   //查询额度信息
   var userId = wx.getStorageSync('userId')
   wx.request({
-    url: 'https://www.yubopet.top/graphql/days',
+    url: 'http://http://139.199.73.105/graphql/days',
     method: 'POST',
     data: '{user(userId:' + userId + '){limit daysCount nickName avatarUrl} }',
     header: {
