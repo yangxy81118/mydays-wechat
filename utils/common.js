@@ -63,7 +63,7 @@ const daysChange = function(change){
 const request = function (obj) {
   var token = wx.getStorageSync("token")
 
-  var url = 'http://139.199.73.105/' + obj.url
+  var url = 'https://www.yubopet.top/' + obj.url
   if(obj.tokenAppend){
     url = url + "&"
   }else{
