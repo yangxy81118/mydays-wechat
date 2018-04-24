@@ -60,6 +60,7 @@ Page({
             if (commonTool.checkError(res)) return
 
             var dayData = res.data.data.day
+            
             //检测是否是农历
             if (dayData.lunar && dayData.lunar.length > 0) {
 
