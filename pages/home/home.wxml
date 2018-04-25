@@ -22,9 +22,10 @@
     <view class="sug" wx:if="{{queryFavor}}">
       <text>还没有任何星标日子~</text>
     </view>
-    <view class="sug" wx:else>
-      <text>还记得爸妈的生日吗?</text>
-      <text>记下来吧！</text>
+    <view class="sug sug-new" wx:else>
+      <text>总是记不住亲朋好友的生日，很愧疚</text>
+      <text>所以做了这个小程序</text>
+      <text>希望对您也有用~ : )</text>
     </view>
   </view>
   <scroll-view wx:else scroll-y='true' class="list">
@@ -33,7 +34,7 @@
       <view class="item-scroll-wrap">
         <view class="day-box" bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}">
           <text class="day-title ">{{item.name}}{{item.age}}岁生日</text>
-          <block wx:if="{{item.remain <= 60}}">
+          <block wx:if="{{item.remain <= 30}}">
             <text wx:if="{{item.remain == -1}}" class="day-remain close-remain">今天</text>
             <text wx:if="{{item.remain == 0}}" class="day-remain close-remain">明天</text>
             <text wx:if="{{item.remain == 1}}" class="day-remain close-remain">后天</text>
@@ -64,7 +65,7 @@
       wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" wx:key="id"
       bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}"
       class="day-item-v">
-        <view wx:if="{{item.remain <= 60}}" class="item-v-main close-v" data-dayId="{{item.id}}">
+        <view wx:if="{{item.remain <= 30}}" class="item-v-main close-v" data-dayId="{{item.id}}">
           <text wx:if="{{item.favor}}" class="star iconfont icon-star"></text>
 
           <text wx:if="{{item.remain == -1}}" class="remain">今天</text>
@@ -144,7 +145,7 @@
           <text class="name">{{popUpDay.name}}</text>
           <text class="birthday">{{popUpDay.age}}岁生日</text>
           <text class="small">还有</text> 
-          <text wx:if="{{popUpDay.remain <= 60 }}" class="remain orange">{{popUpDay.remain}}天</text>
+          <text wx:if="{{popUpDay.remain <= 30 }}" class="remain orange">{{popUpDay.remain}}天</text>
           <text wx:else class="remain">{{popUpDay.remain}}天</text>
       </block>
       
@@ -160,7 +161,7 @@
       <!-- <navigator class="icon iconfont icon-fenxiang" catchtap='shareAction'></navigator> -->
       <navigator class="icon iconfont icon-delete red" data-dayId="{{popUpDay.id}}" bindtap='delAction'></navigator>
     </view>
-    <text wx:if="{{popUpDay.remain <= 60}}" class="highLight hl"></text>
+    <text wx:if="{{popUpDay.remain <= 30}}" class="highLight hl"></text>
     <text wx:else class="highLight"></text>
 
    

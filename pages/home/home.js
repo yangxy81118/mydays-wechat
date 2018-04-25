@@ -94,8 +94,7 @@ Page({
           var userId = wx.getStorageSync('userId')   
 
           commonTool.request({
-            tokenAppend:true,
-            url:'customDay?dayId='+dayId,
+            url:'customDay/'+dayId,
             method:'DELETE',
             callback:function (res) {
               if (commonTool.checkError(res)) return

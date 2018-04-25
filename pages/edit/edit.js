@@ -224,21 +224,29 @@ Page({
 
       this.setData({
         lunarArray: cnCalendarArray,
-        lunarChoice: [rowIdx, 0, 0]
+        // lunarChoice: [rowIdx, 0, 0]
+        lunarChoice: [rowIdx, cnCalendarChoice[1], cnCalendarChoice[2]]
       })
-    }
-
-    //month
-    if (colIdx == 1) {
+    }else if (colIdx == 1) {
+      //month
+      
       var targetYear = cnCalendarArray[0][cnCalendarChoice[0]]
       var targetMonth = cnCalendarArray[1][rowIdx]
       cnCalendarArray[2] = calTool.buildCNDays(cnCalendar,targetYear, calTool.formatMField(targetMonth))
 
       cnCalendarChoice[1] = rowIdx
-      cnCalendarChoice[2] = 0
+      // cnCalendarChoice[2] = 0
+      cnCalendarChoice[2] = cnCalendarChoice[2]
 
       this.setData({
         lunarArray: cnCalendarArray,
+        lunarChoice: cnCalendarChoice
+      })
+    }else{
+
+      cnCalendarChoice[2] = rowIdx
+      //day
+      this.setData({
         lunarChoice: cnCalendarChoice
       })
     }
