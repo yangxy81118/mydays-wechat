@@ -2,8 +2,8 @@
 
 App({
   globalData: {
-    host: "https://www.yubopet.top"
-    // host: "http://139.199.73.105"
+    // host: "https://www.yubopet.top"
+    host: "http://139.199.73.105"
   },
   onLaunch: function () {
 

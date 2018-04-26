@@ -186,7 +186,6 @@ Page({
 
     //去同步userInfo到数据库
     var userInfo = e.detail.userInfo
-    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
 
     var userId = wx.getStorageSync('userId')
     var that = this

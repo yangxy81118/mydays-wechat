@@ -1,0 +1,13 @@
+<scroll-view scroll-y='true' class="list">
+  <view class="notice-item"
+    wx:for="{{notice}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
+    <view class="header">
+      <view class="tag {{item.tagClass}}"></view>
+      <view class="title">{{item.title}}</view>
+      <view class="time">{{item.date}}</view>
+    </view>
+    <view class="content">
+      <text wx:for="{{item.content}}" wx:for-item="line">{{line}}</text>
+    </view>
+  </view>
+</scroll-view>

@@ -4,7 +4,8 @@
     "pages/edit/edit",
     "pages/shareTemplate/shareTemplate",
     "pages/fromOther/fromOther",
-    "pages/fromOtherResult/fromOtherResult"
+    "pages/fromOtherResult/fromOtherResult",
+    "pages/notice/notice"
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
@@ -52,6 +52,12 @@
 					"id": -1,
 					"name": "邀请模板",
 					"pathName": "pages/shareTemplate/shareTemplate",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "消息公告",
+					"pathName": "pages/notice/notice",
 					"query": ""
 				}
 			]
