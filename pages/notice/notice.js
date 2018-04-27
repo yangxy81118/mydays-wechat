@@ -6,6 +6,8 @@ Page({
   },
   onLoad: function () {
     var that = this
+    wx.setStorageSync("version", getApp().globalData.version)
+    
     commonTool.graphReq({
       module: 'resource',
       data: '{notice(page:1,rows:30){id title type content date}}',

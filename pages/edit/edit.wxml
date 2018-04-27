@@ -24,7 +24,7 @@
         <picker mode="date" name="date"
           fields="day" value="{{date}}" start="1900-01-01" value="{{dateValue}}" end="{{endDate}}" bindchange="bindDateChange">
           <view class="picker">
-            <text class="{{dateClass}}">{{date}}</text>
+            <text class="{{dateClass}}">{{normalDateView}}</text>
           </view>
         </picker>
       </view>
@@ -34,7 +34,7 @@
         <picker mode="multiSelector" name="date"
             bindchange="lunarValueChange" bindcolumnchange="lunarFieldChange" value="{{lunarChoice}}" range="{{lunarArray}}">
           <view class="picker">
-            <text class="{{dateClass}}">{{cnDate}}</text>
+            <text class="{{dateClass}}">{{cnDateView}}</text>
           </view>
         </picker>
       </view>

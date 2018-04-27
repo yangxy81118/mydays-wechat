@@ -2,7 +2,9 @@
   <view class="notice-item"
     wx:for="{{notice}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
     <view class="header">
-      <view class="tag {{item.tagClass}}"></view>
+      <view class="tag {{item.tagClass}}">
+        <image src="/images/app-icon.png" mode="aspectFit"></image>
+      </view>
       <view class="title">{{item.title}}</view>
       <view class="time">{{item.date}}</view>
     </view>

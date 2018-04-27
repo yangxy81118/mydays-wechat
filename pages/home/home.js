@@ -12,7 +12,9 @@ Page({
     layout:2,
     modelShow:"none",
     queryFavor:false,
-    wxModelShow:"none"
+    wxModelShow:"none",
+    slidebarOffset:"-70%",
+    slideShadowDisplay:"none"
   },
   onShow: function () {
 
@@ -48,7 +50,12 @@ Page({
         layout: 1
       })
     }
-    
+  },
+  profileAction:function(e){
+    this.setData({
+      slidebarOffset: "0",
+      slideShadowDisplay: "block"
+    })
   },
   listNavAction:function(e){
     favor = Boolean(e.currentTarget.dataset.favor)
@@ -135,6 +142,12 @@ Page({
       url: '/pages/edit/edit',
     })
   },
+  slideShowClickAction:function(e){
+    this.setData({
+      slidebarOffset: "-70%",
+      slideShadowDisplay: "none"
+    })
+  },
   popSeqAction:function(e){
     if(e.currentTarget.id=="prev"){
       var currentIdx = this.data.popUpIdx
@@ -207,7 +220,9 @@ Page({
 
         //然后修改按钮状态
         that.setData({
-          authFinish: true
+          authFinish: true,
+          hasUserInfo: true,
+          userInfo: localUserInfo
         })
       }
     })
@@ -282,6 +297,7 @@ function loadDays(page,userId){
             days: daysData,
             daysCnt: daysCnt,
             hasUserInfo: hasUserInfo,
+            userInfo: userInfo,
             isFull: daysCnt >= userInfo.limit
           })
         }
@@ -329,6 +345,14 @@ function initOnOpen(page){
     if(newDayId){
       page.setData({ newId: newDayId})
       wx.removeStorageSync('newDayId')
+    }
+
+    //红点判断
+    var version = wx.getStorageSync("version")
+    if (version >= getApp().globalData.version){
+      page.setData({ dot: false })
+    }else{
+      page.setData({ dot: true })
     }
 
     wx.hideLoading()

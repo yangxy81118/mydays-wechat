@@ -2,6 +2,7 @@
 
 App({
   globalData: {
+    version:120,
     // host: "https://www.yubopet.top"
     host: "http://139.199.73.105"
   },
@@ -20,6 +21,15 @@ App({
 
     if(userId > 0 && token.length > 0){
       initUserBaseData(userId,that)
+
+      wx.request({
+        url: that.globalData.host + '/user/enter?token=' + token,
+        method:'POST',
+        success:function(res){
+          console.log("记录登陆时间成功")
+        }
+      })
+
     }else{
       // 登录
       wx.login({

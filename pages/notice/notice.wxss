@@ -9,7 +9,7 @@ scroll-view.list{
 
 view.notice-item{
   background: #FFF;
-  box-shadow: 0 0 12rpx #E3E3E3;
+  box-shadow: 0 0 16rpx #DDD;
   width:84%;
   padding:8%;
   margin:0 0 40rpx 0;
@@ -33,13 +33,17 @@ view.header view.tag{
   border-radius: 50%;
 }
 
+view.tag image{
+  height:40rpx;
+}
+
 view.header view.title{
   color:#444;
   font-size:32rpx;
   padding:0 0 0 40rpx;
   font-weight: 700;
   position: relative;
-  top:-20rpx;
+  top:-5rpx;
 }
 
 view.header view.time{
@@ -52,15 +56,15 @@ view.header view.time{
 }
 
 view.header view.tg-update{
-  background: #99F;
+  background: #89BDF9;
 }
 
 view.header view.tg-talk{
-  background: #3d3;
+  background: #FFE8D3;
 }
 
 view.header view.tg-notify{
-  background: #833;
+  background: #9CD95A;
 }
 
 

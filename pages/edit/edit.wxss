@@ -211,7 +211,7 @@ view.toolbar button.again{
   background: #ffe8d3;
   width:32%;
   color:#ff9940;
-  box-shadow:0 2rpx 6rpx rgba(255,153,64,0.40);
+  box-shadow:0 2rpx 6rpx #ffe8d3;
 }
 
 view.toolbar button.save{
