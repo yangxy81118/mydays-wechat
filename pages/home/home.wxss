@@ -41,7 +41,7 @@ view.tab-nav view.slide-btn{
 }
 
 view.tab-nav view.layout-btn {
-  color:#FF9940;
+  color:#c7c7c7;
 }
 
 view.tab-nav view.user-btn {
@@ -97,10 +97,10 @@ view.empty-list {
 }
 
 view.empty-list image {
-  width: 300rpx;
-  height: 300rpx;
+  width: 220rpx;
+  height: 220rpx;
   display: block;
-  margin: 24% auto 0;
+  margin: 24% auto 40rpx;
 }
 
 view.empty-list .sug {

@@ -190,6 +190,10 @@ Page({
     }
 
   },
+  recordsClickAction:function(e){
+    this.listNavAction(e)
+    this.slideShowClickAction(e)
+  },
   getUserInfo: function (e) {
 
     //如果拒绝，则不做响应
@@ -277,20 +281,25 @@ function loadDays(page,userId){
 
   commonTool.graphReq({
       module:'days',
-      data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor } user(userId:'+userId+') { nickName avatarUrl } }',
+      data: '{days(userId:' + userId + ',favor:' + favor + ') { id name year month date remain custom lunar age favor } user(userId:'+userId+') { nickName avatarUrl favorCount } }',
       callback:function (res) {
         if (commonTool.checkError(res)) return
 
         //如果一切正常
         if(res.data.data){
           var daysData = res.data.data.days
+          var userData = res.data.data.user
           var hasUserInfo = false
-          if (res.data.data.user.nickName.length > 0) hasUserInfo = true
+          if (userData.nickName.length > 0) hasUserInfo = true
 
-          //这里还要多检查一次用户的额度，因为有可能这时候有其他用户填写完邀请，数量其实就发生了变化
-          var daysCnt = daysData.length
           var userInfo = wx.getStorageSync("userInfo")
-          userInfo.daysCount = daysCnt
+          var daysCnt = daysData.length
+          userInfo.favorCount = userData.favorCount
+
+          //如果是查询总量，则还需要再更新一次总数据daysCount
+          if(!page.data.queryFavor){         
+            userInfo.daysCount = daysCnt
+          }
           wx.setStorageSync("userInfo", userInfo)
 
           page.setData({

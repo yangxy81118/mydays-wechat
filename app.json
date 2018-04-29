@@ -5,7 +5,8 @@
     "pages/shareTemplate/shareTemplate",
     "pages/fromOther/fromOther",
     "pages/fromOtherResult/fromOtherResult",
-    "pages/notice/notice"
+    "pages/notice/notice",
+    "pages/about/about"
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -17,7 +17,6 @@
     <view class="slide-btn layout-btn" bindtap='layoutAction'>
       <text class="icon iconfont {{layoutBtnClass}} layout-icon"></text>
     </view>
-    <!-- <image class="star" src="/images/star.png" /> -->
   </view>
 
   <!-- 无数据欢迎词 -->
@@ -192,13 +191,13 @@
     <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">点击授权</button>
   </view>
   <view class="statistics">
-    <view>
+    <view bindtap='recordsClickAction'>
       <label>记录</label>
       <text class="orange">{{userInfo.daysCount}}</text>
     </view>
-    <view>
+    <view bindtap='recordsClickAction' data-favor="1">
       <label>星标</label>
-      <text class="orange">8</text>
+      <text class="orange">{{userInfo.favorCount}}</text>
     </view>
   </view>
 
@@ -212,7 +211,7 @@
       <label class="iconfont icon-msg"></label>
       <text>意见反馈</text>
     </button>
-    <navigator class="nav" url="/pages/shareTemplate/shareTemplate">
+    <navigator class="nav" url="/pages/about/about">
       <label class="iconfont icon-about"></label>
       <text>关于我们</text>
     </navigator>

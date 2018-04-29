@@ -2,7 +2,7 @@
 
 App({
   globalData: {
-    version:100,
+    version:120,
     host: "https://www.yubopet.top"
     // host: "http://139.199.73.105"
   },

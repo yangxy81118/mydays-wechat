@@ -1,0 +1,53 @@
+page{
+  background: #FFF;
+  height: auto;
+}
+
+image{
+  display: block;
+  width:140rpx;
+  height:140rpx;
+  border-radius: 50%;
+  margin:15% auto 40rpx;
+}
+
+view.brief{
+  text-align: center;
+  margin:0 0 80rpx 0;
+}
+
+view.brief text{
+  display: block;
+}
+
+view.brief text.title{
+  font-weight: 700;
+  font-size:34rpx;
+  line-height: 54rpx;
+}
+
+view.brief text.version{
+  color:#AAA;
+  font-size:28rpx;
+  line-height: 40rpx;
+}
+
+view.comments{
+  padding:0 15%;
+  text-align: center;
+  font-size:26rpx;
+  color:#888;
+}
+
+view.comments text{
+  display: block;
+  line-height: 50rpx;
+}
+
+view.comments view.bottom{
+  color:#CCC;
+  position: fixed;
+  bottom:5%;
+  left:0;
+  width:100%;
+}
