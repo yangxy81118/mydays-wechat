@@ -1,0 +1,82 @@
+page{
+  background: #f9f9f9;
+}
+
+scroll-view.list{
+  padding:5%;
+  width:90%;
+}
+
+view.notice-item{
+  background: #FFF;
+  box-shadow: 0 0 16rpx #DDD;
+  width:84%;
+  padding:8%;
+  margin:0 0 40rpx 0;
+  border-radius: 10rpx;
+}
+
+view.header{
+  
+}
+
+view.header > view{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+view.header view.tag{
+  width:70rpx;
+  height:70rpx;
+  background: #666;
+  border-radius: 50%;
+}
+
+view.tag image{
+  height:40rpx;
+}
+
+view.header view.title{
+  color:#444;
+  font-size:32rpx;
+  padding:0 0 0 40rpx;
+  font-weight: 700;
+  position: relative;
+  top:-5rpx;
+}
+
+view.header view.time{
+  text-align: right;
+  color:#DDD;
+  float:right;
+  position: relative;
+  top:20rpx;
+  font-size:28rpx;
+}
+
+view.header view.tg-update{
+  background: #9CD95A;
+}
+
+view.header view.tg-talk{
+  background: #FFE8D3;
+}
+
+view.header view.tg-notify{
+  background: #89BDF9;
+}
+
+
+view.content{
+  font-size: 28rpx;
+  color:#999;
+  padding:30rpx 0 0 0;
+}
+
+view.content text{
+  line-height: 46rpx;
+  display: block;
+  width:100%;
+}
+

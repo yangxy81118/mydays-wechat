@@ -53,7 +53,6 @@ Page({
       return;
     }
 
-    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
     this.setData({
       userInfo: userInfo
     })

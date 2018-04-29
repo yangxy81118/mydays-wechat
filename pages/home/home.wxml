@@ -1,24 +1,27 @@
 <!--index.wxml-->
 <view class="main">
+
+  <!-- 头部栏 -->
   <view class="tab-nav">
+    <view class="slide-btn user-btn" bindtap='profileAction'>
+      <text wx:if="{{dot}}" class="dot"></text>
+      <image wx:if="{{hasUserInfo}}" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+      <image wx:else src="/images/defaultuser.png" mode="aspectFit"></image>
+    </view>
     <view class="nav {{navAllClass}}" id="normal-list" bindtap='listNavAction'>
-      <text class="icon iconfont icon-all"></text>
       <text class="word">全部</text>
-      <view class="underline"></view>
     </view>
     <view class="nav {{navFavorClass}}" id="star-list" bindtap='listNavAction' data-favor="1">
-      <text class="icon iconfont icon-star"></text>
       <text class="word">星标</text>
-      <view class="underline"></view>
     </view>
-    <view class="layout-btn" bindtap='layoutAction'>
+    <view class="slide-btn layout-btn" bindtap='layoutAction'>
       <text class="icon iconfont {{layoutBtnClass}} layout-icon"></text>
     </view>
-    <!-- <image class="star" src="/images/star.png" /> -->
   </view>
+
+  <!-- 无数据欢迎词 -->
   <view wx:if="{{days.length == 0}}" class='empty-list'>
-    <image src='/images/empty-list.png' mode='aspectFit'></image>
-    
+    <image src='/images/empty-list.png' mode='aspectFit'></image> 
     <view class="sug" wx:if="{{queryFavor}}">
       <text>还没有任何星标日子~</text>
     </view>
@@ -28,7 +31,10 @@
       <text>希望对您也有用~ : )</text>
     </view>
   </view>
+
   <scroll-view wx:else scroll-y='true' class="list">
+
+     <!-- 标签式布局 -->
     <scroll-view wx:if="{{layout == 1}}" scroll-x="true" class="day-item-h" 
       wx:for="{{days}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
       <view class="item-scroll-wrap">
@@ -60,7 +66,7 @@
       </view>
     </scroll-view>
 
-
+    <!-- 挂历式布局 -->
     <view wx:if="{{layout == 2}}" 
       wx:for="{{days}}" wx:for-index="idx" wx:for-item="item" wx:key="id"
       bindtap="popupAction" data-dayId="{{item.id}}" data-idx="{{idx}}"
@@ -91,29 +97,28 @@
             <text>新</text> 
         </view>
     </view>
-
     <view class="bottom-box"></view>
 
   </scroll-view>
 
+  <!-- 底部工具按钮 -->
   <view class="bottom-mask"></view>
-
-    <block wx:if="{{!isFull}}">
-      <button class="add" bindtap='addAction'>记录生日</button>
-
-      <button class="byShare" bindtap='shareCheckAction'>
-          <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
-          <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
-      </button>
-      <view class="share-tip {{shareTipClass}}">
-        <text>邀请好友添加生日吧</text>
-        <view class='arrow'></view>
-      </view>
-    </block>
-    <button wx:else class="add full disable" bindtap="fullAction">额度已满</button>
+  <block wx:if="{{!isFull}}">
+    <button class="add" bindtap='addAction'>记录生日</button>
+    <button class="byShare" bindtap='shareCheckAction'>
+        <image class="wx wx-move" src="/images/ani-wx.png" mode="aspectFit"></image>
+        <image class="plus plus-move" src="/images/ani-wx-plus.png" mode="aspectFit"></image>
+    </button>
+    <view class="share-tip {{shareTipClass}}">
+      <text>邀请好友添加生日吧</text>
+      <view class='arrow'></view>
+    </view>
+  </block>
+  <button wx:else class="add full disable" bindtap="fullAction">额度已满</button>
 
 </view>
 
+<!-- userInfo授权弹出框 -->
 <view class="popUpBk" id="wxModelBk" style="display:{{wxModelShow}}" bindtap='wxModelTapAction'>
   <view class="popUpBox authBox" id="wxModelContent" catchtap='wxModelTapAction'>
     <view class='tip'>
@@ -121,14 +126,15 @@
       <view>您的微信头像和昵称</view>
     </view>
     <button wx:if="{{!authFinish}}" class="auth" 
-      open-type="getUserInfo" bindgetuserinfo="getUserInfo"><text class="iconfont icon-weixin"></text>微信授权</button>
-    <button wx:else class="auth disabled" disabled><text class="iconfont icon-weixin"></text>已授权</button>
+      open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信授权</button>
+    <button wx:else class="auth disabled" disabled>已授权</button>
 
     <button wx:if="{{!authFinish}}" class="share disabled" disabled open-type='share'>发送邀请</button>
     <button wx:else class="share" bindtap="shareTapAction">发送邀请</button>
   </view>
 </view>
 
+<!-- 生日详情弹出框 -->
 <view class="popUpBk " style="display:{{modelShow}}" bindtap='modelTapAction' id="popBk">
   <view class="popUpBox detailBox" id="popContent" catchtap='modelTapAction'>
 
@@ -166,8 +172,49 @@
 
    
   </view>
+
   <view wx:if="{{popUpIdx > 0}}" class="seq prev" catchtap='popSeqAction' id="prev"><text class="iconfont icon-last"></text></view>
   <view wx:if="{{popUpIdx+1 < daysCnt}}"class="seq next" catchtap='popSeqAction' id="next"><text class="iconfont icon-next"></text></view>
   <view class="shadow s1"></view> 
   <view class="shadow s2"></view> 
 </view>
+
+
+<!-- 侧边栏滑出菜单 -->
+<view class="slide-bar" style='left:{{slidebarOffset}}'>
+  <view wx:if="{{hasUserInfo}}" class="profile">
+    <image src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+    <text>{{userInfo.nickName}}</text>
+  </view>
+  <view wx:else class="profile">
+    <image src="/images/defaultuser.png" mode="aspectFit"></image>
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">点击授权</button>
+  </view>
+  <view class="statistics">
+    <view bindtap='recordsClickAction'>
+      <label>记录</label>
+      <text class="orange">{{userInfo.daysCount}}</text>
+    </view>
+    <view bindtap='recordsClickAction' data-favor="1">
+      <label>星标</label>
+      <text class="orange">{{userInfo.favorCount}}</text>
+    </view>
+  </view>
+
+  <view class="menu">
+    <navigator class="nav" url="/pages/notice/notice">
+      <label class="iconfont icon-notice"></label>
+      <text wx:if="{{dot}}" class="dot"></text>
+      <text>公告消息</text>
+    </navigator>
+    <button open-type="contact" class="nav">
+      <label class="iconfont icon-msg"></label>
+      <text>意见反馈</text>
+    </button>
+    <navigator class="nav" url="/pages/about/about">
+      <label class="iconfont icon-about"></label>
+      <text>关于我们</text>
+    </navigator>
+  </view>
+</view>
+<view class="slide-shadow" style="display:{{slideShadowDisplay}}" bindtap='slideShowClickAction'></view>

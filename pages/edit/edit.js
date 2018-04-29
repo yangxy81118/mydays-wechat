@@ -7,8 +7,8 @@ const commonTool = require("../../utils/common.js")
 
 Page({
   data: {
-    date: "点击选择",   //阳历组件显示值
-    cnDate: "点击选择",//农历组件显示值
+    normalDateView: "点击选择",   //阳历组件显示值
+    cnDateView: "点击选择",//农历组件显示值
     vDate: "",   //两种日历后台公用实际值
     dateValue: "",  //阳历组件value属性值
     dayFavor:false,
@@ -20,7 +20,7 @@ Page({
 
   onLoad: function (option) {
 
-    commonTool.showLastAction()
+    // commonTool.showLastAction()
     wx.hideShareMenu()
 
     var that = this
@@ -72,12 +72,12 @@ Page({
               lunarSplitArray[2] = dayData.lunar.substring(yue + 1, dayData.lunar.length)
 
               var result = calTool.getChoiceIndex(cnCalendar, lunarSplitArray, that.data.lunarArray)
-              var cnDateStr = lunarSplitArray[0] + lunarSplitArray[1] + lunarSplitArray[2]
+              var cnDateViewStr = lunarSplitArray[0] + lunarSplitArray[1] + lunarSplitArray[2]
               that.setData({
                 lunarArray: result.lunarArray,
                 lunarChoice: [result.year, result.month, result.day],
-                cnDate: cnDateStr,
-                vDate: cnDateStr,
+                cnDateView: cnDateViewStr,
+                vDate: cnDateViewStr,
                 dateClass: "selected",
                 dateMode: 1
               })
@@ -87,7 +87,7 @@ Page({
               that.setData({
                 dateValue: normalDateStr,
                 vDate: normalDateStr,
-                date: normalDateStr,
+                normalDateView: normalDateStr,
                 dateMode: "公历",
                 dateClass: "selected",
                 dateMode: 0
@@ -159,8 +159,8 @@ Page({
       return
 
     this.setData({
-      cnDate: "历法切换中...",
-      date: "历法切换中..."
+      cnDateView: "历法切换中...",
+      normalDateView: "历法切换中..."
     })
 
     //获取date数据，如果已经选择了前一种的date数据，那么根据mode发送到服务器，获取到另外一种的数据
@@ -176,7 +176,7 @@ Page({
           that.setData({
             dateValue: res.data,
             vDate: res.data,
-            date: res.data
+            normalDateView: res.data
           })
         }
       })
@@ -194,12 +194,12 @@ Page({
         callback:function (res) {
           var lunarStr = res.data.split(",")
           var result = calTool.getChoiceIndex(cnCalendar, lunarStr, that.data.lunarArray)
-          var cnDateStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
+          var cnDateViewStr = lunarStr[0] + lunarStr[1] + lunarStr[2]
           that.setData({
             lunarArray: result.lunarArray,
             lunarChoice: [result.year, result.month, result.day],
-            cnDate: cnDateStr,
-            vDate: cnDateStr
+            cnDateView: cnDateViewStr,
+            vDate: cnDateViewStr
           })
         }
       })
@@ -256,17 +256,17 @@ Page({
     dateSelected = true
     var lunar = this.data.lunarArray
     var valArray = e.detail.value
-    var cnDateStr = lunar[0][valArray[0]] + "" + lunar[1][valArray[1]] + lunar[2][valArray[2]]
+    var cnDateViewStr = lunar[0][valArray[0]] + "" + lunar[1][valArray[1]] + lunar[2][valArray[2]]
     this.setData({
-      cnDate: cnDateStr,
+      cnDateView: cnDateViewStr,
       dateClass: "selected",
-      vDate: cnDateStr
+      vDate: cnDateViewStr
     })
 
   },
   bindDateChange: function (e) {
     this.setData({
-      date: e.detail.value,
+      normalDateView: e.detail.value,
       dateClass: "selected",
       vDate: e.detail.value
     })
@@ -354,10 +354,17 @@ Page({
           commonTool.daysChange(1)
 
           if (again) {
-            wx.setStorageSync("lastActionState", "success:添加成功")
-            wx.redirectTo({
-              url: '/pages/edit/edit',
+            wx.showToast({
+              title: '添加成功',
+              icon:'success'
             })
+            setTimeout(function () {
+              wx.redirectTo({
+                url: '/pages/edit/edit',
+              })
+            }, 1000)
+            // wx.setStorageSync("lastActionState", "success:添加成功")
+            
           } else {
             wx.navigateBack({
               delta: 1
@@ -393,7 +400,6 @@ Page({
 
     //去同步userInfo到数据库
     var userInfo = e.detail.userInfo
-    userInfo.nickName = commonTool.replaceEmoji(userInfo.nickName)
 
     var userId = wx.getStorageSync('userId')
     var that = this

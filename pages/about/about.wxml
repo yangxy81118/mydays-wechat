@@ -1,0 +1,24 @@
+<view>
+  <image src="/images/icon.png" mode="aspectFit"></image>
+  <view class="brief">
+    <text class="title">生日还记得吗</text>
+    <text class="version">v1.2.0</text>
+  </view>
+
+  <view class="comments">
+    <text>小时候</text>
+    <text>总是无比期待着爸爸妈妈</text>
+    <text>给自己举办一个开心隆重的生日</text>
+    <text>长大了，却陡然发现</text>
+    <text>他们的生日，自己反而记不清了</text>
+    <text>这个小程序，希望能够帮到你我</text>
+
+    
+    <view class="bottom">
+      <text>PS : 这里没有提醒功能，也不打算做</text>
+      <!-- <text>如果你觉得不错，希望能推荐给家人朋友</text> -->
+      <text>谢谢你来用我们的程序</text>
+    </view>
+
+  </view>
+</view>
